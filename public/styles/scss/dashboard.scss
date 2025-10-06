@@ -1,0 +1,59 @@
+@import "reset";
+@import "global";
+@import "layout";
+@import "button";
+
+.dashboard {
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 3rem;
+        width: 100%;
+        padding: 2rem;
+        .header {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .content {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            .box {
+                flex: 0 1 450px;
+                max-width: 450px;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+                padding: 1.5rem;
+                border-radius: 1rem;
+                box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+                text-decoration: none;
+                .row {
+                    width: 100%;
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 1rem;
+                    justify-content: space-between;
+                    .img-wrapper {
+                        padding: 1rem;
+                        border-radius: 0.5rem;
+                        background-color: rgb(242, 242, 242);
+                        img {
+                            width: 1.5rem;   
+                            height: 1.5rem;   
+                        }
+                    }
+                }
+                #students {
+                    font-size: 1rem;
+                }
+            }
+        }
+    }
+}

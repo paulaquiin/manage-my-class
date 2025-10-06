@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/styles/css/dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ancizar+Sans:ital,wght@0,100..1000;1,100..1000&family=Lexend:wght@100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <main class="dashboard">
+        <aside data-include="../components/sidebar.html"></aside>
+        <div class="container">
+            <div class="header">
+                <span class="heading-2">Mis Clases</span>
+                <button>Nueva Clase</button>
+            </div>
+            <div class="content"></div>
+        </div>
+    </main>
+
+    <template id="box-template">
+        <a class="box">
+            <div class="row">
+                <div class="img-wrapper">
+                    <img src="" />
+                </div>
+                <span id="class" class="muted"></span>
+            </div>
+            <span id="title" class="heading-3 bold"></span>
+            <span id="students" class="muted"></span>
+        </a>
+    </template>
+    <script src="/js/include.js"></script>
+    <script src="/js/classes.js"></script>
+</body>
+
+</html>

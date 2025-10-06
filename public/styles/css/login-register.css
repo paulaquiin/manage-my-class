@@ -144,7 +144,7 @@ form input:not(input[type=submit]):focus {
 
 button,
 input[type=submit] {
-  background-color: #c334d6;
+  background-color: #A855F7;
   color: #fff;
   font-size: 1.15rem;
   padding: 0.35rem 1.5rem;
@@ -154,7 +154,7 @@ input[type=submit] {
 }
 button:focus,
 input[type=submit]:focus {
-  outline: 1px solid #c334d6;
+  outline: 1px solid #A855F7;
 }
 
 .login-regist {
