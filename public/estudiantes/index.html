@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis alumnos</title>
+    <link rel="stylesheet" href="/styles/css/students.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ancizar+Sans:ital,wght@0,100..1000;1,100..1000&family=Lexend:wght@100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <main class="students">
+        <aside data-include="../components/sidebar.html"></aside>
+        <div class="container">
+            <div class="header">
+                <span class="heading-2">Mis Alumnos</span>
+                <button>Nuevo Alumno</button>
+            </div>
+            <div class="content"></div>
+        </div>
+    </main>
+
+    <template id="student-template">
+        <a class="box">
+            <img src="" />
+            <div class="column">
+                <span id="name" class="heading-4 bold"></span>
+                <span id="lastName" class="muted"></span>
+            </div>
+        </a>
+    </template>
+
+    <script src="/js/include.js"></script>
+    <script src="/js/students.js"></script>
+</body>
+
+</html>
