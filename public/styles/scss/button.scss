@@ -1,0 +1,13 @@
+button,
+input[type="submit"] {
+    background-color: #c334d6;
+    color: #fff;
+    font-size: 1.15rem;
+    padding: 0.35rem 1.5rem;
+    border-radius: 0.75rem;
+    border: 0;
+    cursor: pointer;
+    &:focus {
+        outline: 1px solid #c334d6;
+    }
+}
