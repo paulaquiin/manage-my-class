@@ -107,13 +107,15 @@ h4 {
   color: #181818;
 }
 
-main.dashboard {
+main.classes,
+main.students {
   display: grid;
   grid-template-columns: 0.15fr 1fr;
   height: 100%;
   box-sizing: border-box;
 }
-main.dashboard aside > div {
+main.classes aside > div,
+main.students aside > div {
   display: flex;
   flex-direction: column;
   gap: 3.5rem;
@@ -121,32 +123,40 @@ main.dashboard aside > div {
   border-right: 2px solid #F7F6F8;
   height: 100%;
 }
-main.dashboard aside > div .user {
+main.classes aside > div .user,
+main.students aside > div .user {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
-main.dashboard aside > div .user img {
+main.classes aside > div .user img,
+main.students aside > div .user img {
   width: 3.5rem;
   height: 3.5rem;
   border-radius: 100%;
 }
-main.dashboard aside > div .user .info {
+main.classes aside > div .user .info,
+main.students aside > div .user .info {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-main.dashboard aside > div .menu {
+main.classes aside > div .menu,
+main.students aside > div .menu {
   flex: 1;
 }
-main.dashboard aside > div .menu,
-main.dashboard aside > div .footer {
+main.classes aside > div .menu,
+main.classes aside > div .footer,
+main.students aside > div .menu,
+main.students aside > div .footer {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-main.dashboard aside > div .menu a,
-main.dashboard aside > div .footer a {
+main.classes aside > div .menu a,
+main.classes aside > div .footer a,
+main.students aside > div .menu a,
+main.students aside > div .footer a {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -155,21 +165,28 @@ main.dashboard aside > div .footer a {
   text-decoration: none;
   color: #000;
 }
-main.dashboard aside > div .menu a:hover,
-main.dashboard aside > div .footer a:hover {
+main.classes aside > div .menu a:hover,
+main.classes aside > div .footer a:hover,
+main.students aside > div .menu a:hover,
+main.students aside > div .footer a:hover {
   color: #A855F7;
   background-color: #F3E8FF;
 }
-main.dashboard aside > div .menu a:hover span,
-main.dashboard aside > div .footer a:hover span {
+main.classes aside > div .menu a:hover span,
+main.classes aside > div .footer a:hover span,
+main.students aside > div .menu a:hover span,
+main.students aside > div .footer a:hover span {
   color: #A855F7;
 }
-main.dashboard aside > div .menu a svg,
-main.dashboard aside > div .footer a svg {
+main.classes aside > div .menu a svg,
+main.classes aside > div .footer a svg,
+main.students aside > div .menu a svg,
+main.students aside > div .footer a svg {
   width: 2rem;
   height: 2rem;
 }
-main.dashboard .container {
+main.classes .container,
+main.students .container {
   background-color: rgb(255, 255, 255);
 }
 
@@ -188,7 +205,7 @@ input[type=submit]:focus {
   outline: 1px solid #A855F7;
 }
 
-.dashboard .container {
+.classes .container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -196,20 +213,20 @@ input[type=submit]:focus {
   width: 100%;
   padding: 2rem;
 }
-.dashboard .container .header {
+.classes .container .header {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 1rem;
 }
-.dashboard .container .content {
+.classes .container .content {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
 }
-.dashboard .container .content .box {
+.classes .container .content .box {
   flex: 0 1 450px;
   max-width: 450px;
   display: flex;
@@ -221,22 +238,22 @@ input[type=submit]:focus {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
   text-decoration: none;
 }
-.dashboard .container .content .box .row {
+.classes .container .content .box .row {
   width: 100%;
   display: flex;
   align-items: flex-start;
   gap: 1rem;
   justify-content: space-between;
 }
-.dashboard .container .content .box .row .img-wrapper {
+.classes .container .content .box .row .img-wrapper {
   padding: 1rem;
   border-radius: 0.5rem;
   background-color: rgb(242, 242, 242);
 }
-.dashboard .container .content .box .row .img-wrapper img {
+.classes .container .content .box .row .img-wrapper img {
   width: 1.5rem;
   height: 1.5rem;
 }
-.dashboard .container .content .box #students {
+.classes .container .content .box #students {
   font-size: 1rem;
 }

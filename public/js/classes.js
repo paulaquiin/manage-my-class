@@ -42,27 +42,33 @@ const classes = [
     },
 ]
 
-// Clonar un fragmento y rellenarlo con los datos
-const content = document.querySelector(".content");
-const template = document.getElementById("box-template");
-const fragment = document.createDocumentFragment();
 
-classes.forEach((item) => {
-    const clone = template.content.cloneNode(true);
+renderClasses();
+
+
+function renderClasses() {
+    // Clonar un fragmento y rellenarlo con los datos
+    const content = document.querySelector(".content");
+    const template = document.getElementById("box-template");
+    const fragment = document.createDocumentFragment();
     
-    const boxEl = clone.querySelector(".box");
-    const classEl = clone.querySelector("#class");
-    const iconEl = clone.querySelector("img");
-    const titleEl = clone.querySelector("#title");
-    const studentsEl = clone.querySelector("#students");
-
-    boxEl.href = `/clases/${item.id}`;
-    classEl.textContent = item.class;
-    iconEl.src = `../assets/${item.icon}`;
-    titleEl.textContent = item.title;
-    studentsEl.textContent = `${item.students} estudiantes`;
-
-    fragment.appendChild(clone);
-})
-
-content.appendChild(fragment);
+    classes.forEach((item) => {
+        const clone = template.content.cloneNode(true);
+        
+        const boxEl = clone.querySelector(".box");
+        const classEl = clone.querySelector("#class");
+        const iconEl = clone.querySelector("img");
+        const titleEl = clone.querySelector("#title");
+        const studentsEl = clone.querySelector("#students");
+    
+        boxEl.href = `/clases/${item.id}`;
+        classEl.textContent = item.class;
+        iconEl.src = `../assets/${item.icon}`;
+        titleEl.textContent = item.title;
+        studentsEl.textContent = `${item.students} estudiantes`;
+    
+        fragment.appendChild(clone);
+    })
+    
+    content.appendChild(fragment);
+}
