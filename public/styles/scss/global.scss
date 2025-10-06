@@ -1,8 +1,9 @@
-body{
-    height: 100vh;
-    overflow-x: hidden;
+html, body {
+    height: 100%;
     font-family: "Lexend", sans-serif;
-
+}
+body{
+    overflow-x: hidden;
 }
 
 input,
