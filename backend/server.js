@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const db = require("./database");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const app = express();
 const PORT = 3000;
@@ -34,7 +35,7 @@ app.post("/api/register/", async (req, res) => {
     // Librería para encriptar la contraseña
     const hashedPwd = await bcrypt.hash(password, 10);
     db.run(
-        "INSERT INTO usuarios (user, password, dni) VALUES (?, ?, ?)",
+        "INSERT INTO users (user, password, dni) VALUES (?, ?, ?)",
         [user, hashedPwd, dni],
         function (error) {
             if (error) {
@@ -49,11 +50,10 @@ app.post("/api/register/", async (req, res) => {
 
 // Endpoint para iniciar sesión
 app.post("/api/login/", async (req, res) => {
-    const { username, password } = req.body;
-
-    db.run(
-        "SELECT * FROM users WHERE username = ?",
-        [username],
+    const { user, password } = req.body;
+    db.get(
+        "SELECT * FROM users WHERE user = ?",
+        [user],
         async function (error, user) {
             if (!user) {
                 return res.status(400).json({ errorId: "user-error", message: "El usuario no existe" });

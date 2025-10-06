@@ -8,7 +8,7 @@ const db = new sqlite3.Database("./backend/data.db", (err) => {
 
 // Crear una tabla si no existe
 db.run(
-    `CREATE TABLE IF NOT EXISTS usuarios 
+    `CREATE TABLE IF NOT EXISTS users 
     (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user TEXT UNIQUE NOT NULL,

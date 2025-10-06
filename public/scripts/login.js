@@ -14,13 +14,16 @@ form.addEventListener("submit", async (e) => {
         });
 
         const result = await response.json();
-
         if (!response.ok) {
             const errorEl = document.getElementById(result.errorId);
             if (errorEl) {
                 errorEl.textContent = result.message;
             }
-            
+        } else {
+            // Almacenar token en localStorage
+            if (result.token) {
+                localStorage.setItem("token", result.token)
+            }
         }
     } catch (error) {}
 });
