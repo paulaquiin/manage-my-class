@@ -1,7 +1,10 @@
-body {
-  height: 100vh;
-  overflow-x: hidden;
+html, body {
+  height: 100%;
   font-family: "Lexend", sans-serif;
+}
+
+body {
+  overflow-x: hidden;
 }
 
 input,
@@ -10,7 +13,17 @@ textarea {
 }
 
 .text {
-  font-size: 1rem;
+  font-size: 1.15rem;
+  color: #181818;
+}
+
+.muted {
+  font-size: 0.9rem;
+  color: #777777;
+}
+
+.bold {
+  font-weight: 600;
 }
 
 .error {
@@ -21,19 +34,23 @@ textarea {
 .heading-1,
 h1 {
   font-size: 3.75rem;
+  color: #181818;
 }
 
 .heading-2,
 h2 {
   font-size: 2.75rem;
+  color: #181818;
 }
 
 .heading-3,
 h3 {
-  font-size: 2rem;
+  font-size: 1.75rem;
+  color: #181818;
 }
 
 .heading-4,
 h4 {
   font-size: 1.35rem;
+  color: #181818;
 }
