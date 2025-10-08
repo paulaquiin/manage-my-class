@@ -17,5 +17,14 @@ db.run(
     )
     `
 );
-
+db.run(
+    `CREATE TABLE IF NOT EXISTS classes 
+    (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT UNIQUE NOT NULL,
+        grade TEXT NOT NULL,
+        icon INTEGER NOT NULL,
+    )
+    `
+);
 module.exports = db;

@@ -72,11 +72,11 @@ app.post("/api/login/", async (req, res) => {
 })
 
 // Endpoint para crear una clase
-app.post("/api/clase/", (req, res) => {
-    const { nombre } = req.body;
+app.post("/api/class/", (req, res) => {
+    const { name, grade, icon } = req.body;
     db.run(
-        "INSERT INTO Class (name) VALUES (?)",
-        [nombre],
+        "INSERT INTO classes (name, grade, icon) VALUES (?, ?, ?)",
+        [name, grade, icon],
         function (error) {
             if (!error) {
                 return res.status(201);
