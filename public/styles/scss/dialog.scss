@@ -1,0 +1,25 @@
+dialog {
+    width: 100%;
+    max-width: 400px;
+    max-height: 600px;
+    border: none;
+    outline: none;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    padding: 1.5rem;
+    border-radius: 1rem;
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid #F7F6F8;
+        .close-dialog {
+            cursor: pointer;
+        }
+    }
+
+    .content {
+        padding-top: 1rem;
+    }
+}

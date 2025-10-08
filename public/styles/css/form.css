@@ -4,9 +4,9 @@ form {
   align-items: center;
   gap: 1.5rem;
   width: 100%;
-  max-width: 350px;
 }
 form .row {
+  width: 100%;
   display: flex;
   gap: 0.5rem;
 }
@@ -15,14 +15,14 @@ form .form-group {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.35rem;
+  gap: 0.5rem;
 }
 form label {
   font-size: 1.1rem;
 }
 form input:not(input[type=submit]) {
   width: 100%;
-  background-color: lightgray;
+  background-color: #F7F6F8;
   border: 0;
   height: 40px;
   border-radius: 0.5rem;
@@ -31,4 +31,10 @@ form input:not(input[type=submit]) {
 }
 form input:not(input[type=submit]):focus {
   outline: 1px solid #c334d6;
+}
+form input:not(input[type=submit])::placeholder {
+  color: #a5a5a5;
+}
+form input[type=submit] {
+  margin-left: auto;
 }

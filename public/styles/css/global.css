@@ -7,6 +7,10 @@ body {
   overflow-x: hidden;
 }
 
+*:not(dialog):focus {
+  outline: 1px solid #A855F7;
+}
+
 input,
 textarea {
   font-family: "Lexend", sans-serif;
@@ -14,6 +18,11 @@ textarea {
 
 .text {
   font-size: 1.15rem;
+  color: #181818;
+}
+
+.subtext {
+  font-size: 0.9rem;
   color: #181818;
 }
 
@@ -52,5 +61,11 @@ h3 {
 .heading-4,
 h4 {
   font-size: 1.35rem;
+  color: #181818;
+}
+
+.heading-5,
+h5 {
+  font-size: 1.25rem;
   color: #181818;
 }

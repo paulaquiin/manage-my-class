@@ -1,14 +1,21 @@
 button,
 input[type=submit] {
   background-color: #A855F7;
+  font-family: "Lexend", sans-serif;
   color: #fff;
   font-size: 1.15rem;
-  padding: 0.35rem 1.5rem;
+  padding: 0.4rem 1.5rem;
   border-radius: 0.75rem;
-  border: 0;
   cursor: pointer;
+  border: 2px solid #A855F7;
+  transition: background-color 0.25s;
 }
 button:focus,
 input[type=submit]:focus {
-  outline: 1px solid #A855F7;
+  border-color: #fff;
+}
+button:hover,
+input[type=submit]:hover {
+  background-color: #782fbd;
+  border-color: #782fbd;
 }

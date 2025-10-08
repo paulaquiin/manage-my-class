@@ -59,6 +59,10 @@ body {
   overflow-x: hidden;
 }
 
+*:not(dialog):focus {
+  outline: 1px solid #A855F7;
+}
+
 input,
 textarea {
   font-family: "Lexend", sans-serif;
@@ -66,6 +70,11 @@ textarea {
 
 .text {
   font-size: 1.15rem;
+  color: #181818;
+}
+
+.subtext {
+  font-size: 0.9rem;
   color: #181818;
 }
 
@@ -107,15 +116,21 @@ h4 {
   color: #181818;
 }
 
+.heading-5,
+h5 {
+  font-size: 1.25rem;
+  color: #181818;
+}
+
 form {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
   width: 100%;
-  max-width: 350px;
 }
 form .row {
+  width: 100%;
   display: flex;
   gap: 0.5rem;
 }
@@ -124,14 +139,14 @@ form .form-group {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.35rem;
+  gap: 0.5rem;
 }
 form label {
   font-size: 1.1rem;
 }
 form input:not(input[type=submit]) {
   width: 100%;
-  background-color: lightgray;
+  background-color: #F7F6F8;
   border: 0;
   height: 40px;
   border-radius: 0.5rem;
@@ -141,20 +156,33 @@ form input:not(input[type=submit]) {
 form input:not(input[type=submit]):focus {
   outline: 1px solid #c334d6;
 }
+form input:not(input[type=submit])::placeholder {
+  color: #a5a5a5;
+}
+form input[type=submit] {
+  margin-left: auto;
+}
 
 button,
 input[type=submit] {
   background-color: #A855F7;
+  font-family: "Lexend", sans-serif;
   color: #fff;
   font-size: 1.15rem;
-  padding: 0.35rem 1.5rem;
+  padding: 0.4rem 1.5rem;
   border-radius: 0.75rem;
-  border: 0;
   cursor: pointer;
+  border: 2px solid #A855F7;
+  transition: background-color 0.25s;
 }
 button:focus,
 input[type=submit]:focus {
-  outline: 1px solid #A855F7;
+  border-color: #fff;
+}
+button:hover,
+input[type=submit]:hover {
+  background-color: #782fbd;
+  border-color: #782fbd;
 }
 
 .login-register {
@@ -242,6 +270,9 @@ input[type=submit]:focus {
   width: 150px;
   height: 100px;
   border: 3px solid rgb(100, 0, 100);
+}
+.login-register .container .right form {
+  max-width: 350px;
 }
 
 @media (max-width: 768px) {

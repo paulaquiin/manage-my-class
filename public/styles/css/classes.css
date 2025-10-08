@@ -59,6 +59,10 @@ body {
   overflow-x: hidden;
 }
 
+*:not(dialog):focus {
+  outline: 1px solid #A855F7;
+}
+
 input,
 textarea {
   font-family: "Lexend", sans-serif;
@@ -66,6 +70,11 @@ textarea {
 
 .text {
   font-size: 1.15rem;
+  color: #181818;
+}
+
+.subtext {
+  font-size: 0.9rem;
   color: #181818;
 }
 
@@ -104,6 +113,12 @@ h3 {
 .heading-4,
 h4 {
   font-size: 1.35rem;
+  color: #181818;
+}
+
+.heading-5,
+h5 {
+  font-size: 1.25rem;
   color: #181818;
 }
 
@@ -193,16 +208,88 @@ main.students .container {
 button,
 input[type=submit] {
   background-color: #A855F7;
+  font-family: "Lexend", sans-serif;
   color: #fff;
   font-size: 1.15rem;
-  padding: 0.35rem 1.5rem;
+  padding: 0.4rem 1.5rem;
   border-radius: 0.75rem;
-  border: 0;
   cursor: pointer;
+  border: 2px solid #A855F7;
+  transition: background-color 0.25s;
 }
 button:focus,
 input[type=submit]:focus {
-  outline: 1px solid #A855F7;
+  border-color: #fff;
+}
+button:hover,
+input[type=submit]:hover {
+  background-color: #782fbd;
+  border-color: #782fbd;
+}
+
+dialog {
+  width: 100%;
+  max-width: 400px;
+  max-height: 600px;
+  border: none;
+  outline: none;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  padding: 1.5rem;
+  border-radius: 1rem;
+}
+dialog .header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #F7F6F8;
+}
+dialog .header .close-dialog {
+  cursor: pointer;
+}
+dialog .content {
+  padding-top: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+form .row {
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+}
+form .form-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+form label {
+  font-size: 1.1rem;
+}
+form input:not(input[type=submit]) {
+  width: 100%;
+  background-color: #F7F6F8;
+  border: 0;
+  height: 40px;
+  border-radius: 0.5rem;
+  padding: 0 0.5rem;
+  box-sizing: border-box;
+}
+form input:not(input[type=submit]):focus {
+  outline: 1px solid #c334d6;
+}
+form input:not(input[type=submit])::placeholder {
+  color: #a5a5a5;
+}
+form input[type=submit] {
+  margin-left: auto;
 }
 
 .classes .container {
@@ -218,6 +305,7 @@ input[type=submit]:focus {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  align-items: center;
   gap: 1rem;
 }
 .classes .container .content {
