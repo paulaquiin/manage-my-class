@@ -63,7 +63,7 @@ app.post("/api/login/", async (req, res) => {
                     return res.status(400).json({ errorId: "password-error", message: "Contraseña incorrecta" });
                 } else {
                     const token = jwt.sign({ id: user.id }, JWT_SECRET_KEY, { expiresIn: JWT_EXPIRATION });
-                    res.json({ success: true, token });
+                    return res.status(200).json({ token });
                 }
             }
 
