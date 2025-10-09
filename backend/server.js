@@ -63,7 +63,7 @@ app.post("/api/login/", async (req, res) => {
                     return res.status(400).json({ errorId: "password-error", message: "Contraseña incorrecta" });
                 } else {
                     const token = jwt.sign({ id: user.id }, JWT_SECRET_KEY, { expiresIn: JWT_EXPIRATION });
-                    return res.status(200).json({ token });
+                    return res.status(200).json({ token, user_id: user.id });
                 }
             }
 
@@ -73,18 +73,39 @@ app.post("/api/login/", async (req, res) => {
 
 // Endpoint para crear una clase
 app.post("/api/class/", (req, res) => {
-    const { name, grade, icon } = req.body;
+    const { name, course, icon, userId } = req.body;
     db.run(
-        "INSERT INTO classes (name, grade, icon) VALUES (?, ?, ?)",
-        [name, grade, icon],
+        "INSERT INTO classes (name, grade, icon, user_id) VALUES (?, ?, ?, ?)",
+        [name, course, icon, userId],
         function (error) {
-            if (!error) {
-                return res.status(201);
+            console.log(error);
+            if (error) {
+                if (error.code === "SQLITE_CONSTRAINT") {
+                    return res.status(400).json({ success: false, errorId: "class-exists" });
+                } else {
+                    return res.status(400).json({ success: false });
+                }
             } else {
-                return res.status(400);
+                return res.status(201).json({ success: true });
             }
         }
     )
+})
+
+app.get("/api/class/", (req, res) => {
+    const userId = req.query.userId;
+    db.all(
+        "SELECT * FROM classes WHERE user_id = ?",
+        [userId],
+        function (error, rows) {
+            if (error) {
+                return res.status(400).json({ success: false });
+            } else {
+                return res.status(201).json({ success: true, rows });
+            }
+
+        }
+    );
 })
 
 app.listen(PORT, () => console.log(`Servidor escuchando en el puerto ${PORT}`));

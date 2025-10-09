@@ -23,7 +23,9 @@ db.run(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT UNIQUE NOT NULL,
         grade TEXT NOT NULL,
-        icon INTEGER NOT NULL
+        icon INTEGER NOT NULL,
+        user_id INTEGER NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES users(id)
     )
     `
 );

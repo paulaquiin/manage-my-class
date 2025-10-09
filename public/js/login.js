@@ -23,7 +23,8 @@ form.addEventListener("submit", async (e) => {
             // Almacenar token en localStorage
             if (result.token) {
                 localStorage.setItem("token", result.token)
+                localStorage.setItem("user_id", result.user_id)
             }
         }
-    } catch (error) {}
+    } catch (error) { }
 });
