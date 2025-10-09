@@ -23,7 +23,7 @@ db.run(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT UNIQUE NOT NULL,
         grade TEXT NOT NULL,
-        icon INTEGER NOT NULL,
+        icon INTEGER NOT NULL
     )
     `
 );
