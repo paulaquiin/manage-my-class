@@ -11,9 +11,24 @@ button.addEventListener("click", () => {
 })
 
 // Identificar la "x" que cierra el dialogo
-const closeDialog = document.querySelector(".close-dialog");
+const closeDialogEl = document.querySelector(".close-dialog");
 
 // Añadir evento para cerrar el dialogo
-closeDialog.addEventListener("click", () => {
+closeDialogEl.addEventListener("click", closeDialog);
+
+export function closeDialog() {
+    // Cerrar dialog
     dialog.close();
-})
+
+    // Vacíar todos los inputs
+    const inputs = dialog.querySelectorAll("input:not(input[type='submit'])");
+    inputs.forEach((input) => {
+        input.value = "";
+    })
+
+    // Esconder todos los mensajes de error
+    const errorMessages = dialog.querySelectorAll(".error");
+    errorMessages.forEach((errorMsg) => {
+        errorMsg.classList.remove("show");
+    })
+}
