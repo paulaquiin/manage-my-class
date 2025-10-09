@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis clases</title>
+    <title>Clases</title>
     <link rel="stylesheet" href="/styles/css/classes.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,6 +23,32 @@
             </div>
             <div class="content"></div>
         </div>
+
+        <dialog>
+            <div class="header">
+                <span class="heading-5">Nueva Clase</span>
+                <span class="heading-5 close-dialog">&#10006;</span>
+            </div>
+            <div class="content">
+                <form>
+                    <div class="form-group">
+                        <label for="name" class="subtext">Nombre de la clase</label>
+                        <input name="name" type="text" placeholder="Ej: Matemáticas Avanzadas" />
+                        <span class="error" id="class-exists">Este nombre se está usando, elige otro</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="course" class="subtext">Curso</label>
+                        <input name="course" type="text" placeholder="Ej: Matemáticas Avanzadas" />
+                    </div>
+                    <!-- Selector de iconos -->
+                     <div class="form-group">
+                        <label class="subtext">Icono</label>
+                        <div class="icon-group"></div>
+                     </div>
+                    <input value="Crear clase" type="submit" />
+                </form>
+            </div>
+        </dialog>
     </main>
 
     <template id="box-template">
@@ -37,29 +63,10 @@
             <span id="students" class="muted"></span>
         </a>
     </template>
-    <dialog>
-        <div class="header">
-            <span class="heading-5">Nueva Clase</span>
-            <span class="heading-5 close-dialog">&#10006;</span>
-        </div>
-        <div class="content">
-            <form>
-                <div class="form-group">
-                    <label class="subtext">Nombre de la clase</label>
-                    <input type="text" placeholder="Ej: Matemáticas Avanzadas" />
-                </div>
-                <div class="form-group">
-                    <label class="subtext">Curso</label>
-                    <input type="text" placeholder="Ej: Matemáticas Avanzadas" />
-                </div>
-                <!-- Selector de iconos -->
-                <input value="Crear clase" type="submit" />
-            </form>
-        </div>
-    </dialog>
-    <script src="/js/include.js"></script>
-    <script src="/js/dialog.js"></script>
-    <script src="/js/classes.js"></script>
+
+    <script type="module" src="/js/include.js"></script>
+    <script type="module" src="/js/dialog.js"></script>
+    <script type="module" src="/js/classes.js"></script>
 </body>
 
 </html>

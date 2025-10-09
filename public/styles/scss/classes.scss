@@ -13,6 +13,7 @@
         gap: 3rem;
         width: 100%;
         padding: 2rem;
+
         .header {
             width: 100%;
             display: flex;
@@ -21,11 +22,13 @@
             align-items: center;
             gap: 1rem;
         }
+
         .content {
             width: 100%;
             display: flex;
             flex-wrap: wrap;
             gap: 2rem;
+
             .box {
                 flex: 0 1 450px;
                 max-width: 450px;
@@ -37,24 +40,47 @@
                 border-radius: 1rem;
                 box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
                 text-decoration: none;
+
                 .row {
                     width: 100%;
                     display: flex;
                     align-items: flex-start;
                     gap: 1rem;
                     justify-content: space-between;
+
                     .img-wrapper {
                         padding: 1rem;
                         border-radius: 0.5rem;
                         background-color: rgb(242, 242, 242);
+
                         img {
-                            width: 1.5rem;   
-                            height: 1.5rem;   
+                            width: 1.5rem;
+                            height: 1.5rem;
                         }
                     }
                 }
+
                 #students {
                     font-size: 1rem;
+                }
+            }
+        }
+    }
+
+    dialog {
+        .icon-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+
+            img {
+                width: 3rem;
+                height: 3rem;
+                cursor: pointer;
+                padding: 0.25rem;
+                border-radius: 0.5rem;
+                &.selected {
+                    outline: 2px solid #A855F7;
                 }
             }
         }
