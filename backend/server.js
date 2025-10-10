@@ -13,6 +13,9 @@ const JWT_EXPIRATION = "12h";
 app.use(express.static("public")); //Muestra los archivos de la carpeta public
 app.use(bodyParser.json()); // Permite utilizar estructuras JSON en cada petición
 function authJwtToken(req, res, next) {
+    const exclude = ["/api/register", "/api/login"];
+    if (exclude.includes(req.path)) return next();
+
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
     if (!token) return res.status(401).json({ message: "No autorizado" });
@@ -24,6 +27,8 @@ function authJwtToken(req, res, next) {
         next();
     });
 }
+
+app.use(authJwtToken);
 
 // ENDPOINTS
 
@@ -39,10 +44,10 @@ app.post("/api/register/", async (req, res) => {
         [user, hashedPwd, dni],
         function (error) {
             if (error) {
-                return res.status(400).json({ errorId: "user-exists-error", message: "Usuario ya existe" });
+                 return res.status(400).json({ success: false, errorId: "user-exists-error", message: "Usuario ya existe" });
             } else {
                 // Usuario registrado y redirecciona a la pantalla de inicio de sesión
-                return res.status(201).json({ redirect: "/iniciar-sesion" });
+                return res.status(201).json({ success: true });
             }
         }
     );

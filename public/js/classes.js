@@ -1,5 +1,5 @@
 import { closeDialog } from "./dialog.js";
-
+import { handleFetch } from "./handle-fetch.js";
 
 // Variables globales
 const userId = localStorage.getItem("user_id");
@@ -28,26 +28,20 @@ renderDialogIcons();
 
 // Recupera las clases de base de datos
 async function getClasses() {
-    try {
-        const response = await fetch(`http://localhost:3000/api/class?userId=${userId}`, {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-        });
-        const result = await response.json();
-
-        if (!response.ok) {
-            const errorEl = document.getElementById(result.errorId);
-            if (errorEl) {
-                errorEl.classList.add("show");
-            }
-        } else {
-            // Vaciar todas las clases del DOM
-            removeDomClasses();
-            // Renderizar las clases
-            renderClasses(result.rows);
+    const result = await handleFetch(
+        `http://localhost:3000/api/class?userId=${userId}`,
+        "GET",
+    )
+    if (!result.success) {
+        const errorEl = document.getElementById(result.errorId);
+        if (errorEl) {
+            errorEl.classList.add("show");
         }
-    } catch (error) {
-        console.log(error);
+    } else {
+        // Vaciar todas las clases del DOM
+        removeDomClasses();
+        // Renderizar las clases
+        renderClasses(result.rows);
     }
 }
 
@@ -90,18 +84,14 @@ function removeDomClasses() {
 
 // Eliminar una clase de base de datos
 async function deleteClassById(id) {
-    try {
-        const response = await fetch("http://localhost:3000/api/class", {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id }),
-        });
-        if (response.ok) {
-            // Si todo ha ido bien, llamamos a getClasses para eliminar todo y renderizar de nuevo la lista
-            getClasses();
-        }
-    } catch (error) {
-        console.log(error);
+    const result = await handleFetch(
+        "http://localhost:3000/api/class",
+        "DELETE",
+        JSON.stringify({ id })
+    )
+
+    if (result.success) {
+        getClasses();
     }
 }
 
@@ -155,27 +145,21 @@ form.addEventListener("submit", async (e) => {
     const icon = iconEl.dataset.id;
 
     // Se lanza la petición
-    try {
-        const response = await fetch("http://localhost:3000/api/class", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, course, icon, userId }),
-        });
+    const result = await handleFetch(
+        "http://localhost:3000/api/class",
+        "POST",
+        JSON.stringify({ name, course, icon, userId })
+    )
 
-        const result = await response.json();
-
-        if (!response.ok) {
-            const errorEl = document.getElementById(result.errorId);
-            if (errorEl) {
-                errorEl.classList.add("show");
-            }
-        } else {
-            // Si todo ha ido bien, cierra el dialog y recupera
-            // nuevamente todas las clases (las antiguas + la nueva)
-            closeDialog();
-            getClasses();
+    if (!result.success) {
+        const errorEl = document.getElementById(result.errorId);
+        if (errorEl) {
+            errorEl.classList.add("show");
         }
-    } catch (error) {
-        console.log(error);
+    } else {
+        // Si todo ha ido bien, cierra el dialog y recupera
+        // nuevamente todas las clases (las antiguas + la nueva)
+        closeDialog();
+        getClasses();
     }
 })
