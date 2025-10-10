@@ -48,15 +48,9 @@
                     gap: 1rem;
                     justify-content: space-between;
 
-                    .img-wrapper {
-                        padding: 1rem;
-                        border-radius: 0.5rem;
-                        background-color: rgb(242, 242, 242);
-
-                        img {
-                            width: 1.5rem;
-                            height: 1.5rem;
-                        }
+                    img {
+                        width: 2.5rem;
+                        height: 2.5rem;
                     }
                 }
 
@@ -79,6 +73,7 @@
                 cursor: pointer;
                 padding: 0.25rem;
                 border-radius: 0.5rem;
+
                 &.selected {
                     outline: 2px solid #A855F7;
                 }
