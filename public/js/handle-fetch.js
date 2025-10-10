@@ -1,7 +1,7 @@
-export async function handleFetch(url, method, body) {
+export async function handleFetch(url, method, body, validateToken = true) {
 
     const token = localStorage.getItem("token");
-    if (!token) {
+    if (validateToken && !token) {
         localStorage.removeItem("token");
         window.location.href = "/iniciar-sesion";
         return;

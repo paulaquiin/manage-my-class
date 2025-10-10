@@ -11,7 +11,8 @@ form.addEventListener("submit", async (e) => {
     const result = await handleFetch(
         "http://localhost:3000/api/register",
         "POST",
-        JSON.stringify({ user, password, dni })
+        JSON.stringify({ user, password, dni }),
+        false
     )
     console.log(result);
     if (!result.success) {

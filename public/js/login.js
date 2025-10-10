@@ -10,7 +10,8 @@ form.addEventListener("submit", async (e) => {
     const result = await handleFetch(
         "http://localhost:3000/api/login",
         "POST",
-        JSON.stringify({ user, password })
+        JSON.stringify({ user, password }),
+        false
     )
 
     if (!result.token) {
