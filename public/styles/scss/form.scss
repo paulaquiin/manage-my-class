@@ -1,3 +1,5 @@
+@import "global";
+
 form {
     display: flex;
     flex-direction: column;
@@ -25,7 +27,7 @@ form {
     
     input:not(input[type="submit"]) {
         width: 100%;
-        background-color: #F7F6F8;
+        background-color: $secondary;
         border: 0;
         height: 40px;
         border-radius: 0.5rem;

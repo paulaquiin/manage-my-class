@@ -88,8 +88,12 @@ textarea {
 }
 
 .error {
+  display: none;
   font-size: 0.8rem;
   color: red;
+}
+.error.show {
+  display: inline;
 }
 
 .heading-1,
@@ -205,78 +209,6 @@ main.students .container {
   background-color: rgb(255, 255, 255);
 }
 
-html, body {
-  height: 100%;
-  font-family: "Lexend", sans-serif;
-}
-
-body {
-  overflow-x: hidden;
-}
-
-*:not(dialog):focus {
-  outline: 1px solid #A855F7;
-}
-
-input,
-textarea {
-  font-family: "Lexend", sans-serif;
-}
-
-.text {
-  font-size: 1.15rem;
-  color: #181818;
-}
-
-.subtext {
-  font-size: 0.9rem;
-  color: #181818;
-}
-
-.muted {
-  font-size: 0.9rem;
-  color: #777777;
-}
-
-.bold {
-  font-weight: 600;
-}
-
-.error {
-  font-size: 0.8rem;
-  color: red;
-}
-
-.heading-1,
-h1 {
-  font-size: 3.75rem;
-  color: #181818;
-}
-
-.heading-2,
-h2 {
-  font-size: 2.75rem;
-  color: #181818;
-}
-
-.heading-3,
-h3 {
-  font-size: 1.75rem;
-  color: #181818;
-}
-
-.heading-4,
-h4 {
-  font-size: 1.35rem;
-  color: #181818;
-}
-
-.heading-5,
-h5 {
-  font-size: 1.25rem;
-  color: #181818;
-}
-
 button,
 input[type=submit] {
   background-color: #A855F7;
@@ -299,144 +231,7 @@ input[type=submit]:hover {
   border-color: #782fbd;
 }
 
-dialog {
-  width: 100%;
-  max-width: 400px;
-  max-height: 600px;
-  border: none;
-  outline: none;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-  padding: 1.5rem;
-  border-radius: 1rem;
-}
-dialog .header {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid #F7F6F8;
-}
-dialog .header .close-dialog {
-  cursor: pointer;
-}
-dialog .content {
-  padding-top: 1rem;
-}
-
-html, body {
-  height: 100%;
-  font-family: "Lexend", sans-serif;
-}
-
-body {
-  overflow-x: hidden;
-}
-
-*:not(dialog):focus {
-  outline: 1px solid #A855F7;
-}
-
-input,
-textarea {
-  font-family: "Lexend", sans-serif;
-}
-
-.text {
-  font-size: 1.15rem;
-  color: #181818;
-}
-
-.subtext {
-  font-size: 0.9rem;
-  color: #181818;
-}
-
-.muted {
-  font-size: 0.9rem;
-  color: #777777;
-}
-
-.bold {
-  font-weight: 600;
-}
-
-.error {
-  font-size: 0.8rem;
-  color: red;
-}
-
-.heading-1,
-h1 {
-  font-size: 3.75rem;
-  color: #181818;
-}
-
-.heading-2,
-h2 {
-  font-size: 2.75rem;
-  color: #181818;
-}
-
-.heading-3,
-h3 {
-  font-size: 1.75rem;
-  color: #181818;
-}
-
-.heading-4,
-h4 {
-  font-size: 1.35rem;
-  color: #181818;
-}
-
-.heading-5,
-h5 {
-  font-size: 1.25rem;
-  color: #181818;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-  width: 100%;
-}
-form .row {
-  width: 100%;
-  display: flex;
-  gap: 0.5rem;
-}
-form .form-group {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.5rem;
-}
-form label {
-  font-size: 1.1rem;
-}
-form input:not(input[type=submit]) {
-  width: 100%;
-  background-color: #F7F6F8;
-  border: 0;
-  height: 40px;
-  border-radius: 0.5rem;
-  padding: 0 0.5rem;
-  box-sizing: border-box;
-}
-form input:not(input[type=submit]):focus {
-  outline: 1px solid #c334d6;
-}
-form input:not(input[type=submit])::placeholder {
-  color: #a5a5a5;
-}
-form input[type=submit] {
-  margin-left: auto;
-}
-
-.classes .container {
+.students .container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -444,58 +239,39 @@ form input[type=submit] {
   width: 100%;
   padding: 2rem;
 }
-.classes .container .header {
+.students .container .header {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: center;
   gap: 1rem;
 }
-.classes .container .content {
+.students .container .content {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
 }
-.classes .container .content .box {
-  flex: 0 1 450px;
-  max-width: 450px;
+.students .container .content .box {
+  flex: 0 1 225px;
+  max-width: 225px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 1rem;
   padding: 1.5rem;
   border-radius: 1rem;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
   text-decoration: none;
 }
-.classes .container .content .box .row {
-  width: 100%;
+.students .container .content .box img {
+  width: 100px;
+  border: 1px solid #A855F7;
+  border-radius: 100%;
+}
+.students .container .content .box .column {
   display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  justify-content: space-between;
-}
-.classes .container .content .box .row img {
-  width: 2.5rem;
-  height: 2.5rem;
-}
-.classes .container .content .box #students {
-  font-size: 1rem;
-}
-.classes dialog .icon-group {
-  display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
   gap: 0.5rem;
-}
-.classes dialog .icon-group img {
-  width: 3rem;
-  height: 3rem;
-  cursor: pointer;
-  padding: 0.25rem;
-  border-radius: 0.5rem;
-}
-.classes dialog .icon-group img.selected {
-  outline: 2px solid #A855F7;
 }

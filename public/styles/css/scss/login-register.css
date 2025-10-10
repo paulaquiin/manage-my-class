@@ -88,8 +88,12 @@ textarea {
 }
 
 .error {
+  display: none;
   font-size: 0.8rem;
   color: red;
+}
+.error.show {
+  display: inline;
 }
 
 .heading-1,
@@ -120,89 +124,6 @@ h4 {
 h5 {
   font-size: 1.25rem;
   color: #181818;
-}
-
-main.classes,
-main.students {
-  display: grid;
-  grid-template-columns: 0.15fr 1fr;
-  height: 100%;
-  box-sizing: border-box;
-}
-main.classes aside > div,
-main.students aside > div {
-  display: flex;
-  flex-direction: column;
-  gap: 3.5rem;
-  padding: 1.75rem;
-  border-right: 2px solid #F7F6F8;
-  height: 100%;
-}
-main.classes aside > div .user,
-main.students aside > div .user {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-main.classes aside > div .user img,
-main.students aside > div .user img {
-  width: 3.5rem;
-  height: 3.5rem;
-  border-radius: 100%;
-}
-main.classes aside > div .user .info,
-main.students aside > div .user .info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-main.classes aside > div .menu,
-main.students aside > div .menu {
-  flex: 1;
-}
-main.classes aside > div .menu,
-main.classes aside > div .footer,
-main.students aside > div .menu,
-main.students aside > div .footer {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-main.classes aside > div .menu a,
-main.classes aside > div .footer a,
-main.students aside > div .menu a,
-main.students aside > div .footer a {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.25rem;
-  border-radius: 1rem;
-  text-decoration: none;
-  color: #000;
-}
-main.classes aside > div .menu a:hover,
-main.classes aside > div .footer a:hover,
-main.students aside > div .menu a:hover,
-main.students aside > div .footer a:hover {
-  color: #A855F7;
-  background-color: #F3E8FF;
-}
-main.classes aside > div .menu a:hover span,
-main.classes aside > div .footer a:hover span,
-main.students aside > div .menu a:hover span,
-main.students aside > div .footer a:hover span {
-  color: #A855F7;
-}
-main.classes aside > div .menu a svg,
-main.classes aside > div .footer a svg,
-main.students aside > div .menu a svg,
-main.students aside > div .footer a svg {
-  width: 2rem;
-  height: 2rem;
-}
-main.classes .container,
-main.students .container {
-  background-color: rgb(255, 255, 255);
 }
 
 html, body {
@@ -243,8 +164,12 @@ textarea {
 }
 
 .error {
+  display: none;
   font-size: 0.8rem;
   color: red;
+}
+.error.show {
+  display: inline;
 }
 
 .heading-1,
@@ -277,6 +202,47 @@ h5 {
   color: #181818;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+form .row {
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+}
+form .form-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+form label {
+  font-size: 1.1rem;
+}
+form input:not(input[type=submit]) {
+  width: 100%;
+  background-color: #F7F6F8;
+  border: 0;
+  height: 40px;
+  border-radius: 0.5rem;
+  padding: 0 0.5rem;
+  box-sizing: border-box;
+}
+form input:not(input[type=submit]):focus {
+  outline: 1px solid #c334d6;
+}
+form input:not(input[type=submit])::placeholder {
+  color: #a5a5a5;
+}
+form input[type=submit] {
+  margin-left: auto;
+}
+
 button,
 input[type=submit] {
   background-color: #A855F7;
@@ -299,47 +265,110 @@ input[type=submit]:hover {
   border-color: #782fbd;
 }
 
-.students .container {
+.login-register {
+  background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgb(255, 238, 223) 35%, rgb(255, 224, 198) 65%, rgb(236, 168, 245) 100%);
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+.login-register .container {
+  width: 100%;
+  display: flex;
+  max-width: 1250px;
+  padding: 1rem;
+  min-height: 600px;
+}
+.login-register .container .left {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 3rem;
-  width: 100%;
-  padding: 2rem;
-}
-.students .container .header {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 1rem;
-}
-.students .container .content {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   gap: 2rem;
+  flex: 1;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  border-radius: 2rem;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
 }
-.students .container .content .box {
-  flex: 0 1 225px;
-  max-width: 225px;
+.login-register .container .left .actions {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  gap: 2rem;
+  position: absolute;
+  right: -0.15rem;
+  top: 2rem;
+}
+.login-register .container .left .actions a {
+  padding: 0.75rem 1rem;
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
   text-decoration: none;
+  color: #c334d6;
+  font-weight: 700;
 }
-.students .container .content .box img {
-  width: 100px;
-  border: 1px solid #A855F7;
-  border-radius: 100%;
+.login-register .container .left .actions a.active {
+  background-color: #f8f8f8;
 }
-.students .container .content .box .column {
+.login-register .container .left .content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 350px;
+  text-align: center;
+}
+.login-register .container .left .tmp {
+  width: 250px;
+  height: 300px;
+  border: 3px solid rgb(100, 0, 100);
+  border-radius: 1rem;
+}
+.login-register .container .right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex: 1;
+  background-color: #fff;
+  border-radius: 2rem;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  overflow: hidden;
+}
+.login-register .container .right .content {
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: center;
+}
+.login-register .container .right .content .logo {
+  display: none;
+  width: 150px;
+  height: 100px;
+  border: 3px solid rgb(100, 0, 100);
+}
+.login-register .container .right form {
+  max-width: 350px;
+}
+
+@media (max-width: 768px) {
+  .login-register .container {
+    flex-direction: column;
+  }
+  .login-register .container .left {
+    display: none;
+  }
+  .login-register .container .right {
+    border-radius: 2rem;
+  }
+  .login-register .container .right .content {
+    display: flex;
+  }
+  .login-register .container .right .content .logo {
+    display: inline;
+  }
 }

@@ -1,3 +1,75 @@
+html, body {
+  height: 100%;
+  font-family: "Lexend", sans-serif;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+*:not(dialog):focus {
+  outline: 1px solid #A855F7;
+}
+
+input,
+textarea {
+  font-family: "Lexend", sans-serif;
+}
+
+.text {
+  font-size: 1.15rem;
+  color: #181818;
+}
+
+.subtext {
+  font-size: 0.9rem;
+  color: #181818;
+}
+
+.muted {
+  font-size: 0.9rem;
+  color: #777777;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.error {
+  font-size: 0.8rem;
+  color: red;
+}
+
+.heading-1,
+h1 {
+  font-size: 3.75rem;
+  color: #181818;
+}
+
+.heading-2,
+h2 {
+  font-size: 2.75rem;
+  color: #181818;
+}
+
+.heading-3,
+h3 {
+  font-size: 1.75rem;
+  color: #181818;
+}
+
+.heading-4,
+h4 {
+  font-size: 1.35rem;
+  color: #181818;
+}
+
+.heading-5,
+h5 {
+  font-size: 1.25rem;
+  color: #181818;
+}
+
 button,
 input[type=submit] {
   background-color: #A855F7;

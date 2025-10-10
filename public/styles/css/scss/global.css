@@ -36,8 +36,12 @@ textarea {
 }
 
 .error {
+  display: none;
   font-size: 0.8rem;
   color: red;
+}
+.error.show {
+  display: inline;
 }
 
 .heading-1,
@@ -68,45 +72,4 @@ h4 {
 h5 {
   font-size: 1.25rem;
   color: #181818;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-  width: 100%;
-}
-form .row {
-  width: 100%;
-  display: flex;
-  gap: 0.5rem;
-}
-form .form-group {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.5rem;
-}
-form label {
-  font-size: 1.1rem;
-}
-form input:not(input[type=submit]) {
-  width: 100%;
-  background-color: #F7F6F8;
-  border: 0;
-  height: 40px;
-  border-radius: 0.5rem;
-  padding: 0 0.5rem;
-  box-sizing: border-box;
-}
-form input:not(input[type=submit]):focus {
-  outline: 1px solid #c334d6;
-}
-form input:not(input[type=submit])::placeholder {
-  color: #a5a5a5;
-}
-form input[type=submit] {
-  margin-left: auto;
 }

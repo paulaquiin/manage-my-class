@@ -1,19 +1,21 @@
+@import "global";
+
 button,
 input[type="submit"] {
-    background-color: #A855F7;
+    background-color: $accent;
     font-family: "Lexend", sans-serif;
     color: #fff;
     font-size: 1.15rem;
     padding: 0.4rem 1.5rem;
     border-radius: 0.75rem;
     cursor: pointer;
-    border: 2px solid #A855F7;
+    border: 2px solid $accent;
     transition: background-color 0.25s;
     &:focus {
         border-color: #fff;
     }
     &:hover {
-        background-color: #782fbd;
-        border-color: #782fbd;
+        background-color: $accentHover;
+        border-color: $accentHover;
     }
 }
