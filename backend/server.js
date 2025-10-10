@@ -71,14 +71,13 @@ app.post("/api/login/", async (req, res) => {
     );
 })
 
-// Endpoint para crear una clase
+// Endpoint para clases
 app.post("/api/class/", (req, res) => {
     const { name, course, icon, userId } = req.body;
     db.run(
         "INSERT INTO classes (name, grade, icon, user_id) VALUES (?, ?, ?, ?)",
         [name, course, icon, userId],
         function (error) {
-            console.log(error);
             if (error) {
                 if (error.code === "SQLITE_CONSTRAINT") {
                     return res.status(400).json({ success: false, errorId: "class-exists" });
@@ -106,6 +105,21 @@ app.get("/api/class/", (req, res) => {
 
         }
     );
+})
+
+app.delete("/api/class/", (req, res) => {
+    const { id } = req.body;
+    db.run(
+        "DELETE FROM classes WHERE id = ?",
+        [id],
+        function (error) {
+            if (error) {
+                return res.status(400).json({ success: false, error });
+            } else {
+                return res.status(200).json({ success: true });
+            }
+        }
+    )
 })
 
 app.listen(PORT, () => console.log(`Servidor escuchando en el puerto ${PORT}`));

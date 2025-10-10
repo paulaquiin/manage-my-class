@@ -22,6 +22,10 @@ const iconList = {
 getClasses();
 renderDialogIcons();
 
+/**
+ * CLASES
+ */
+
 // Recupera las clases de base de datos
 async function getClasses() {
     try {
@@ -30,7 +34,6 @@ async function getClasses() {
             headers: { "Content-Type": "application/json" },
         });
         const result = await response.json();
-        console.log(result);
 
         if (!response.ok) {
             const errorEl = document.getElementById(result.errorId);
@@ -38,8 +41,8 @@ async function getClasses() {
                 errorEl.classList.add("show");
             }
         } else {
-            // Vaciar todas las clases
-            removeClasses();
+            // Vaciar todas las clases del DOM
+            removeDomClasses();
             // Renderizar las clases
             renderClasses(result.rows);
         }
@@ -61,6 +64,10 @@ function renderClasses(classes) {
         const iconEl = clone.querySelector("img");
         const titleEl = clone.querySelector("#title");
         const studentsEl = clone.querySelector("#students");
+        const removeEl = clone.querySelector("#delete-class");
+        removeEl.addEventListener("click", () => {
+            deleteClassById()
+        })
 
         classEl.textContent = item.grade;
         iconEl.src = iconList[item.icon];
@@ -74,12 +81,33 @@ function renderClasses(classes) {
 }
 
 // Función para eliminar cada caja que representa cada clase
-function removeClasses() {
+function removeDomClasses() {
     const classes = content.querySelectorAll(".box");
     classes.forEach((classEl) => {
         classEl.remove();
     })
 }
+
+// Eliminar una clase de base de datos
+async function deleteClassById(id) {
+    try {
+        const response = await fetch("http://localhost:3000/api/class", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id }),
+        });
+        if (response.ok) {
+            // Si todo ha ido bien, llamamos a getClasses para eliminar todo y renderizar de nuevo la lista
+            getClasses();
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+/**
+ * DIALOG
+ */
 
 // Función para dibujar el selector de iconos
 function renderDialogIcons() {
