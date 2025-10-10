@@ -88,8 +88,12 @@ textarea {
 }
 
 .error {
+  display: none;
   font-size: 0.8rem;
   color: red;
+}
+.error.show {
+  display: inline;
 }
 
 .heading-1,
@@ -243,8 +247,12 @@ textarea {
 }
 
 .error {
+  display: none;
   font-size: 0.8rem;
   color: red;
+}
+.error.show {
+  display: inline;
 }
 
 .heading-1,
@@ -361,8 +369,12 @@ textarea {
 }
 
 .error {
+  display: none;
   font-size: 0.8rem;
   color: red;
+}
+.error.show {
+  display: inline;
 }
 
 .heading-1,

@@ -37,8 +37,12 @@ textarea {
 }
 
 .error {
+    display: none;
     font-size: 0.8rem;
     color: red;
+    &.show {
+        display: inline;
+    }
 }
 
 .heading-1,
