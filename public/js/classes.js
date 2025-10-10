@@ -66,7 +66,7 @@ function renderClasses(classes) {
         const studentsEl = clone.querySelector("#students");
         const removeEl = clone.querySelector("#delete-class");
         removeEl.addEventListener("click", () => {
-            deleteClassById()
+            deleteClassById(item.id)
         })
 
         classEl.textContent = item.grade;
