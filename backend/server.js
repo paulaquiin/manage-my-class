@@ -110,6 +110,7 @@ app.get("/api/class/", (req, res) => {
             FROM classes c
             LEFT JOIN students s ON s.class_id = c.id
             WHERE c.user_id = ?
+            GROUP BY c.id
         `,
         [userId],
         function (error, rows) {
