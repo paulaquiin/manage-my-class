@@ -16,6 +16,13 @@ const closeDialogEl = document.querySelector(".close-dialog");
 // Añadir evento para cerrar el dialogo
 closeDialogEl.addEventListener("click", closeDialog);
 
+
+let onCloseDialog = null;
+
+export function setOnCloseDialog(callback) {
+    onCloseDialog = callback;
+}
+
 export function closeDialog() {
     // Cerrar dialog
     dialog.close();
@@ -30,5 +37,15 @@ export function closeDialog() {
     const errorMessages = dialog.querySelectorAll(".error");
     errorMessages.forEach((errorMsg) => {
         errorMsg.classList.remove("show");
+    })
+
+    // Si hay algún callback definido tras cerrar un modal, hay que ejecutarlo
+    if (onCloseDialog) {
+        onCloseDialog();
+    }
+    // Vaciar todos los selects
+    const selects = dialog.querySelectorAll("select");
+    selects.forEach((select) => {
+        select.value = "";
     })
 }

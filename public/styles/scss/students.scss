@@ -90,6 +90,7 @@
                     flex-direction: column;
                     align-items: flex-start;
                     gap: 0.5rem;
+                    order: 1;
 
                     .muted {
                         font-size: 0.7rem;
@@ -102,7 +103,6 @@
                     border-radius: 100%;
                     background-color: $secondary;
                     border: none;
-                    order: -1;
                 }
             }
 

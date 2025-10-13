@@ -521,6 +521,7 @@ form input[type=submit] {
   flex-direction: column;
   align-items: flex-start;
   gap: 0.5rem;
+  order: 1;
 }
 .students dialog .photo-wrapper label .info .muted {
   font-size: 0.7rem;
@@ -531,7 +532,6 @@ form input[type=submit] {
   border-radius: 100%;
   background-color: #F7F6F8;
   border: none;
-  order: -1;
 }
 .students dialog .photo-wrapper input[type=file] {
   display: none;
