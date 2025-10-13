@@ -25,7 +25,7 @@ function authJwtToken(req, res, next) {
     if (!token) return res.status(401).json({ message: "No autorizado" });
 
     jwt.verify(token, JWT_SECRET_KEY, (err, user) => {
-        if (err) return res.status(403).json({ message: "Token inválido" });
+        if (err) return res.status(401).json({ message: "Token inválido" });
         req.user = user;
         next();
     });
@@ -80,6 +80,25 @@ app.post("/api/login/", async (req, res) => {
     );
 })
 
+// Endpoint para usuarios
+app.get("/api/user/", (req, res) => {
+    const userId = req.query.userId;
+    db.get(
+        "SELECT user, dni FROM users WHERE id = ?",
+        [userId],
+        async function (error, user) {
+            console.log(error);
+            console.log(user);
+
+            if (error) {
+                return res.status(400).json({ success: false });
+            } else {
+                return res.status(201).json({ success: true, info: user });
+            }
+            
+        }
+    )
+})
 
 // Endpoint para clases
 app.post("/api/class/", (req, res) => {
