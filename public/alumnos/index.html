@@ -21,7 +21,8 @@
                 <span class="heading-2">Mis Alumnos</span>
                 <button>Nuevo Alumno</button>
             </div>
-            <div class="content"></div>
+            <div class="wrapper">
+            </div>
         </div>
 
         <dialog>
@@ -54,11 +55,8 @@
                     <div class="form-group">
                         <label for="surname" class="subtext">Asignar a Clase</label>
                         <div class="select-wrapper">
-                            <select>
+                            <select id="student-class-select">
                                 <option class="subtext" value="">Seleccionar clase</option>
-                                <option class="subtext" value="1">Clase 1</option>
-                                <option class="subtext" value="2">Clase 2</option>
-                                <option class="subtext" value="3">Clase 3</option>
                             </select>
                         </div>
                     </div>
@@ -68,6 +66,12 @@
             </div>
         </dialog>
     </main>
+
+    <template id="class-template">
+        <img id="class-icon" />
+        <span class="heading-3" id="class-name"></span>
+        <span class="subtext" id="class-course"></span>
+    </template>
 
     <template id="student-template">
         <a class="box">

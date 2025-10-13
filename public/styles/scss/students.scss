@@ -22,38 +22,57 @@
             gap: 1rem;
         }
 
-        .content {
+        .wrapper {
             width: 100%;
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: flex-start;
             gap: 2rem;
 
-            .box {
-                flex: 0 1 225px;
-                max-width: 225px;
+            .class-info {
                 display: flex;
-                flex-direction: column;
-                align-items: center;
                 gap: 1rem;
-                padding: 1.5rem;
-                border-radius: 1rem;
-                box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-                text-decoration: none;
-
                 img {
-                    width: 100px;
-                    border: 1px solid $accent;
-                    border-radius: 100%;
+                    width: 3rem;
+                    height: 3rem;
                 }
+            }
 
-                .column {
+            .content {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 2rem;
+
+                .box {
+                    flex: 0 1 225px;
+                    max-width: 225px;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    gap: 0.5rem;
+                    gap: 1rem;
+                    padding: 1.5rem;
+                    border-radius: 1rem;
+                    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+                    text-decoration: none;
+
+                    img {
+                        width: 100px;
+                        border: 1px solid $accent;
+                        ;
+                        border-radius: 100%;
+                    }
+
+                    .column {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 0.5rem;
+                    }
                 }
             }
         }
+
     }
 
     dialog {
