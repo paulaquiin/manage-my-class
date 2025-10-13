@@ -525,7 +525,7 @@ form input[type=submit] {
 .students dialog .photo-wrapper label .info .muted {
   font-size: 0.7rem;
 }
-.students dialog .photo-wrapper label .img {
+.students dialog .photo-wrapper label img {
   width: 60px;
   height: 60px;
   border-radius: 100%;
