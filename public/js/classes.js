@@ -1,4 +1,4 @@
-import { closeDialog } from "./dialog.js";
+import { closeDialog, initDialog } from "./dialog.js";
 import { handleFetch } from "./handle-fetch.js";
 import { iconList } from "./utils/icons.js";
 
@@ -10,17 +10,21 @@ const iconGroupEl = document.querySelector(".icon-group");
 const form = document.querySelector("form");
 
 
-// Funciones
-getClasses();
-renderDialogIcons();
+// init es la función que arranca todas las funciones
+init();
 
+function init() {
+    getClasses();
+    renderDialogIcons();
+    initDialog();
+}
 
 /**
  * CLASES
  */
 
 // Recupera las clases de base de datos
-async function getClasses() {
+export async function getClasses() {
     const result = await handleFetch(
         `http://localhost:3000/api/class?userId=${userId}`,
         "GET",

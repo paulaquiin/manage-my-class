@@ -1,4 +1,4 @@
-import { closeDialog, setOnCloseDialog } from "./dialog.js";
+import { closeDialog, initDialog, setOnCloseDialog } from "./dialog.js";
 import { handleFetch } from "./handle-fetch.js"
 import { iconList } from "./utils/icons.js";
 
@@ -9,10 +9,16 @@ const wrapper = document.querySelector(".wrapper");
 const studentClassSelectEl = document.getElementById("student-class-select");
 const fileInput = document.getElementById("student-photo-input");
 
-// Funciones
-getStudents();
-fillClasses();
-handleChosenPhotoPreview();
+
+// init es la función que arranca todas las funciones
+init();
+
+function init() {
+    initDialog();
+    getStudents();
+    fillClasses();
+    handleChosenPhotoPreview();
+}
 
 // Callbacks
 // Esto permite decirle al dialog.js que ejecute algo después de

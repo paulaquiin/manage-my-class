@@ -1,23 +1,25 @@
-
-// Identificar el dialogo
-const dialog = document.querySelector("dialog");
-
-// Identificar el botón que abrirá el dialogo
-const button = document.querySelector("button");
-
-// Añadir eventos para abrir el dialogo
-button.addEventListener("click", () => {
-    dialog.showModal();
-})
-
-// Identificar la "x" que cierra el dialogo
-const closeDialogEl = document.querySelector(".close-dialog");
-
-// Añadir evento para cerrar el dialogo
-closeDialogEl.addEventListener("click", closeDialog);
-
-
 let onCloseDialog = null;
+let dialog = null;
+export function initDialog() {
+    // Identificar el dialogo
+    dialog = document.querySelector("dialog");
+    
+    // Identificar el botón que abrirá el dialogo
+    const button = document.querySelector("button");
+
+    // Añadir eventos para abrir el dialogo
+    button.addEventListener("click", () => {
+        dialog.showModal();
+    })
+    
+    // Identificar la "x" que cierra el dialogo
+    const closeDialogEl = document.querySelector(".close-dialog");
+    
+    // Añadir evento para cerrar el dialogo
+    closeDialogEl.addEventListener("click", closeDialog);
+}
+
+
 
 export function setOnCloseDialog(callback) {
     onCloseDialog = callback;
