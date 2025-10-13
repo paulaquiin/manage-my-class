@@ -104,7 +104,13 @@ app.post("/api/class/", (req, res) => {
 app.get("/api/class/", (req, res) => {
     const userId = req.query.userId;
     db.all(
-        "SELECT * FROM classes WHERE user_id = ?",
+        `
+            SELECT c.*, 
+            COUNT(s.id) AS students_qty
+            FROM classes c
+            LEFT JOIN students s ON s.class_id = c.id
+            WHERE c.user_id = ?
+        `,
         [userId],
         function (error, rows) {
             if (error) {
