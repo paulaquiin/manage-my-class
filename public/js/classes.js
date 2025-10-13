@@ -55,7 +55,7 @@ function renderClasses(classes) {
         const iconEl = clone.querySelector("img");
         const titleEl = clone.querySelector("#title");
         const studentsEl = clone.querySelector("#students");
-        const removeEl = clone.querySelector("#delete-class");
+        const removeEl = clone.querySelector("svg");
         removeEl.addEventListener("click", () => {
             deleteClassById(item.id)
         })

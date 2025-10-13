@@ -87,15 +87,12 @@ app.get("/api/user/", (req, res) => {
         "SELECT user, dni FROM users WHERE id = ?",
         [userId],
         async function (error, user) {
-            console.log(error);
-            console.log(user);
-
             if (error) {
                 return res.status(400).json({ success: false });
             } else {
                 return res.status(201).json({ success: true, info: user });
             }
-            
+
         }
     )
 })
@@ -180,6 +177,7 @@ app.get("/api/student/", (req, res) => {
     db.all(
         `
             SELECT s.name AS student_name,
+            s.id,
             s.surname,
             s.photo,
             s.class_id,
@@ -193,6 +191,47 @@ app.get("/api/student/", (req, res) => {
         `,
         [userId],
         function (error, rows) {
+            if (error) {
+                return res.status(400).json({ success: false });
+            } else {
+                return res.status(201).json({ success: true, rows });
+
+            }
+
+        }
+    );
+})
+
+app.delete("/api/student/", (req, res) => {
+    const { id } = req.body;
+    db.run(
+        "DELETE FROM students WHERE id = ?",
+        [id],
+        function (error) {
+            if (error) {
+                return res.status(400).json({ success: false, error });
+            } else {
+                return res.status(200).json({ success: true });
+            }
+        }
+    )
+})
+
+
+// Endpoints para las notas
+app.get("/api/grade/", (req, res) => {
+    const className = req.query.className;
+    db.all(
+        `
+            SELECT g.*
+            FROM grades g
+            JOIN classes c ON g.class_id = c.id
+            WHERE c.name = ?;
+        `,
+        [className],
+        function (error, rows) {
+            console.log(error);
+            console.log(rows);
             if (error) {
                 return res.status(400).json({ success: false });
             } else {

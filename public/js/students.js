@@ -115,10 +115,14 @@ function renderStudents(students) {
             const nameEl = clone.querySelector("#name");
             const iconEl = clone.querySelector("img");
             const lastNameEl = clone.querySelector("#lastName");
+            const removeEl = clone.querySelector("svg");
 
             nameEl.textContent = student.student_name;
             iconEl.src = student.photo;
             lastNameEl.textContent = student.surname;
+            removeEl.addEventListener("click", () => {
+                deleteStudentById(student.id)
+            })
 
             content.appendChild(clone);
         })
@@ -129,7 +133,19 @@ function renderStudents(students) {
     wrapper.appendChild(fragment);
 }
 
+// Eliminar un alumno de base de datos
+async function deleteStudentById(id) {
 
+    const result = await handleFetch(
+        "http://localhost:3000/api/student",
+        "DELETE",
+        JSON.stringify({ id })
+    )
+
+    if (result.success) {
+        getStudents();
+    }
+}
 
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
