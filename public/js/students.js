@@ -7,10 +7,12 @@ const userId = localStorage.getItem("user_id");
 const form = document.querySelector("form");
 const wrapper = document.querySelector(".wrapper");
 const studentClassSelectEl = document.getElementById("student-class-select");
+const fileInput = document.getElementById("student-photo");
 
 // Funciones
 getStudents();
 fillClasses();
+handleChosenPhotoPreview();
 
 /**
  * ALUMNOS
@@ -38,7 +40,7 @@ async function getStudents() {
 
 // Se encarga de eliminar el contenido: clase y lista de alumnos
 function clearDom() {
-   wrapper.innerHTML = "";
+    wrapper.innerHTML = "";
 }
 
 function renderStudents(students) {
@@ -124,7 +126,6 @@ form.addEventListener("submit", async (e) => {
 
     // Foto
     let photo = undefined;
-    const fileInput = document.getElementById("student-photo");
     const file = fileInput.files[0];
     const reader = new FileReader();
     reader.readAsDataURL(file); // convierte el archivo a base64
@@ -135,7 +136,6 @@ form.addEventListener("submit", async (e) => {
             "POST",
             JSON.stringify({ name, surname, classId, photo, userId })
         )
-        console.log(result);
 
         if (!result.success) {
             const errorEl = document.getElementById(result.errorId);
@@ -168,4 +168,17 @@ async function fillClasses() {
             studentClassSelectEl.add(option)
         })
     }
+}
+
+// Se encarga de captar el evento de foto cambiado para imprimirlo en la preview
+async function handleChosenPhotoPreview() {
+    fileInput.addEventListener("change", (e) => {
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = async (event) => {
+            const photoPreviewEl = fileInput.parentElement.querySelector("img");
+            photoPreviewEl.src = event.target.result;
+        }
+    })
 }

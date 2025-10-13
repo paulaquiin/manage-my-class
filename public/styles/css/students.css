@@ -525,11 +525,12 @@ form input[type=submit] {
 .students dialog .photo-wrapper label .info .muted {
   font-size: 0.7rem;
 }
-.students dialog .photo-wrapper label .tmp {
+.students dialog .photo-wrapper label .img {
   width: 60px;
   height: 60px;
   border-radius: 100%;
   background-color: #F7F6F8;
+  border: none;
 }
 .students dialog .photo-wrapper input[type=file] {
   display: none;
