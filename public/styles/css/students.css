@@ -148,10 +148,10 @@ main.students aside > div .user {
   align-items: center;
   gap: 1rem;
 }
-main.classes aside > div .user img,
-main.students aside > div .user img {
-  width: 3.5rem;
-  height: 3.5rem;
+main.classes aside > div .user svg,
+main.students aside > div .user svg {
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 100%;
 }
 main.classes aside > div .user .info,
@@ -525,12 +525,13 @@ form input[type=submit] {
 .students dialog .photo-wrapper label .info .muted {
   font-size: 0.7rem;
 }
-.students dialog .photo-wrapper label img {
+.students dialog .photo-wrapper label img, .students dialog .photo-wrapper label svg {
   width: 60px;
   height: 60px;
   border-radius: 100%;
   background-color: #F7F6F8;
   border: none;
+  order: -1;
 }
 .students dialog .photo-wrapper input[type=file] {
   display: none;

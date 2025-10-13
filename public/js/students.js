@@ -7,7 +7,7 @@ const userId = localStorage.getItem("user_id");
 const form = document.querySelector("form");
 const wrapper = document.querySelector(".wrapper");
 const studentClassSelectEl = document.getElementById("student-class-select");
-const fileInput = document.getElementById("student-photo");
+const fileInput = document.getElementById("student-photo-input");
 
 // Funciones
 getStudents();
@@ -98,7 +98,7 @@ function renderStudents(students) {
             const nameEl = clone.querySelector("#name");
             const iconEl = clone.querySelector("img");
             const lastNameEl = clone.querySelector("#lastName");
-            console.log(student);
+
             nameEl.textContent = student.student_name;
             iconEl.src = student.photo;
             lastNameEl.textContent = student.surname;
@@ -177,8 +177,21 @@ async function handleChosenPhotoPreview() {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = async (event) => {
-            const photoPreviewEl = fileInput.parentElement.querySelector("img");
-            photoPreviewEl.src = event.target.result;
+            const photoPreviewEl = fileInput.parentElement.querySelector("#student-photo");
+            const parent = fileInput.parentElement.querySelector("label");
+            // Para saber si el avatar es un svg o una img compruebo si el elemento tiene la propiedad src
+            // si tiene src significa que es un <img>, sino, es un <svg>
+            if (photoPreviewEl.hasOwnProperty("src")) {
+                // Es un <img>, simplemente reemplazar el valor de src
+                photoPreviewEl.src = event.target.result;
+            } else {
+                // Es un <svg>, debo crear un <img> y reemplazarlo.
+                const img = document.createElement("img");
+                img.src = event.target.result;
+                photoPreviewEl.remove();
+                parent.appendChild(img);
+
+            }
         }
     })
 }
