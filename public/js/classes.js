@@ -1,26 +1,19 @@
 import { closeDialog } from "./dialog.js";
 import { handleFetch } from "./handle-fetch.js";
+import { iconList } from "./utils/icons.js";
+
 
 // Variables globales
 const userId = localStorage.getItem("user_id");
 const content = document.querySelector(".content");
 const iconGroupEl = document.querySelector(".icon-group");
 const form = document.querySelector("form");
-const iconList = {
-    1: "../assets/classes/biologia.svg",
-    2: "../assets/classes/educacion-fisica.svg",
-    3: "../assets/classes/geografia.svg",
-    4: "../assets/classes/ingles.svg",
-    5: "../assets/classes/lengua.svg",
-    6: "../assets/classes/mates.svg",
-    7: "../assets/classes/musica.svg",
-    8: "../assets/classes/plastica.svg",
-    9: "../assets/classes/religion.svg",
-}
+
 
 // Funciones
 getClasses();
 renderDialogIcons();
+
 
 /**
  * CLASES
@@ -38,14 +31,14 @@ async function getClasses() {
             errorEl.classList.add("show");
         }
     } else {
-        // Vaciar todas las clases del DOM
+        // Vacíar todas las clases del DOM
         removeDomClasses();
         // Renderizar las clases
         renderClasses(result.rows);
     }
 }
 
-// Función para ibujar las cajas para cada clase
+// Se encarga de dibujar las cajas para cada clase
 function renderClasses(classes) {
 
     const template = document.getElementById("box-template");
@@ -74,7 +67,7 @@ function renderClasses(classes) {
     content.appendChild(fragment);
 }
 
-// Función para eliminar cada caja que representa cada clase
+// Se encarga de eliminar cada caja que representa cada clase
 function removeDomClasses() {
     const classes = content.querySelectorAll(".box");
     classes.forEach((classEl) => {
@@ -84,6 +77,7 @@ function removeDomClasses() {
 
 // Eliminar una clase de base de datos
 async function deleteClassById(id) {
+
     const result = await handleFetch(
         "http://localhost:3000/api/class",
         "DELETE",
@@ -99,7 +93,7 @@ async function deleteClassById(id) {
  * DIALOG
  */
 
-// Función para dibujar el selector de iconos
+// Se encarga de dibujar el selector de iconos
 function renderDialogIcons() {
     for (const key in iconList) {
         const icon = document.createElement("img");
@@ -144,7 +138,6 @@ form.addEventListener("submit", async (e) => {
     const iconEl = iconGroupEl.querySelector("img.selected");
     const icon = iconEl.dataset.id;
 
-    // Se lanza la petición
     const result = await handleFetch(
         "http://localhost:3000/api/class",
         "POST",
