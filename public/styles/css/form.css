@@ -17,17 +17,17 @@ textarea {
 }
 
 .text {
-  font-size: 1.15rem;
+  font-size: 1rem;
   color: #181818;
 }
 
 .subtext {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #181818;
 }
 
 .muted {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #777777;
 }
 
@@ -106,7 +106,7 @@ form input:not(input[type=submit]) {
   box-sizing: border-box;
 }
 form input:not(input[type=submit]):focus {
-  outline: 1px solid #c334d6;
+  outline: 1px solid #A855F7;
 }
 form input:not(input[type=submit])::placeholder {
   color: #a5a5a5;

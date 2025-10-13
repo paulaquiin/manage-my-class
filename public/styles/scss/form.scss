@@ -34,7 +34,7 @@ form {
         padding: 0 0.5rem;
         box-sizing: border-box;
         &:focus {
-            outline: 1px solid #c334d6;
+            outline: 1px solid $accent;
         }
         &::placeholder {
             color: #a5a5a5;

@@ -69,17 +69,17 @@ textarea {
 }
 
 .text {
-  font-size: 1.15rem;
+  font-size: 1rem;
   color: #181818;
 }
 
 .subtext {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #181818;
 }
 
 .muted {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #777777;
 }
 
@@ -228,17 +228,17 @@ textarea {
 }
 
 .text {
-  font-size: 1.15rem;
+  font-size: 1rem;
   color: #181818;
 }
 
 .subtext {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #181818;
 }
 
 .muted {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #777777;
 }
 
@@ -307,6 +307,147 @@ input[type=submit]:hover {
   border-color: #782fbd;
 }
 
+dialog {
+  width: 100%;
+  max-width: 400px;
+  max-height: 600px;
+  border: none;
+  outline: none;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  padding: 1.5rem;
+  border-radius: 1rem;
+}
+dialog .header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #F7F6F8;
+}
+dialog .header .close-dialog {
+  cursor: pointer;
+}
+dialog .content {
+  padding-top: 1rem;
+}
+
+html, body {
+  height: 100%;
+  font-family: "Lexend", sans-serif;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+*:not(dialog):focus {
+  outline: 1px solid #A855F7;
+}
+
+input,
+textarea {
+  font-family: "Lexend", sans-serif;
+}
+
+.text {
+  font-size: 1rem;
+  color: #181818;
+}
+
+.subtext {
+  font-size: 0.85rem;
+  color: #181818;
+}
+
+.muted {
+  font-size: 0.85rem;
+  color: #777777;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.error {
+  display: none;
+  font-size: 0.8rem;
+  color: red;
+}
+.error.show {
+  display: inline;
+}
+
+.heading-1,
+h1 {
+  font-size: 3.75rem;
+  color: #181818;
+}
+
+.heading-2,
+h2 {
+  font-size: 2.75rem;
+  color: #181818;
+}
+
+.heading-3,
+h3 {
+  font-size: 1.75rem;
+  color: #181818;
+}
+
+.heading-4,
+h4 {
+  font-size: 1.35rem;
+  color: #181818;
+}
+
+.heading-5,
+h5 {
+  font-size: 1.25rem;
+  color: #181818;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+form .row {
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+}
+form .form-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+form label {
+  font-size: 1.1rem;
+}
+form input:not(input[type=submit]) {
+  width: 100%;
+  background-color: #F7F6F8;
+  border: 0;
+  height: 40px;
+  border-radius: 0.5rem;
+  padding: 0 0.5rem;
+  box-sizing: border-box;
+}
+form input:not(input[type=submit]):focus {
+  outline: 1px solid #A855F7;
+}
+form input:not(input[type=submit])::placeholder {
+  color: #a5a5a5;
+}
+form input[type=submit] {
+  margin-left: auto;
+}
+
 .students .container {
   display: flex;
   flex-direction: column;
@@ -350,4 +491,60 @@ input[type=submit]:hover {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+}
+.students dialog .photo-wrapper {
+  width: 100%;
+  display: flex;
+}
+.students dialog .photo-wrapper label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.students dialog .photo-wrapper label .info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.students dialog .photo-wrapper label .info .muted {
+  font-size: 0.7rem;
+}
+.students dialog .photo-wrapper label .tmp {
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  background-color: #F7F6F8;
+}
+.students dialog .photo-wrapper input[type=file] {
+  display: none;
+}
+.students dialog .select-wrapper {
+  position: relative;
+  width: 100%;
+}
+.students dialog select {
+  appearance: none;
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  border: 2px solid #F7F6F8;
+  background: #fff;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.students dialog .select-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 65%;
+  right: 0.5rem;
+  width: 1rem;
+  height: 1rem;
+  transform: translateY(-50%);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'><path d='M1 1l5 5 5-5' stroke='%238b98a6' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' /></svg>");
+  background-repeat: no-repeat;
+  background-size: 1rem 0.5rem;
+  pointer-events: none;
 }

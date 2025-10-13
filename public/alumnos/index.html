@@ -23,6 +23,50 @@
             </div>
             <div class="content"></div>
         </div>
+
+        <dialog>
+            <div class="header">
+                <span class="heading-5">Nuevo Alumno</span>
+                <span class="heading-5 close-dialog">&#10006;</span>
+            </div>
+            <div class="content">
+                <form>
+                    <div class="photo-wrapper">
+                        <label for="student-photo">
+                            <div class="tmp"></div>
+                            <div class="info">
+                                <span class="subtext">Subir foto</span>
+                                <span class="muted">.jpg, .png, .webp</span>
+                            </div>
+                        </label>
+                        <input id="student-photo" type="file" accept=".jpg, .png, .webp" />
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="student-name" class="subtext">Nombre</label>
+                            <input id="student-name" name="name" type="text" placeholder="Paula" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="surname" class="subtext">Apellidos</label>
+                            <input name="surname" type="text" placeholder="Quintana" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="surname" class="subtext">Asignar a Clase</label>
+                        <div class="select-wrapper">
+                            <select>
+                                <option class="subtext" value="">Seleccionar clase</option>
+                                <option class="subtext" value="1">Clase 1</option>
+                                <option class="subtext" value="2">Clase 2</option>
+                                <option class="subtext" value="3">Clase 3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Selector de clases -->
+                    <input value="Añadir Alumno" type="submit" />
+                </form>
+            </div>
+        </dialog>
     </main>
 
     <template id="student-template">
@@ -36,6 +80,7 @@
     </template>
 
     <script type="module" src="/js/sidebar.js"></script>
+    <script type="module" src="/js/dialog.js"></script>
     <script type="module" src="/js/students.js"></script>
 </body>
 

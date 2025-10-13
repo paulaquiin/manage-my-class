@@ -17,17 +17,17 @@ textarea {
 }
 
 .text {
-  font-size: 1.15rem;
+  font-size: 1rem;
   color: #181818;
 }
 
 .subtext {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #181818;
 }
 
 .muted {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #777777;
 }
 
