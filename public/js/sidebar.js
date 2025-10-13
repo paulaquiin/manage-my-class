@@ -1,5 +1,6 @@
 
 await renderSidebar();
+highlightCurrentItem();
 handleLogout();
 
 // Permite buscar el "partial" del sidebar, se encargará
@@ -11,6 +12,15 @@ async function renderSidebar() {
     const res = await fetch(file);
     const html = await res.text();
     sidebar.innerHTML = html;
+}
+
+// Se encarga de añadir la clase select al item del sidebar que
+// toca, según la url.
+function highlightCurrentItem() {
+    const pathname = window.location.pathname;
+    const sidebar = document.querySelector("aside");
+    const current = sidebar.querySelector(`a[data-url='${pathname}']`);
+    current.classList.add("selected");
 }
 
 // Se encarga de eliminar el token de autenticación y redirigir
