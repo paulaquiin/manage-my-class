@@ -46,17 +46,18 @@ main.grades {
                     text-decoration: none;
                     color: #000;
                     cursor: pointer;
-                    &:hover {
+                    &:hover, &.selected{
                         color: $accent;;
                         background-color: #F3E8FF;
                         span {
-                            color: $accent;;
+                            color: $accent;
                         }
                     }
                     svg {
                         width: 1.5rem;
                         height: 1.5rem;
                     }
+                   
                 }
             }
         }
