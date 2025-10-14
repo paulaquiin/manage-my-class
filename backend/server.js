@@ -177,7 +177,6 @@ app.get("/api/student/", (req, res) => {
     db.all(
         `
             SELECT s.name AS student_name,
-            s.id,
             s.surname,
             s.photo,
             s.class_id,
@@ -201,22 +200,6 @@ app.get("/api/student/", (req, res) => {
         }
     );
 })
-
-app.delete("/api/student/", (req, res) => {
-    const { id } = req.body;
-    db.run(
-        "DELETE FROM students WHERE id = ?",
-        [id],
-        function (error) {
-            if (error) {
-                return res.status(400).json({ success: false, error });
-            } else {
-                return res.status(200).json({ success: true });
-            }
-        }
-    )
-})
-
 
 // Endpoints para las notas
 app.get("/api/grade/", (req, res) => {
