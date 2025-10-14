@@ -44,4 +44,18 @@ db.run(
     `
 );
 
+db.run(
+    `CREATE TABLE IF NOT EXISTS grades 
+    (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        type TEXT NOT NULL,
+        score REAL NOT NULL,
+        class_id INTEGER NOT NULL,
+        user_id INTEGER NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        FOREIGN KEY (class_id) REFERENCES classes(id)
+    )
+    `
+);
+
 module.exports = db;
