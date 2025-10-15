@@ -27,6 +27,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 2rem;
+
             &.hide {
                 display: none;
             }
@@ -62,6 +63,57 @@
                     }
 
                 }
+            }
+        }
+
+        .content {
+            .table {
+                display: grid;
+                grid-auto-rows: auto;
+                // overflow-x: scroll;
+                max-width: 750px;
+                overflow-x: auto;
+
+                .row {
+                    border-bottom: 3px solid $secondary;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+
+                    &.thead {
+                        background-color: $secondary;
+                    }
+
+
+                    &>div {
+                        padding: 1rem;
+                        width: 125px;
+                        border: 1px solid $secondary;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+
+                        &.grade {
+                            
+                            
+                        }
+                        
+                        &:first-child {
+                            width: 200px;
+                        }
+                        
+                        &:last-child {
+                            width: 75px;
+                            position: sticky;
+                            right: 0;
+                            z-index: 1;
+                            background-color: $secondary;
+
+                        }
+                    }
+                }
+
+
             }
         }
     }

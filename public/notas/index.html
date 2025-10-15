@@ -19,15 +19,43 @@
         <div class="container">
             <div class="header">
                 <span class="heading-2">Notas</span>
+                <button id="add-column-test">Añadir Actividad</button>
             </div>
 
 
             <!-- Aquí hay que diferenciar el contenido del filtro -->
             <div class="filter">
-                
+
             </div>
-            <div class="content"></div>
+            <div class="content">
+
+                <div class="table" id="activities-table">
+                    <div class="row thead">
+                        <div>Nombre Alumno</div>
+                        <div id="grade">Nota</div>
+                    </div>
+                </div>
+
+            </div>
         </div>
+
+
+        <dialog>
+            <div class="header">
+                <span class="heading-5">Nuevo Alumno</span>
+                <span class="heading-5 close-dialog">&#10006;</span>
+            </div>
+            <div class="content">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Nombre</label>
+                        <input id="name" type="text" name="name" />
+                    </div>
+                    <input value="Crear actividad" type="submit" />
+
+                </form>
+            </div>
+        </dialog>
     </main>
 
     <template id="box-template">
