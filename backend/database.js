@@ -6,6 +6,8 @@ const db = new sqlite3.Database("./backend/data.db", (err) => {
     else console.log("Base de datos conectada.");
 });
 
+db.run("PRAGMA foreign_keys = ON");
+
 db.run(
     `CREATE TABLE IF NOT EXISTS users 
     (
@@ -27,8 +29,8 @@ db.run(
         FOREIGN KEY (user_id) REFERENCES users(id)
         )
         `
-    );
-    
+);
+
 db.run(
     `CREATE TABLE IF NOT EXISTS students 
     (
@@ -44,18 +46,39 @@ db.run(
     `
 );
 
+
 db.run(
     `CREATE TABLE IF NOT EXISTS grades 
     (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        type TEXT NOT NULL,
         score REAL NOT NULL,
+        
+        activity_id INTEGER NOT NULL,
+        student_id INTEGER NOT NULL,
         class_id INTEGER NOT NULL,
         user_id INTEGER NOT NULL,
+        
+        FOREIGN KEY (activity_id) REFERENCES activities(id)
+        FOREIGN KEY (student_id) REFERENCES students(id)
         FOREIGN KEY (user_id) REFERENCES users(id)
         FOREIGN KEY (class_id) REFERENCES classes(id)
     )
     `
 );
+
+db.run(
+    `CREATE TABLE IF NOT EXISTS activities
+    (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        type TEXT NOT NULL,
+        name TEXT NOT NULL,
+        student_id INTEGER NOT NULL,
+        user_id INTEGER NOT NULL,
+        
+        FOREIGN KEY (student_id) REFERENCES students(id)
+        FOREIGN KEY (user_id) REFERENCES users(id)
+    )
+    `
+)
 
 module.exports = db;
