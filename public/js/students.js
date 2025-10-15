@@ -99,11 +99,13 @@ function renderStudents(students) {
         const classIconEl = classClone.querySelector("#class-icon");
         const classNameEl = classClone.querySelector("#class-name");
         const classCourseEl = classClone.querySelector("#class-course");
+        const classStudentsQty = classClone.querySelector("#class-students-qty");
 
         classIconEl.src = iconList[classroom.icon];
         classNameEl.textContent = classroom.class_name;
         classCourseEl.textContent = classroom.grade;
-
+        classStudentsQty.textContent = `(${classroom.students.length} estudiantes)`;
+        
         classInfo.appendChild(classClone);
         fragment.appendChild(classInfo);
 
