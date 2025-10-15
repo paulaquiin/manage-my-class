@@ -146,6 +146,7 @@ app.delete("/api/class/", (req, res) => {
         "DELETE FROM classes WHERE id = ?",
         [id],
         function (error) {
+            // console.log(error);
             if (error) {
                 return res.status(400).json({ success: false, error });
             } else {
@@ -177,6 +178,7 @@ app.get("/api/student/", (req, res) => {
     db.all(
         `
             SELECT s.name AS student_name,
+            s.id,
             s.surname,
             s.photo,
             s.class_id,
@@ -201,17 +203,90 @@ app.get("/api/student/", (req, res) => {
     );
 })
 
+app.get("/api/student-by-class-name/", (req, res) => {
+    const userId = req.query.userId;
+    const className = req.query.className;
+    // console.log(userId);
+    // console.log(className);
+    db.all(
+        `
+            SELECT 
+            s.id,
+            s.name,
+            s.surname
+            FROM students s
+            JOIN classes c ON s.class_id = c.id
+            WHERE s.user_id = ? AND c.name = ?;
+        `,
+        [userId, className],
+        function (error, rows) {
+            // console.log(error);
+            // console.log(rows);
+            if (error) {
+                return res.status(400).json({ success: false });
+            } else {
+                return res.status(201).json({ success: true, rows });
+
+            }
+
+        }
+    );
+})
+
+app.delete("/api/student/", (req, res) => {
+    const { id } = req.body;
+    db.run(
+        "DELETE FROM students WHERE id = ?",
+        [id],
+        function (error) {
+            // console.log(error);
+            if (error) {
+                return res.status(400).json({ success: false, error });
+            } else {
+                return res.status(200).json({ success: true });
+            }
+        }
+    )
+})
+
+
 // Endpoints para las notas
 app.get("/api/grade/", (req, res) => {
     const className = req.query.className;
+    const userId = req.query.userId;
     db.all(
         `
             SELECT g.*
             FROM grades g
             JOIN classes c ON g.class_id = c.id
-            WHERE c.name = ?;
+            WHERE c.name = ? AND g.user_id = ?;
         `,
-        [className],
+        [className, userId],
+        function (error, rows) {
+            if (error) {
+                return res.status(400).json({ success: false });
+            } else {
+                return res.status(201).json({ success: true, rows });
+
+            }
+        }
+    );
+})
+app.post("/api/grade/", (req, res) => {
+    const { name, studentId, userId, className } = req.body;
+    db.run(
+        `
+            INSERT INTO grades 
+            (type, score, name, student_id, class_id, user_id) 
+            VALUES (
+            ?,
+            ?,
+            ?,
+            ?,
+            (SELECT id FROM classes WHERE name = ? AND user_id = ?),
+            ?)
+        `,
+        ["activity", 0, name, studentId, className, userId, userId],
         function (error, rows) {
             console.log(error);
             console.log(rows);
@@ -222,6 +297,54 @@ app.get("/api/grade/", (req, res) => {
 
             }
 
+        }
+    );
+})
+
+
+// Endpoints para las actividades
+app.post("/api/activity/", (req, res) => {
+    const { name, studentId, userId } = req.body;
+    db.run(
+        `
+            INSERT INTO activities 
+            (type, name, student_id, user_id) 
+            VALUES (
+                ?,
+                ?,
+                ?,
+                ?
+            )
+        `,
+        ["activity", name, studentId, userId],
+        function (error, rows) {
+            console.log(error);
+            console.log(rows);
+            if (error) {
+                return res.status(400).json({ success: false });
+            } else {
+                return res.status(201).json({ success: true, rows });
+
+            }
+
+        }
+    );
+})
+
+app.get("/api/activity/", (req, res) => {
+    const userId = req.query.userId;
+    db.all(
+        `
+            SELECT * FROM activities WHERE user_id = ?
+        `,
+        [userId],
+        function (error, rows) {
+            if (error) {
+                return res.status(400).json({ success: false });
+            } else {
+                return res.status(201).json({ success: true, rows });
+
+            }
         }
     );
 })
