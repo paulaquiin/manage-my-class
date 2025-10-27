@@ -63,6 +63,8 @@ db.run(
         FOREIGN KEY (student_id) REFERENCES students(id)
         FOREIGN KEY (user_id) REFERENCES users(id)
         FOREIGN KEY (class_id) REFERENCES classes(id)
+
+        UNIQUE (activity_id, student_id, class_id, user_id)
     )
     `
 );
