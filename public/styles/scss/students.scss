@@ -19,6 +19,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
+            align-items: center;
             gap: 1rem;
         }
 
@@ -42,9 +43,9 @@
                 }
 
                 #class-row-text {
-                    display: flex;   
-                    gap: 0.5rem;                
-                    
+                    display: flex;
+                    gap: 0.5rem;
+
                     svg {
                         width: 2rem;
                         height: 2rem;
