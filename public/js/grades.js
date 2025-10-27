@@ -9,12 +9,13 @@ const filters = document.querySelector(".filter");
 const activitiesTable = document.getElementById("activities-table");
 const thead = activitiesTable.querySelector(".row.thead");
 const form = document.querySelector("form");
+const saveStudentGradesEl = document.getElementById("save-student-grades");
 let students = null; // Esta variable almacena todos los estudiantes de la clase escogida
-
+let className = null;
 
 init();
 
-function init() {
+async function init() {
 
     // Iniciamos dialog
     initDialog();
@@ -24,7 +25,9 @@ function init() {
     // Si no es así, entonces debo renderizar la lista de clases para que el profesor elija una
     let params = new URLSearchParams(document.location.search);
     if (params.get("clase")) {
-        handleGrades(params.get("clase"));
+        className = params.get("clase");
+        await handleGrades();
+        handleTableEvents();
     } else {
         handleClasses();
     }
@@ -35,7 +38,7 @@ function init() {
  */
 
 // Función que maneja las notas, según la clase escogida
-async function handleGrades(className) {
+async function handleGrades() {
     // Primero ocultamos los filtros.
     filters.classList.add("hide");
 
@@ -71,6 +74,7 @@ function renderStudents() {
         for (let i = 0; i < loopCount; i++) {
             const newCell = document.createElement("div");
             if (i === 0) {
+                newCell.dataset.studentId = student.id;
                 newCell.textContent = student.name;
             }
             tr.appendChild(newCell);
@@ -82,17 +86,78 @@ function renderStudents() {
 
 // Función que renderiza cada nota en forma de columnas en la tabla
 function renderActivities(activities) {
-    activities.forEach((grade) => {
+    activities.forEach((activity) => {
         const th = document.createElement("div");
-        th.textContent = grade.name;
+        th.textContent = activity.name;
         thead.insertBefore(th, thead.lastElementChild);
         const tbody = activitiesTable.querySelectorAll(".row:not(.thead)");
         tbody.forEach(tr => {
             const newTd = document.createElement("div");
+            newTd.dataset.studentId = tr.firstElementChild.dataset.studentId
+            newTd.dataset.activityId = activity.id
             newTd.contentEditable = true
             newTd.textContent = "-"; // valor inicial
             tr.insertBefore(newTd, tr.lastElementChild); // antes de la columna de media
         });
+    })
+
+    console.log("ok");
+}
+
+// Función que detecta cambios en las celdas para habilitar el botón de guardar notas
+function handleTableEvents() {
+    // No permitir escribir algo diferente a una nota en cada celda
+    const cells = document.querySelectorAll('div[contenteditable="true"]')
+    cells.forEach((cell) => {
+        cell.addEventListener("keydown", (e) => {
+            const key = e.key;
+            if (
+                key !== "0" &&
+                key !== "1" &&
+                key !== "2" &&
+                key !== "3" &&
+                key !== "4" &&
+                key !== "5" &&
+                key !== "6" &&
+                key !== "7" &&
+                key !== "8" &&
+                key !== "9" &&
+                key !== "." &&
+                key !== "," &&
+                key !== "Backspace"
+            ) {
+                e.preventDefault();
+            } else {
+                saveStudentGradesEl.classList.add("show");
+            }
+        })
+    })
+
+    // Añadir el evento correspondiente al botón de guardar notas
+    saveStudentGradesEl.addEventListener("click", saveGrades);
+}
+
+async function saveGrades() {
+    // Recorrer cada estudiante y guardar su nota siempre y cuando su nota sea diferente a "-".
+
+    const studentsElements = activitiesTable.querySelectorAll("div[data-student-id]:first-child");
+    studentsElements.forEach((studentEl) => {
+        const studentId = studentEl.dataset.studentId;
+
+        const studentActivitiesElements = studentEl.parentElement.querySelectorAll("div[data-activity-id]");
+        studentActivitiesElements.forEach(async (activityEl) => {
+            const activityId = activityEl.dataset.activityId;
+            const activityScore = activityEl.textContent;
+            // Por cada actividad de cada estudiante, se lanza petición
+            const result = await handleFetch(
+                `http://localhost:3000/api/grade`,
+                "POST",
+                JSON.stringify({ activityScore, activityId, studentId, userId, className })
+            )
+            console.log(result);
+
+        })
+
     })
 }
 

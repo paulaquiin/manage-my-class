@@ -273,27 +273,26 @@ app.get("/api/grade/", (req, res) => {
     );
 })
 app.post("/api/grade/", (req, res) => {
-    const { name, studentId, userId, className } = req.body;
+    const { activityScore, activityId, studentId, userId, className } = req.body;
     db.run(
         `
             INSERT INTO grades 
-            (type, score, name, student_id, class_id, user_id) 
+            (score, activity_id, student_id, class_id, user_id) 
             VALUES (
             ?,
             ?,
             ?,
-            ?,
             (SELECT id FROM classes WHERE name = ? AND user_id = ?),
-            ?)
+            ?
+            )
         `,
-        ["activity", 0, name, studentId, className, userId, userId],
-        function (error, rows) {
+        [activityScore, activityId, studentId, className, userId, userId],
+        function (error) {
             console.log(error);
-            console.log(rows);
             if (error) {
                 return res.status(400).json({ success: false });
             } else {
-                return res.status(201).json({ success: true, rows });
+                return res.status(201).json({ success: true });
 
             }
 

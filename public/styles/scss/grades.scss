@@ -110,5 +110,12 @@
 
             }
         }
+
+        #save-student-grades {
+            display: none;
+            &.show {
+                display: inline;
+            }
+        }
     }
 }

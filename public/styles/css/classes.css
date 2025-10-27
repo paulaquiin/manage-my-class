@@ -127,14 +127,16 @@ h5 {
 }
 
 main.classes,
-main.students {
+main.students,
+main.grades {
   display: grid;
   grid-template-columns: 0.15fr 1fr;
   height: 100%;
   box-sizing: border-box;
 }
 main.classes aside > div,
-main.students aside > div {
+main.students aside > div,
+main.grades aside > div {
   display: flex;
   flex-direction: column;
   gap: 3.5rem;
@@ -143,31 +145,37 @@ main.students aside > div {
   height: 100%;
 }
 main.classes aside > div .user,
-main.students aside > div .user {
+main.students aside > div .user,
+main.grades aside > div .user {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 main.classes aside > div .user svg,
-main.students aside > div .user svg {
+main.students aside > div .user svg,
+main.grades aside > div .user svg {
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 100%;
 }
 main.classes aside > div .user .info,
-main.students aside > div .user .info {
+main.students aside > div .user .info,
+main.grades aside > div .user .info {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 main.classes aside > div .menu,
-main.students aside > div .menu {
+main.students aside > div .menu,
+main.grades aside > div .menu {
   flex: 1;
 }
 main.classes aside > div .menu,
 main.classes aside > div .footer,
 main.students aside > div .menu,
-main.students aside > div .footer {
+main.students aside > div .footer,
+main.grades aside > div .menu,
+main.grades aside > div .footer {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -175,7 +183,9 @@ main.students aside > div .footer {
 main.classes aside > div .menu a,
 main.classes aside > div .footer a,
 main.students aside > div .menu a,
-main.students aside > div .footer a {
+main.students aside > div .footer a,
+main.grades aside > div .menu a,
+main.grades aside > div .footer a {
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -183,29 +193,47 @@ main.students aside > div .footer a {
   border-radius: 1rem;
   text-decoration: none;
   color: #000;
+  cursor: pointer;
 }
-main.classes aside > div .menu a:hover,
+main.classes aside > div .menu a:hover, main.classes aside > div .menu a.selected,
 main.classes aside > div .footer a:hover,
+main.classes aside > div .footer a.selected,
 main.students aside > div .menu a:hover,
-main.students aside > div .footer a:hover {
+main.students aside > div .menu a.selected,
+main.students aside > div .footer a:hover,
+main.students aside > div .footer a.selected,
+main.grades aside > div .menu a:hover,
+main.grades aside > div .menu a.selected,
+main.grades aside > div .footer a:hover,
+main.grades aside > div .footer a.selected {
   color: #A855F7;
   background-color: #F3E8FF;
 }
-main.classes aside > div .menu a:hover span,
+main.classes aside > div .menu a:hover span, main.classes aside > div .menu a.selected span,
 main.classes aside > div .footer a:hover span,
+main.classes aside > div .footer a.selected span,
 main.students aside > div .menu a:hover span,
-main.students aside > div .footer a:hover span {
+main.students aside > div .menu a.selected span,
+main.students aside > div .footer a:hover span,
+main.students aside > div .footer a.selected span,
+main.grades aside > div .menu a:hover span,
+main.grades aside > div .menu a.selected span,
+main.grades aside > div .footer a:hover span,
+main.grades aside > div .footer a.selected span {
   color: #A855F7;
 }
 main.classes aside > div .menu a svg,
 main.classes aside > div .footer a svg,
 main.students aside > div .menu a svg,
-main.students aside > div .footer a svg {
+main.students aside > div .footer a svg,
+main.grades aside > div .menu a svg,
+main.grades aside > div .footer a svg {
   width: 1.5rem;
   height: 1.5rem;
 }
 main.classes .container,
-main.students .container {
+main.students .container,
+main.grades .container {
   background-color: rgb(255, 255, 255);
 }
 
@@ -490,11 +518,17 @@ form input[type=submit] {
   justify-content: space-between;
 }
 .classes .container .content .box .row img {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 3rem;
+  height: 3rem;
 }
 .classes .container .content .box #students {
   font-size: 1rem;
+}
+.classes .container .content .box svg {
+  width: 25px;
+  height: 25px;
+  align-self: flex-end;
+  cursor: pointer;
 }
 .classes dialog .icon-group {
   display: flex;
