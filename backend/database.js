@@ -22,13 +22,14 @@ db.run(
     `CREATE TABLE IF NOT EXISTS classes 
     (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT UNIQUE NOT NULL,
+        name TEXT NOT NULL,
         grade TEXT NOT NULL,
         icon INTEGER NOT NULL,
         user_id INTEGER NOT NULL,
         FOREIGN KEY (user_id) REFERENCES users(id)
-        )
-        `
+        UNIQUE (name, user_id)
+    )
+    `
 );
 
 db.run(
