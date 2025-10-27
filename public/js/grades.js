@@ -6,12 +6,13 @@ import { iconList } from "./utils/icons.js";
 const userId = localStorage.getItem("user_id");
 const content = document.querySelector(".content");
 const filters = document.querySelector(".filter");
-const activitiesTable = document.getElementById("activities-table");
+const activitiesTable = document.getElementById("grades-table");
 const thead = activitiesTable.querySelector(".row.thead");
 const form = document.querySelector("form");
 const saveStudentGradesEl = document.getElementById("save-student-grades");
 let students = null; // Esta variable almacena todos los estudiantes de la clase escogida
 let className = null;
+let type = null;
 
 init();
 
@@ -24,8 +25,9 @@ async function init() {
     // Si lo contiene, significa que debo mostrar las notas de esa clase
     // Si no es así, entonces debo renderizar la lista de clases para que el profesor elija una
     let params = new URLSearchParams(document.location.search);
-    if (params.get("clase")) {
+    if (params.get("clase") && params.get("type")) {
         className = params.get("clase");
+        type = params.get("type");
         await handleGrades();
         handleTableEvents();
     } else {
@@ -42,6 +44,14 @@ async function handleGrades() {
     // Primero ocultamos los filtros.
     filters.classList.add("hide");
 
+    // Luego, editamos cada item de navegación con su respectivo href.
+    const activitiesLink = document.getElementById("grades-activities");
+    activitiesLink.href = `/notas/?clase=${className}&type=activity`;
+    const examsLink = document.getElementById("grades-exams");
+    examsLink.href = `/notas/?clase=${className}&type=exam`;
+    const quartersLink = document.getElementById("grades-quarters");
+    quartersLink.href = `/notas/?clase=${className}&type=quarter`;
+
     // Luego, listar las notas según el nombre de la clase que he recibido
     // Lo primero hay que recuperar todos los estudiantes de la clase seleccionada
     const studentsResult = await handleFetch(
@@ -53,7 +63,7 @@ async function handleGrades() {
 
     // Después, se recuperan las actividades, 
     const activitiesResult = await handleFetch(
-        `http://localhost:3000/api/activity?userId=${userId}`,
+        `http://localhost:3000/api/activity?userId=${userId}&type=${type}`,
         "GET",
     )
 
@@ -197,7 +207,7 @@ function renderClasses(classes) {
         console.log(item);
         const boxEl = clone.querySelector(".box");
         boxEl.addEventListener("click", () => {
-            window.location.href = `/notas?clase=${item.name}`
+            window.location.href = `/notas?clase=${item.name}&type=activity`
         })
         const classEl = clone.querySelector("#class");
         const iconEl = clone.querySelector("img");
@@ -236,6 +246,7 @@ form.addEventListener("submit", async (e) => {
             "POST",
             JSON.stringify({
                 name,
+                type,
                 studentId: student.id,
                 userId,
             })
