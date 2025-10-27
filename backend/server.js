@@ -285,6 +285,8 @@ app.post("/api/grade/", (req, res) => {
             (SELECT id FROM classes WHERE name = ? AND user_id = ?),
             ?
             )
+            ON CONFLICT(activity_id, student_id, class_id, user_id)
+            DO UPDATE SET score = excluded.score
         `,
         [activityScore, activityId, studentId, className, userId, userId],
         function (error) {
@@ -334,7 +336,11 @@ app.get("/api/activity/", (req, res) => {
     const userId = req.query.userId;
     db.all(
         `
-            SELECT * FROM activities WHERE user_id = ?
+            SELECT a.*, 
+            g.score 
+            FROM activities a 
+            LEFT JOIN grades g ON g.activity_id = a.id 
+            WHERE a.user_id = ?
         `,
         [userId],
         function (error, rows) {
