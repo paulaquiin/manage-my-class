@@ -70,7 +70,6 @@
             .table {
                 display: grid;
                 grid-auto-rows: auto;
-                // overflow-x: scroll;
                 max-width: 750px;
                 overflow-x: auto;
 
@@ -89,14 +88,9 @@
                     &>div {
                         padding: 1rem;
                         width: 125px;
-                        border: 1px solid $secondary;
+                        height: 100%; 
                         text-overflow: ellipsis;
                         overflow: hidden;
-
-                        &.grade {
-                            
-                            
-                        }
                         
                         &:first-child {
                             width: 200px;
