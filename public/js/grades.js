@@ -96,8 +96,8 @@ function renderActivities(activities) {
             newTd.dataset.studentId = tr.firstElementChild.dataset.studentId
             newTd.dataset.activityId = activity.id
             newTd.contentEditable = true
-            newTd.textContent = "-"; // valor inicial
-            tr.insertBefore(newTd, tr.lastElementChild); // antes de la columna de media
+            newTd.textContent = activity.score || "-";
+            tr.insertBefore(newTd, tr.lastElementChild);
         });
     })
 
