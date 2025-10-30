@@ -1,4 +1,4 @@
-import { closeDialog, initDialog, setOnCloseDialog } from "./dialog.js";
+import { initDialog, setOnCloseDialog } from "./dialog.js";
 import { handleFetch } from "./handle-fetch.js"
 import { iconList } from "./utils/icons.js";
 
@@ -47,17 +47,9 @@ async function getStudents() {
             errorEl.classList.add("show");
         }
     } else {
-        // Vacíar el contenido del dom
-        clearDom();
         // Renderizar los estudiantes
         renderStudents(result.rows);
     }
-}
-
-
-// Se encarga de eliminar el contenido: clase y lista de alumnos
-function clearDom() {
-    wrapper.innerHTML = "";
 }
 
 function renderStudents(students) {
@@ -178,8 +170,7 @@ form.addEventListener("submit", async (e) => {
                 errorEl.classList.add("show");
             }
         } else {
-            closeDialog();
-            getStudents();
+            window.location.reload();
         }
     }
 })

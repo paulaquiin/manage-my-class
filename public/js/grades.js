@@ -271,7 +271,7 @@ form.addEventListener("submit", async (e) => {
                 errorEl.classList.add("show");
             }
         } else {
-            console.log(result);
+            window.location.reload()
         }
 
     })

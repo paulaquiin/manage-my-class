@@ -1,4 +1,4 @@
-import { closeDialog, initDialog } from "./dialog.js";
+import { initDialog } from "./dialog.js";
 import { handleFetch } from "./handle-fetch.js";
 import { iconList } from "./utils/icons.js";
 
@@ -35,9 +35,6 @@ export async function getClasses() {
             errorEl.classList.add("show");
         }
     } else {
-        // Vacíar todas las clases del DOM
-        removeDomClasses();
-        // Renderizar las clases
         renderClasses(result.rows);
     }
 }
@@ -154,9 +151,7 @@ form.addEventListener("submit", async (e) => {
             errorEl.classList.add("show");
         }
     } else {
-        // Si todo ha ido bien, cierra el dialog y recupera
-        // nuevamente todas las clases (las antiguas + la nueva)
-        closeDialog();
-        getClasses();
+        // Si todo ha ido bien, recargo página
+        window.location.reload();
     }
 })
