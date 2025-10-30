@@ -2,33 +2,47 @@ import { initDialog } from "./dialog.js";
 import { handleFetch } from "./handle-fetch.js";
 import { iconList } from "./utils/icons.js";
 
-// Variables globales
+// Id del usuario logeado
 const userId = localStorage.getItem("user_id");
-const content = document.querySelector(".content");
-const filters = document.querySelector(".filter");
-const activitiesTable = document.getElementById("grades-table");
-const thead = activitiesTable.querySelector(".row.thead");
-const form = document.querySelector("form");
-const saveStudentGradesEl = document.getElementById("save-student-grades");
-let students = null; // Esta variable almacena todos los estudiantes de la clase escogida
-let className = null;
-let type = null;
 
+// Sección de filtros - Se renderizan las clases
+const filters = document.querySelector(".filter");
+// Sección de contenido - Se renderiza la tabla de actividades/examenes/trimestre
+const content = document.querySelector(".content");
+// Tabla donde se muestran las actividades/examenes
+const table = document.getElementById("grades-table");
+// Referencia del encabezado de la tabla
+const thead = table.querySelector(".row.thead");
+// Botón para guardar las notas cuando se ha editado la tabla
+const saveStudentGradesEl = document.getElementById("save-student-grades");
+
+// Referencia del form donde se añaden nuevas actividades/examenes
+const form = document.querySelector("form");
+
+// Almacena la clase seleccionada
+let className = null;
+// Almacena el tipo de tabla a mostrar (actividades, examenes, trimestre)
+let type = null;
+// Almacena los estudiantes de la clase seleccionada
+let students = null;
+
+// Iniciamos dialog
+initDialog();
+// Iniciamos el resto de funcionalidad de notas
 init();
 
 async function init() {
-
-    // Iniciamos dialog
-    initDialog();
-
-    // La función principal a lanzar dependerá si la url contiene el parámetro "clase".
+    // La función principal a lanzar dependerá si la url contiene el parámetro "clase" y el parámetro "type".
     // Si lo contiene, significa que debo mostrar las notas de esa clase
     // Si no es así, entonces debo renderizar la lista de clases para que el profesor elija una
-    let params = new URLSearchParams(document.location.search);
+    const params = new URLSearchParams(document.location.search);
     if (params.get("clase") && params.get("type")) {
         className = params.get("clase");
         type = params.get("type");
-        await handleGrades();
+        hideClasses();
+        fillNavigation();
+        await fetchStudents();
+        await fetchActivities();
         handleTableEvents();
     } else {
         handleClasses();
@@ -39,29 +53,34 @@ async function init() {
  * NOTAS
  */
 
-// Función que maneja las notas, según la clase escogida
-async function handleGrades() {
-    // Primero ocultamos los filtros.
+// Función para ocultar las clases
+function hideClasses() {
     filters.classList.add("hide");
+}
 
-    // Luego, editamos cada item de navegación con su respectivo href.
+// Función para agregarle a cada item de navegación su respectivo href (Depende de la clase seleccionada)
+function fillNavigation() {
     const activitiesLink = document.getElementById("grades-activities");
     activitiesLink.href = `/notas/?clase=${className}&type=activity`;
     const examsLink = document.getElementById("grades-exams");
     examsLink.href = `/notas/?clase=${className}&type=exam`;
     const quartersLink = document.getElementById("grades-quarters");
     quartersLink.href = `/notas/?clase=${className}&type=quarter`;
+}
 
-    // Luego, listar las notas según el nombre de la clase que he recibido
-    // Lo primero hay que recuperar todos los estudiantes de la clase seleccionada
+// Obtiene todos los estudiantes y los renderiza en la tabla
+async function fetchStudents() {
     const studentsResult = await handleFetch(
         `http://localhost:3000/api/student-by-class-name?userId=${userId}&&className=${className}`,
         "GET",
     )
+    // Ahora se crea una fila por cada estudiantes
     students = studentsResult.rows;
     renderStudents();
+}
 
-    // Después, se recuperan las actividades, 
+// Obtiene todas las actividades y las renderiza en la tabla
+async function fetchActivities() {
     const activitiesResult = await handleFetch(
         `http://localhost:3000/api/activity?userId=${userId}&type=${type}`,
         "GET",
@@ -71,7 +90,6 @@ async function handleGrades() {
     const activities = activitiesResult.rows;
     renderActivities(activities);
 }
-
 
 // Función que renderiza cada estudiante en forma de fila en la tabla
 function renderStudents() {
@@ -90,7 +108,7 @@ function renderStudents() {
             tr.appendChild(newCell);
         }
 
-        activitiesTable.appendChild(tr);
+        table.appendChild(tr);
     })
 }
 
@@ -100,7 +118,7 @@ function renderActivities(activities) {
         const th = document.createElement("div");
         th.textContent = activity.name;
         thead.insertBefore(th, thead.lastElementChild);
-        const tbody = activitiesTable.querySelectorAll(".row:not(.thead)");
+        const tbody = table.querySelectorAll(".row:not(.thead)");
         tbody.forEach(tr => {
             const newTd = document.createElement("div");
             newTd.dataset.studentId = tr.firstElementChild.dataset.studentId
@@ -110,8 +128,6 @@ function renderActivities(activities) {
             tr.insertBefore(newTd, tr.lastElementChild);
         });
     })
-
-    console.log("ok");
 }
 
 // Función que detecta cambios en las celdas para habilitar el botón de guardar notas
@@ -150,7 +166,7 @@ function handleTableEvents() {
 async function saveGrades() {
     // Recorrer cada estudiante y guardar su nota siempre y cuando su nota sea diferente a "-".
 
-    const studentsElements = activitiesTable.querySelectorAll("div[data-student-id]:first-child");
+    const studentsElements = table.querySelectorAll("div[data-student-id]:first-child");
     studentsElements.forEach((studentEl) => {
         const studentId = studentEl.dataset.studentId;
 
@@ -164,8 +180,6 @@ async function saveGrades() {
                 "POST",
                 JSON.stringify({ activityScore, activityId, studentId, userId, className })
             )
-            console.log(result);
-
         })
 
     })
@@ -204,7 +218,7 @@ function renderClasses(classes) {
 
     classes.forEach((item) => {
         const clone = template.content.cloneNode(true);
-        console.log(item);
+
         const boxEl = clone.querySelector(".box");
         boxEl.addEventListener("click", () => {
             window.location.href = `/notas?clase=${item.name}&type=activity`
@@ -240,7 +254,6 @@ form.addEventListener("submit", async (e) => {
 
     // Por cada estudiante, debo añadir una nueva actividad
     students.forEach(async (student) => {
-        console.log(student.id);
         const result = await handleFetch(
             "http://localhost:3000/api/activity",
             "POST",
