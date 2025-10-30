@@ -85,7 +85,7 @@ async function deleteClassById(id) {
     const result = await handleFetch(
         "http://localhost:3000/api/class",
         "DELETE",
-        JSON.stringify({ id })
+        JSON.stringify({ id, userId })
     )
 
     if (result.success) {

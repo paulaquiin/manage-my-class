@@ -141,12 +141,11 @@ app.get("/api/class/", (req, res) => {
 })
 
 app.delete("/api/class/", (req, res) => {
-    const { id } = req.body;
+    const { id, userId } = req.body;
     db.run(
-        "DELETE FROM classes WHERE id = ?",
-        [id],
+        "DELETE FROM classes WHERE id = ? AND user_id = ?",
+        [id, userId],
         function (error) {
-            // console.log(error);
             if (error) {
                 return res.status(400).json({ success: false, error });
             } else {
