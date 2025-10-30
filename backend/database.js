@@ -77,9 +77,11 @@ db.run(
         name TEXT NOT NULL,
         student_id INTEGER NOT NULL,
         user_id INTEGER NOT NULL,
+        class_id INTEGER NOT NULL,
         
         FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE
         FOREIGN KEY (user_id) REFERENCES users(id)
+        FOREIGN KEY (class_id) REFERENCES classes(id) ON DELETE CASCADE
     )
     `
 )

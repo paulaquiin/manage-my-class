@@ -304,19 +304,20 @@ app.post("/api/grade/", (req, res) => {
 
 // Endpoints para las actividades
 app.post("/api/activity/", (req, res) => {
-    const { name, type, studentId, userId } = req.body;
+    const { name, type, studentId, userId, className } = req.body;
     db.run(
         `
             INSERT INTO activities 
-            (type, name, student_id, user_id) 
+            (type, name, student_id, user_id, class_id) 
             VALUES (
                 ?,
                 ?,
                 ?,
-                ?
+                ?,
+                (SELECT id FROM classes WHERE name = ? AND user_id = ?)
             )
         `,
-        [type, name, studentId, userId],
+        [type, name, studentId, userId, className, userId],
         function (error, rows) {
             console.log(error);
             console.log(rows);
@@ -334,16 +335,17 @@ app.post("/api/activity/", (req, res) => {
 app.get("/api/activity/", (req, res) => {
     const userId = req.query.userId;
     const type = req.query.type;
-    console.log(type);
+    const className = req.query.className;
+    console.log(className);
     db.all(
         `
             SELECT a.*, 
             g.score 
             FROM activities a 
             LEFT JOIN grades g ON g.activity_id = a.id 
-            WHERE a.user_id = ? AND a.type = ?
+            WHERE a.user_id = ? AND a.type = ? AND a.class_id = (SELECT id FROM classes WHERE name = ? AND user_id = ?)
         `,
-        [userId, type],
+        [userId, type, className, userId],
         function (error, rows) {
             if (error) {
                 return res.status(400).json({ success: false });

@@ -82,7 +82,7 @@ async function fetchStudents() {
 // Obtiene todas las actividades y las renderiza en la tabla
 async function fetchActivities() {
     const activitiesResult = await handleFetch(
-        `http://localhost:3000/api/activity?userId=${userId}&type=${type}`,
+        `http://localhost:3000/api/activity?userId=${userId}&type=${type}&className=${className}`,
         "GET",
     )
 
@@ -262,6 +262,7 @@ form.addEventListener("submit", async (e) => {
                 type,
                 studentId: student.id,
                 userId,
+                className
             })
         )
 
