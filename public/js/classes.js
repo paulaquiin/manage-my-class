@@ -68,14 +68,6 @@ function renderClasses(classes) {
     content.appendChild(fragment);
 }
 
-// Se encarga de eliminar cada caja que representa cada clase
-function removeDomClasses() {
-    const classes = content.querySelectorAll(".box");
-    classes.forEach((classEl) => {
-        classEl.remove();
-    })
-}
-
 // Eliminar una clase de base de datos
 async function deleteClassById(id) {
 
@@ -86,7 +78,7 @@ async function deleteClassById(id) {
     )
 
     if (result.success) {
-        getClasses();
+        window.location.reload();
     }
 }
 
