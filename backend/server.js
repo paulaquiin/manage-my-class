@@ -233,12 +233,12 @@ app.get("/api/student-by-class-name/", (req, res) => {
 })
 
 app.delete("/api/student/", (req, res) => {
-    const { id } = req.body;
+    const { id, userId } = req.body;
     db.run(
-        "DELETE FROM students WHERE id = ?",
-        [id],
+        "DELETE FROM students WHERE id = ? AND user_id = ?",
+        [id, userId],
         function (error) {
-            // console.log(error);
+            console.log(error);
             if (error) {
                 return res.status(400).json({ success: false, error });
             } else {

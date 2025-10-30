@@ -141,7 +141,7 @@ async function deleteStudentById(id) {
     const result = await handleFetch(
         "http://localhost:3000/api/student",
         "DELETE",
-        JSON.stringify({ id })
+        JSON.stringify({ id, userId })
     )
 
     if (result.success) {
