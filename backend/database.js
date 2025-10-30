@@ -26,7 +26,7 @@ db.run(
         grade TEXT NOT NULL,
         icon INTEGER NOT NULL,
         user_id INTEGER NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES users(id)
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
         UNIQUE (name, user_id)
     )
     `
@@ -42,7 +42,7 @@ db.run(
         class_id INTEGER NOT NULL,
         user_id INTEGER NOT NULL,
         FOREIGN KEY (user_id) REFERENCES users(id)
-        FOREIGN KEY (class_id) REFERENCES classes(id)
+        FOREIGN KEY (class_id) REFERENCES classes(id) ON DELETE CASCADE
     )
     `
 );
@@ -59,8 +59,8 @@ db.run(
         class_id INTEGER NOT NULL,
         user_id INTEGER NOT NULL,
         
-        FOREIGN KEY (activity_id) REFERENCES activities(id)
-        FOREIGN KEY (student_id) REFERENCES students(id)
+        FOREIGN KEY (activity_id) REFERENCES activities(id) ON DELETE CASCADE
+        FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE
         FOREIGN KEY (user_id) REFERENCES users(id)
         FOREIGN KEY (class_id) REFERENCES classes(id)
 
@@ -73,12 +73,12 @@ db.run(
     `CREATE TABLE IF NOT EXISTS activities
     (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        type TEXT NOT NULL,
+        type TEXT NOT NULL CHECK (type IN ("activity", "exam")),
         name TEXT NOT NULL,
         student_id INTEGER NOT NULL,
         user_id INTEGER NOT NULL,
         
-        FOREIGN KEY (student_id) REFERENCES students(id)
+        FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE
         FOREIGN KEY (user_id) REFERENCES users(id)
     )
     `
