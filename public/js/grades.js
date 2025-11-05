@@ -43,6 +43,7 @@ async function init() {
         fillNavigation();
         await fetchStudents();
         await fetchActivities();
+        await fillScores();
         handleTableEvents();
     } else {
         handleClasses();
@@ -99,6 +100,7 @@ function renderStudents() {
     students.forEach((student) => {
         const tr = document.createElement("div");
         tr.classList.add("row");
+        tr.dataset.studentId = student.id;
 
         const loopCount = thead.querySelectorAll("div").length;
 
@@ -124,12 +126,28 @@ function renderActivities(activities) {
         const tbody = table.querySelectorAll(".row:not(.thead)");
         tbody.forEach(tr => {
             const newTd = document.createElement("div");
-            newTd.dataset.studentId = tr.firstElementChild.dataset.studentId
-            newTd.dataset.activityId = activity.id
+            newTd.dataset.activityId = activity.id;
             newTd.contentEditable = true
-            newTd.textContent = activity.score || "-";
+            newTd.textContent = "-";
             tr.insertBefore(newTd, tr.lastElementChild);
         });
+    })
+}
+
+// Función encargada de rellenar cada celda con la puntuación que le corresponde
+// Gracias a que las anteriores funciones han rellenado las filas y celdas con un dataset para identificar la actividad y el estudiante
+// tan solo debo buscar la nota con la activityId y studentId renderizado en el dom y cambiar su textContent.
+async function fillScores() {
+    // Primero obtengo todas las notas
+    const result = await handleFetch(
+        `http://localhost:3000/api/grade?className=${className}&userId=${userId}`,
+        "GET",
+    )
+    const grades = result.rows;
+    // Por cada nota, busco el elemento del DOM con el dataset correspondiente y cambio su textContent
+    grades.forEach((grade) => {
+        const cell = document.querySelector(`.row[data-student-id='${grade.student_id}'] > [data-activity-id='${grade.activity_id}']`);
+        cell.textContent = grade.score;
     })
 }
 
@@ -168,7 +186,6 @@ function handleTableEvents() {
 
 async function saveGrades() {
     // Recorrer cada estudiante y guardar su nota siempre y cuando su nota sea diferente a "-".
-
     const studentsElements = table.querySelectorAll("div[data-student-id]:first-child");
     studentsElements.forEach((studentEl) => {
         const studentId = studentEl.dataset.studentId;

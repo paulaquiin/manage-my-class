@@ -337,11 +337,9 @@ app.get("/api/activity/", (req, res) => {
     console.log(className);
     db.all(
         `
-            SELECT a.id, a.name, a.type, a.class_id, g.score
+            SELECT a.id, a.name, a.type, a.class_id
             FROM activities a 
-            LEFT JOIN grades g ON g.activity_id = a.id
             WHERE a.user_id = ? AND a.type = ? AND a.class_id = (SELECT id FROM classes WHERE name = ? AND user_id = ?)
-            GROUP BY a.id
         `,
         [userId, type, className, userId],
         function (error, rows) {
