@@ -60,12 +60,15 @@ function hideClasses() {
 
 // Función para agregarle a cada item de navegación su respectivo href (Depende de la clase seleccionada)
 function fillNavigation() {
-    const activitiesLink = document.getElementById("grades-activities");
+    const activitiesLink = document.getElementById("link-activity");
     activitiesLink.href = `/notas/?clase=${className}&type=activity`;
-    const examsLink = document.getElementById("grades-exams");
+    const examsLink = document.getElementById("link-exam");
     examsLink.href = `/notas/?clase=${className}&type=exam`;
-    const quartersLink = document.getElementById("grades-quarters");
+    const quartersLink = document.getElementById("link-quarter");
     quartersLink.href = `/notas/?clase=${className}&type=quarter`;
+
+    const currentLink = document.getElementById(`link-${type}`);
+    currentLink.classList.add("active");
 }
 
 // Obtiene todos los estudiantes y los renderiza en la tabla
