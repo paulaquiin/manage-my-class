@@ -147,7 +147,9 @@ async function fillScores() {
     // Por cada nota, busco el elemento del DOM con el dataset correspondiente y cambio su textContent
     grades.forEach((grade) => {
         const cell = document.querySelector(`.row[data-student-id='${grade.student_id}'] > [data-activity-id='${grade.activity_id}']`);
-        cell.textContent = grade.score;
+        if (cell) {
+            cell.textContent = grade.score || "-";
+        }
     })
 }
 
