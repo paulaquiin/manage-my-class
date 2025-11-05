@@ -154,24 +154,29 @@ form.addEventListener("submit", async (e) => {
     // Foto
     let photo = undefined;
     const file = fileInput.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file); // convierte el archivo a base64
-    reader.onload = async (event) => {
-        photo = event.target.result
-        const result = await handleFetch(
-            "http://localhost:3000/api/student",
-            "POST",
-            JSON.stringify({ name, surname, classId, photo, userId })
-        )
-
-        if (!result.success) {
-            const errorEl = document.getElementById(result.errorId);
-            if (errorEl) {
-                errorEl.classList.add("show");
+    if (file) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file); // convierte el archivo a base64
+        reader.onload = async (event) => {
+            photo = event.target.result
+            const result = await handleFetch(
+                "http://localhost:3000/api/student",
+                "POST",
+                JSON.stringify({ name, surname, classId, photo, userId })
+            )
+    
+            if (!result.success) {
+                const errorEl = document.getElementById(result.errorId);
+                if (errorEl) {
+                    errorEl.classList.add("show");
+                }
+            } else {
+                window.location.reload();
             }
-        } else {
-            window.location.reload();
         }
+    } else {
+        const errorEl = document.getElementById("student-photo-empty-error");
+        errorEl.classList.add("show");
     }
 })
 
