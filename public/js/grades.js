@@ -44,6 +44,7 @@ async function init() {
         await fetchStudents();
         await fetchActivities();
         await fillScores();
+        calculateAvg();
         handleTableEvents();
     } else {
         handleClasses();
@@ -153,6 +154,28 @@ async function fillScores() {
     })
 }
 
+// Función que calcula la nota media de cada estudiante según sus actividades
+function calculateAvg() {
+    // Primero obtengo todas las filas (menos la cabecera)
+    const rows = table.querySelectorAll(".row:not(.thead)");
+    let avgScore = 0;
+    rows.forEach((row) => {
+        // Por cada fila, obtengo todas las celdas menos la primera (es el nombre del alumno) y la última (es la nota media).
+        const cells = row.querySelectorAll("div:not(:first-child):not(:last-child)");
+        // Por cada celda, le sumo su textContent (parseado a numero y comprobando que si es un guión lo trate como un cero).
+        cells.forEach((cell) => {
+            console.log(cell.textContent);
+            avgScore += cell.textContent === "-" ? 0 : parseInt(cell.textContent);
+        })
+        // Obtengo la ultima celda de la fila actual (corresponde a la nota) y le doy la suma de todas las celdas dividido por la longitud
+        // de cells que son todas las celdas menos el nombre y la nota final (es decir, todas las notas de las actividades). 
+        const lastCell = row.querySelector("div:last-child");
+        lastCell.textContent = avgScore / cells.length;
+        // Reinicio avgScore a cero para que calcule la siguiente fila.
+        avgScore = 0;
+    })
+}
+
 // Función que detecta cambios en las celdas para habilitar el botón de guardar notas
 function handleTableEvents() {
     // No permitir escribir algo diferente a una nota en cada celda
@@ -202,6 +225,10 @@ async function saveGrades() {
                 "POST",
                 JSON.stringify({ activityScore, activityId, studentId, userId, className })
             )
+
+            if (result.success) {
+                calculateAvg();
+            }
         })
 
     })
