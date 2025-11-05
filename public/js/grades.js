@@ -254,30 +254,47 @@ form.addEventListener("submit", async (e) => {
 
     // Obtener nombre de la actividad
     const { name } = Object.fromEntries(formData.entries());
+    // Añado una nueva actividad
+    const result = await handleFetch(
+        "http://localhost:3000/api/activity",
+        "POST",
+        JSON.stringify({
+            name,
+            type,
+            userId,
+            className
+        })
+    );
 
-    // Por cada estudiante, debo añadir una nueva actividad
-    students.forEach(async (student) => {
-        const result = await handleFetch(
-            "http://localhost:3000/api/activity",
-            "POST",
-            JSON.stringify({
-                name,
-                type,
-                studentId: student.id,
-                userId,
-                className
-            })
-        )
-
-        if (!result.success) {
-            const errorEl = document.getElementById(result.errorId);
-            if (errorEl) {
-                errorEl.classList.add("show");
-            }
-        } else {
-            window.location.reload()
+    if (!result.success) {
+        const errorEl = document.getElementById(result.errorId);
+        if (errorEl) {
+            errorEl.classList.add("show");
         }
+    } else {
+        // Si todo ha ido bien, recorreré todos los alumnos de esta clase y les añadiré una nota inicial (0) a cada uno
+        // de ellos para esta actividad
+        students.forEach(async (student) => {
+            const result2 = await handleFetch(
+                "http://localhost:3000/api/grade",
+                "POST",
+                JSON.stringify({
+                    activityId: result.activityId,
+                    studentId: student.id,
+                    userId,
+                    className,
+                    activityScore: 0
+                })
+            );
 
-    })
-
+            if (!result2.success) {
+                const errorEl = document.getElementById(result2.errorId);
+                if (errorEl) {
+                    errorEl.classList.add("show");
+                }
+            } else {
+                window.location.reload()
+            }
+        })
+    }
 })
