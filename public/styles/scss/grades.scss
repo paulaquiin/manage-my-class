@@ -2,6 +2,8 @@
 @import "global";
 @import "layout";
 @import "button";
+@import "form";
+@import "dialog";
 
 .grades {
     .container {
@@ -19,6 +21,9 @@
             justify-content: space-between;
             align-items: center;
             gap: 1rem;
+            button.hide {
+                display: none;
+            }
         }
 
         .filter {
@@ -148,4 +153,5 @@
             }
         }
     }
+    
 }

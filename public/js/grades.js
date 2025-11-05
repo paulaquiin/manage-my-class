@@ -41,6 +41,7 @@ async function init() {
         type = params.get("type");
         hideClasses();
         fillNavigation();
+        updateDialog();
         await fetchStudents();
         await fetchActivities();
         await fillScores();
@@ -71,6 +72,32 @@ function fillNavigation() {
 
     const currentLink = document.getElementById(`link-${type}`);
     currentLink.classList.add("active");
+}
+
+function updateDialog() {
+    const dialogTitle = document.getElementById("dialog-title");
+    const dialogBtn = document.querySelector("form input[type='submit']");
+    const openDialog = document.querySelector(".header button");
+    // Cambiar título del botón de la pantalla y del dialog (input y titulo) según si estamos en examenes o actividades
+    switch (type) {
+        case "activity":
+            dialogTitle.textContent = "Nueva actividad";
+            openDialog.textContent = "Añadir Actividad";
+            dialogBtn.value = "Crear actividad";
+            break;
+        case "exam":
+            dialogTitle.textContent = "Nuevo examen";
+            openDialog.textContent = "Añadir Examen";
+            dialogBtn.value = "Crear examen";
+            break;
+    }
+    
+    // Ocultar el botón de añadir actividad/examen si estoy viendo las notas trimestrales
+    if (type == "quarter") {
+        openDialog.classList.add("hide");
+    } else {
+        openDialog.classList.remove("hide");
+    }
 }
 
 // Obtiene todos los estudiantes y los renderiza en la tabla
