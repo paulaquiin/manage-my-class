@@ -21,7 +21,6 @@
             gap: 1rem;
         }
 
-        .content,
         .filter {
             width: 100%;
             display: flex;
@@ -67,16 +66,46 @@
         }
 
         .content {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1.5rem;
+            &.hide {
+                display: none;
+            }
+            .nav {
+                display: flex;
+                align-items: center;
+                gap: 2rem;
+                width: 100%;
+                border-bottom: 3px solid $secondary;
+                max-width: 1250px;
+                a {
+                    text-decoration: none;
+                    padding-bottom: 1.5rem;
+                    border-bottom: 3px solid $secondary;
+                    &::after {
+                        content: "";
+                        border-bottom: 3px solid $secondary;
+                    }    
+                    &.active {
+                        color: $accent;
+                        border-color: $accent;
+                    }
+                }
+            }
             .table {
                 display: grid;
                 grid-auto-rows: auto;
-                max-width: 750px;
+                max-width: 1250px;
+                width: 100%;
                 overflow-x: auto;
 
                 .row {
                     border-bottom: 3px solid $secondary;
                     display: flex;
-                    justify-content: center;
+                    justify-content: flex-start;
                     align-items: center;
                     text-align: center;
 
@@ -97,6 +126,7 @@
                         }
                         
                         &:last-child {
+                            margin-left: auto;
                             width: 75px;
                             position: sticky;
                             right: 0;
