@@ -21,6 +21,7 @@
             justify-content: space-between;
             align-items: center;
             gap: 1rem;
+
             button.hide {
                 display: none;
             }
@@ -76,9 +77,11 @@
             flex-direction: column;
             align-items: flex-start;
             gap: 1.5rem;
+
             &.hide {
                 display: none;
             }
+
             .nav {
                 display: flex;
                 align-items: center;
@@ -86,26 +89,32 @@
                 width: 100%;
                 border-bottom: 3px solid $secondary;
                 max-width: 1250px;
+
                 a {
                     text-decoration: none;
                     padding-bottom: 1.5rem;
                     border-bottom: 3px solid $secondary;
+
                     &::after {
                         content: "";
                         border-bottom: 3px solid $secondary;
-                    }    
+                    }
+
                     &.active {
                         color: $accent;
                         border-color: $accent;
                     }
                 }
             }
+
             .table {
                 display: grid;
                 grid-auto-rows: auto;
                 max-width: 1250px;
                 width: 100%;
                 overflow-x: auto;
+                border-radius: 0.75rem;
+                border-left: 3px solid $secondary;
 
                 .row {
                     border-bottom: 3px solid $secondary;
@@ -120,16 +129,24 @@
 
 
                     &>div {
-                        padding: 1rem;
-                        width: 125px;
-                        height: 100%; 
+                        display: flex;
+                        align-items: center;
+                        padding: 0.75rem 2rem;
+                        width: 175px;
+                        height: 100%;
                         text-overflow: ellipsis;
                         overflow: hidden;
-                        
+
+
                         &:first-child {
                             width: 200px;
                         }
-                        
+
+                        &:not(:first-child) {
+                            justify-content: center;
+                            text-align: center;
+                        }
+
                         &:last-child {
                             margin-left: auto;
                             width: 75px;
@@ -140,6 +157,31 @@
 
                         }
                     }
+
+                    &:not(.thead) {
+                        &>div {
+                            min-height: 80px;
+
+                            &:not(:first-child):not(:last-child) {
+
+                                position: relative;
+                        cursor: text;
+
+                                &::after {
+                                    content: "_______";
+                                    letter-spacing: -3px;
+                                    color: #b6b6b6;
+                                    position: absolute;
+                                    font-weight: 200;
+                                    left: 50%;
+                                    transform: translateX(-50%);
+                                    top: 2.5rem;
+                                    width: 100%;
+                                    pointer-events: none;
+                                }
+                            }
+                        }
+                    }
                 }
 
 
@@ -148,10 +190,11 @@
 
         #save-student-grades {
             display: none;
+
             &.show {
                 display: inline;
             }
         }
     }
-    
+
 }
