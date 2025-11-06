@@ -254,7 +254,7 @@ async function saveGrades() {
             )
 
             if (result.success) {
-                calculateAvg();
+                document.location.reload();
             }
         })
 
@@ -276,15 +276,9 @@ async function handleClasses() {
         `http://localhost:3000/api/class?userId=${userId}`,
         "GET",
     )
-    if (!result.success) {
-        const errorEl = document.getElementById(result.errorId);
-        if (errorEl) {
-            errorEl.classList.add("show");
-        }
-    } else {
+    if (result.success) {
         renderClasses(result.rows);
     }
-
 }
 
 // Encargado de renderizar cada caja de cada clase en filtros
@@ -339,12 +333,7 @@ form.addEventListener("submit", async (e) => {
         })
     );
 
-    if (!result.success) {
-        const errorEl = document.getElementById(result.errorId);
-        if (errorEl) {
-            errorEl.classList.add("show");
-        }
-    } else {
+    if (result.success) {
         // Si todo ha ido bien, recorreré todos los alumnos de esta clase y les añadiré una nota inicial (0) a cada uno
         // de ellos para esta actividad
         students.forEach(async (student) => {
@@ -360,12 +349,7 @@ form.addEventListener("submit", async (e) => {
                 })
             );
 
-            if (!result2.success) {
-                const errorEl = document.getElementById(result2.errorId);
-                if (errorEl) {
-                    errorEl.classList.add("show");
-                }
-            } else {
+            if (result2.success) {
                 window.location.reload()
             }
         })

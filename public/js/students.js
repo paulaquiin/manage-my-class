@@ -41,12 +41,7 @@ async function getStudents() {
         `http://localhost:3000/api/student?userId=${userId}`,
         "GET",
     )
-    if (!result.success) {
-        const errorEl = document.getElementById(result.errorId);
-        if (errorEl) {
-            errorEl.classList.add("show");
-        }
-    } else {
+    if (result.success) {
         // Renderizar los estudiantes
         renderStudents(result.rows);
     }
@@ -165,12 +160,7 @@ form.addEventListener("submit", async (e) => {
                 JSON.stringify({ name, surname, classId, photo, userId })
             )
     
-            if (!result.success) {
-                const errorEl = document.getElementById(result.errorId);
-                if (errorEl) {
-                    errorEl.classList.add("show");
-                }
-            } else {
+            if (result.success) {
                 window.location.reload();
             }
         }

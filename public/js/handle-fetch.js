@@ -10,7 +10,7 @@ export async function handleFetch(url, method, body, validateToken = true) {
     try {
         const response = await fetch(url, {
             method: method,
-            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}`},
+            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
             body: body
         });
 
@@ -23,6 +23,14 @@ export async function handleFetch(url, method, body, validateToken = true) {
         }
 
         const result = await response.json();
+
+        if (!result.success) {
+            const errorEl = document.getElementById(result.errorId);
+            if (errorEl) {
+                errorEl.classList.add("show");
+            }
+        }
+
         return result;
     } catch (err) {
         console.error("Error en fetch:", err);

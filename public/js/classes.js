@@ -29,12 +29,7 @@ export async function getClasses() {
         `http://localhost:3000/api/class?userId=${userId}`,
         "GET",
     )
-    if (!result.success) {
-        const errorEl = document.getElementById(result.errorId);
-        if (errorEl) {
-            errorEl.classList.add("show");
-        }
-    } else {
+    if (result.success) {
         renderClasses(result.rows);
     }
 }
@@ -137,12 +132,7 @@ form.addEventListener("submit", async (e) => {
         JSON.stringify({ name, course, icon, userId })
     )
 
-    if (!result.success) {
-        const errorEl = document.getElementById(result.errorId);
-        if (errorEl) {
-            errorEl.classList.add("show");
-        }
-    } else {
+    if (result.success) {
         // Si todo ha ido bien, recargo página
         window.location.reload();
     }

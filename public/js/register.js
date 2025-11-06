@@ -14,14 +14,8 @@ form.addEventListener("submit", async (e) => {
         JSON.stringify({ user, password, dni }),
         false
     )
-    console.log(result);
-    if (!result.success) {
-        const errorEl = document.getElementById(result.errorId);
-        if (errorEl) {
-            errorEl.textContent = result.message;
-        }
-    } else {
+
+    if (result.success) {
         window.location.href = "/iniciar-sesion/"
     }
-
 });
