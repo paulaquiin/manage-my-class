@@ -36,7 +36,7 @@ db.run(
     `CREATE TABLE IF NOT EXISTS students 
     (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT UNIQUE NOT NULL,
+        name TEXT NOT NULL,
         surname TEXT NOT NULL,
         photo TEXT NOT NULL,
         class_id INTEGER NOT NULL,
