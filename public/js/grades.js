@@ -269,9 +269,12 @@ async function saveGrades() {
 // Encargado de obtener las clases y renderizarlas en pantalla
 async function handleClasses() {
 
-    // 1. Ocultar notas.
+    // Ocultar notas.
     content.classList.add("hide");
-    // 2. Listar las clases
+    // Ocultar botón de añadir actividad/examen.
+    const openDialog = document.querySelector(".header button");
+    openDialog.classList.add("hide");
+    // Listar las clases
     const result = await handleFetch(
         `http://localhost:3000/api/class?userId=${userId}`,
         "GET",
