@@ -55,13 +55,20 @@
 
                 }
 
+                #title,
+                #class {
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    width: 100%;
+                }
+
                 #students {
                     font-size: 1rem;
                 }
 
                 svg {
-                    width: 25px;
-                    height: 25px;
+                    width: 1.25rem;
+                    height: 1.25rem;
                     align-self: flex-end;
                     cursor: pointer;
                 }
