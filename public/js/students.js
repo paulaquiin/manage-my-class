@@ -145,6 +145,11 @@ form.addEventListener("submit", async (e) => {
 
     // Obtener curso
     const classId = studentClassSelectEl.value;
+    if (!classId) {
+        const errorEl = document.getElementById("student-photo-class-error");
+        errorEl.classList.add("show");
+        return;
+    }
 
     // Foto
     let photo = undefined;
