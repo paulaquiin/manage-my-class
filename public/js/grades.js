@@ -197,7 +197,7 @@ function calculateAvg() {
         // Obtengo la ultima celda de la fila actual (corresponde a la nota) y le doy la suma de todas las celdas dividido por la longitud
         // de cells que son todas las celdas menos el nombre y la nota final (es decir, todas las notas de las actividades). 
         const lastCell = row.querySelector("div:last-child");
-        lastCell.textContent = avgScore / cells.length;
+        lastCell.textContent = cells.length > 0 ? (avgScore / cells.length) : 0;
         // Reinicio avgScore a cero para que calcule la siguiente fila.
         avgScore = 0;
     })
