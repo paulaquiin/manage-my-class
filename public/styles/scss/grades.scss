@@ -116,13 +116,16 @@
                     }
                 }
             }
-
+            .table-wrapper {
+                overflow-x: auto;
+                width: 100%;
+                max-width: 1250px;
+            }
             .table {
                 display: grid;
                 grid-auto-rows: auto;
-                max-width: 1250px;
+                max-width: 1px;
                 width: 100%;
-                overflow-x: auto;
                 border-radius: 0.75rem;
                 border-left: 3px solid $secondary;
 
@@ -169,6 +172,7 @@
                     }
 
                     &:not(.thead) {
+                        border-bottom: 3px solid $secondary;
                         &>div {
                             min-height: 80px;
 
