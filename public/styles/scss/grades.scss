@@ -116,11 +116,13 @@
                     }
                 }
             }
+
             .table-wrapper {
                 overflow-x: auto;
                 width: 100%;
                 max-width: 1250px;
             }
+
             .table {
                 display: grid;
                 grid-auto-rows: auto;
@@ -138,6 +140,16 @@
 
                     &.thead {
                         background-color: $secondary;
+
+                        div {
+                            cursor: pointer;
+                            transition: all 0.25s;
+                            border: 2px solid transparent;
+
+                            &:hover {
+                                border: 2px solid $accent;
+                            }
+                        }
                     }
 
 
@@ -167,12 +179,14 @@
                             right: 0;
                             z-index: 1;
                             background-color: $secondary;
+                            outline: 2px solid $secondary;
 
                         }
                     }
 
                     &:not(.thead) {
                         border-bottom: 3px solid $secondary;
+
                         &>div {
                             min-height: 80px;
 
@@ -184,6 +198,20 @@
 
                                 position: relative;
                                 cursor: text;
+                                transition: all 0.25s;
+                                border: 2px solid transparent;
+
+                                &:focus {
+                                    outline: 2px solid $accent;
+                                }
+
+                                &.selected {
+                                    border: 2px solid $secondary;
+                                }
+
+                                &:hover {
+                                    border: 2px solid $accent;
+                                }
 
                                 &::after {
                                     content: "_______";
