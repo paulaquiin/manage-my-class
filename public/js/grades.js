@@ -198,6 +198,10 @@ function calculateAvg() {
         // de cells que son todas las celdas menos el nombre y la nota final (es decir, todas las notas de las actividades). 
         const lastCell = row.querySelector("div:last-child");
         lastCell.textContent = cells.length > 0 ? (avgScore / cells.length) : 0;
+        // Le doy unos estilos a la nota para pintarlo de rojo si la nota es menor de 5
+        if (parseInt(lastCell.textContent) < 5) {
+            lastCell.classList.add("fail")
+        }
         // Reinicio avgScore a cero para que calcule la siguiente fila.
         avgScore = 0;
     })
