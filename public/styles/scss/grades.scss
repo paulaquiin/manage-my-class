@@ -48,7 +48,7 @@
                 border-radius: 1rem;
                 box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
                 text-decoration: none;
-                
+
                 .row {
                     width: 100%;
                     display: flex;
@@ -67,6 +67,7 @@
                         gap: 0.5rem;
                         width: 100%;
                         max-width: 250px;
+
                         #title,
                         #class {
                             text-overflow: ellipsis;
@@ -171,10 +172,14 @@
                         &>div {
                             min-height: 80px;
 
+                            &.fail {
+                                color: #E74C3C;
+                            }
+
                             &:not(:first-child):not(:last-child) {
 
                                 position: relative;
-                        cursor: text;
+                                cursor: text;
 
                                 &::after {
                                     content: "_______";

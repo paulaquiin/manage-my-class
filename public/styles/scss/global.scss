@@ -9,7 +9,7 @@ body {
 }
 
 *:not(dialog):focus {
-    outline: 1px solid #A855F7;
+    outline: 1px solid $accent;;
 }
 
 input,
@@ -39,7 +39,7 @@ textarea {
 .error {
     display: none;
     font-size: 0.8rem;
-    color: red;
+    color: #E74C3C;
     &.show {
         display: inline;
     }
