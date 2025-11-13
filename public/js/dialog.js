@@ -1,5 +1,5 @@
 let onCloseDialog = null;
-let dialog = null;
+export let dialog = null;
 export function initDialog() {
     // Identificar el dialogo
     dialog = document.querySelector("dialog");

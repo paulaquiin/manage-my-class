@@ -1,4 +1,4 @@
-import { initDialog } from "./dialog.js";
+import { dialog, initDialog, setOnCloseDialog } from "./dialog.js";
 import { handleFetch } from "./handle-fetch.js";
 import { iconList } from "./utils/icons.js";
 
@@ -25,9 +25,18 @@ let className = null;
 let type = null;
 // Almacena los estudiantes de la clase seleccionada
 let students = null;
+// Almacena la actividad seleccionada que se va a editar (Si corresponde)
+let editActivityId = null;
+
+// Elementos del dialog de añadir actividad/examen
+const dialogTitle = document.getElementById("dialog-title");
+const dialogBtn = document.querySelector("form input[type='submit']");
+const openDialog = document.querySelector(".header button");
 
 // Iniciamos dialog
 initDialog();
+// Incluimos un evento a ejecutar cuando se cierre el dialog
+setOnCloseDialog(onCloseDialog);
 // Iniciamos el resto de funcionalidad de notas
 init();
 
@@ -41,7 +50,7 @@ async function init() {
         type = params.get("type");
         hideClasses();
         fillNavigation();
-        updateDialog();
+        updateDialogUI();
         await fetchStudents();
         await fetchActivities();
         await fillScores();
@@ -74,21 +83,19 @@ function fillNavigation() {
     currentLink.classList.add("active");
 }
 
-function updateDialog() {
-    const dialogTitle = document.getElementById("dialog-title");
-    const dialogBtn = document.querySelector("form input[type='submit']");
-    const openDialog = document.querySelector(".header button");
+function updateDialogUI() {
+   
     // Cambiar título del botón de la pantalla y del dialog (input y titulo) según si estamos en examenes o actividades
     switch (type) {
         case "activity":
-            dialogTitle.textContent = "Nueva actividad";
+            dialogTitle.textContent = editActivityId ? "Editar actividad" : "Nueva actividad";
             openDialog.textContent = "Añadir Actividad";
-            dialogBtn.value = "Crear actividad";
+            dialogBtn.value = editActivityId ? "Editar actividad" : "Crear actividad";
             break;
         case "exam":
-            dialogTitle.textContent = "Nuevo examen";
+            dialogTitle.textContent = editActivityId ? "Editar Examen" : "Nuevo Examen";
             openDialog.textContent = "Añadir Examen";
-            dialogBtn.value = "Crear examen";
+            dialogBtn.value = editActivityId ? "Editar examen" : "Crear examen";
             break;
     }
     
@@ -150,6 +157,7 @@ function renderActivities(activities) {
     activities.forEach((activity) => {
         const th = document.createElement("div");
         th.textContent = activity.name;
+        th.dataset.id = activity.id;
         thead.insertBefore(th, thead.lastElementChild);
         const tbody = table.querySelectorAll(".row:not(.thead)");
         tbody.forEach(tr => {
@@ -238,6 +246,29 @@ function handleTableEvents() {
 
     // Añadir el evento correspondiente al botón de guardar notas
     saveStudentGradesEl.addEventListener("click", saveGrades);
+
+    // Añadir el evento correspondiente a las cabeceras para poder editar el nombre de las actividades
+    const headers = thead.querySelectorAll("div");
+    headers.forEach((header) => {
+        header.addEventListener("click", () => {
+            // Asignar activityId para actualizarlo en el backend
+            editActivityId = header.dataset.id;
+            // Añadir nombre de la actividad en el input
+            const activityTitle = dialog.querySelector("#name");
+            activityTitle.value = header.textContent;
+            // Actualizar los textos del dialog
+            updateDialogUI();
+            // Abrir dialog
+            dialog.showModal();
+        })
+    })
+}
+
+// Al cerrar el dialog reseteo el editActivityId por si luego le da a añadir actividad que no lo considere un edit
+// Al cerrar el dialog, actualizo su 
+function onCloseDialog() {
+    editActivityId = null;
+    updateDialogUI();
 }
 
 async function saveGrades() {
@@ -328,19 +359,14 @@ form.addEventListener("submit", async (e) => {
 
     // Obtener nombre de la actividad
     const { name } = Object.fromEntries(formData.entries());
-    // Añado una nueva actividad
+    // Añado una nueva actividad o edito una existente
     const result = await handleFetch(
         "http://localhost:3000/api/activity",
-        "POST",
-        JSON.stringify({
-            name,
-            type,
-            userId,
-            className
-        })
+        editActivityId ? "PUT" : "POST",
+        editActivityId ? JSON.stringify({ name, activityId: editActivityId }) : JSON.stringify({ name, type, userId, className })
     );
 
-    if (result.success) {
+    if (result.success && !editActivityId) {
         // Si todo ha ido bien, recorreré todos los alumnos de esta clase y les añadiré una nota inicial (0) a cada uno
         // de ellos para esta actividad
         students.forEach(async (student) => {
@@ -360,5 +386,7 @@ form.addEventListener("submit", async (e) => {
                 window.location.reload()
             }
         })
+    } else if (result.success && editActivityId) {
+        window.location.reload()
     }
 })
