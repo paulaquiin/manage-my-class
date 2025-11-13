@@ -84,7 +84,7 @@ function fillNavigation() {
 }
 
 function updateDialogUI() {
-   
+
     // Cambiar título del botón de la pantalla y del dialog (input y titulo) según si estamos en examenes o actividades
     switch (type) {
         case "activity":
@@ -98,7 +98,7 @@ function updateDialogUI() {
             dialogBtn.value = editActivityId ? "Editar examen" : "Crear examen";
             break;
     }
-    
+
     // Ocultar el botón de añadir actividad/examen si estoy viendo las notas trimestrales
     if (type == "quarter") {
         openDialog.classList.add("hide");
@@ -205,7 +205,7 @@ function calculateAvg() {
         // Obtengo la ultima celda de la fila actual (corresponde a la nota) y le doy la suma de todas las celdas dividido por la longitud
         // de cells que son todas las celdas menos el nombre y la nota final (es decir, todas las notas de las actividades). 
         const lastCell = row.querySelector("div:last-child");
-        lastCell.textContent = cells.length > 0 ? (avgScore / cells.length) : 0;
+        lastCell.textContent = cells.length > 0 ? Math.round((avgScore / cells.length) * 10) / 10 : 0;
         // Le doy unos estilos a la nota para pintarlo de rojo si la nota es menor de 5
         if (parseInt(lastCell.textContent) < 5) {
             lastCell.classList.add("fail")
