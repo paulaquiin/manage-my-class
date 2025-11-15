@@ -187,3 +187,17 @@
         }
     }
 }
+
+@media (max-width: 768px) {
+    .students {
+        .container {
+            .wrapper {
+                .class-info {
+                    #class-row-text {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
