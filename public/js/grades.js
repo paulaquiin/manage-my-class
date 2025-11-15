@@ -167,6 +167,15 @@ function renderActivities(activities) {
         const th = document.createElement("div");
         th.textContent = activity.name;
         th.dataset.id = activity.id;
+        const quarterInfo = document.createElement("span");
+        quarterInfo.classList.add("muted");
+        switch(activity.quarter) {
+            case "first": quarterInfo.textContent = "(Primer trimestre)"; break;
+            case "second": quarterInfo.textContent = "(Segundo trimestre)"; break;
+            case "third": quarterInfo.textContent = "(Tercer trimestre)"; break;
+        }
+        
+        th.appendChild(quarterInfo);
         thead.insertBefore(th, thead.lastElementChild);
         const tbody = table.querySelectorAll(".row:not(.thead)");
         tbody.forEach(tr => {

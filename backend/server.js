@@ -378,6 +378,7 @@ app.get("/api/activity/", (req, res) => {
             SELECT a.id, a.name, a.type, a.class_id, a.quarter
             FROM activities a 
             WHERE a.user_id = ? AND a.type = ? AND a.class_id = (SELECT id FROM classes WHERE name = ? AND user_id = ?)
+            ORDER BY a.quarter
         `,
         [userId, type, className, userId],
         function (error, rows) {
