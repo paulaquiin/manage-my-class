@@ -1,4 +1,4 @@
-import { dialog, initDialog, setOnCloseDialog } from "./dialog.js";
+import { closeDialog, dialog, initDialog, setOnCloseDialog } from "./dialog.js";
 import { handleFetch } from "./handle-fetch.js";
 import { iconList } from "./utils/icons.js";
 
@@ -290,6 +290,7 @@ async function saveGrades() {
 
             if (result.success) {
                 document.location.reload();
+                closeDialog();
             }
         })
 
@@ -384,9 +385,11 @@ form.addEventListener("submit", async (e) => {
 
             if (result2.success) {
                 window.location.reload()
+                closeDialog();
             }
         })
     } else if (result.success && editActivityId) {
-        window.location.reload()
+        window.location.reload();
+        closeDialog();
     }
 })

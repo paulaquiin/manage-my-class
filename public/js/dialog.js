@@ -25,7 +25,7 @@ export function setOnCloseDialog(callback) {
     onCloseDialog = callback;
 }
 
-function closeDialog() {
+export function closeDialog() {
     // Cerrar dialog
     dialog.close();
 

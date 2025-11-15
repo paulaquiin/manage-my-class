@@ -135,5 +135,6 @@ form.addEventListener("submit", async (e) => {
     if (result.success) {
         // Si todo ha ido bien, recargo página
         window.location.reload();
+        closeDialog();
     }
 })
