@@ -130,6 +130,9 @@
                 width: 100%;
                 border-radius: 0.75rem;
                 border-left: 3px solid $secondary;
+                &.hide {
+                    display: none;
+                }
 
                 .row {
                     border-bottom: 3px solid $secondary;

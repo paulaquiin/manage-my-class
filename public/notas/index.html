@@ -39,6 +39,15 @@
                             <div id="grade">Nota</div>
                         </div>
                     </div>
+                    <div class="table hide" id="quarters-table">
+                        <div class="row thead">
+                            <div>Nombre Alumno</div>
+                            <div>Primer trimestre</div>
+                            <div>Segundo trimestre</div>
+                            <div>Tercer trimestre</div>
+                            <div id="grade">Nota</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -57,6 +66,16 @@
                     <div class="form-group">
                         <label for="name">Nombre</label>
                         <input placeholder="ACT. 1: ÁLGEBRA" id="name" type="text" name="name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="activity-quarter">Trimestre</label>
+                        <div class="select-wrapper">
+                            <select id="activity-quarter">
+                                <option class="subtext" value="first">Primer trimestre</option>
+                                <option class="subtext" value="second">Segundo trimestre</option>
+                                <option class="subtext" value="third">Tercer trimestre</option>
+                            </select>
+                        </div>
                     </div>
                     <input value="" type="submit" />
 

@@ -238,7 +238,6 @@ app.delete("/api/student/", (req, res) => {
         "DELETE FROM students WHERE id = ? AND user_id = ?",
         [id, userId],
         function (error) {
-            console.log(error);
             if (error) {
                 return res.status(400).json({ success: false, error });
             } else {
@@ -271,6 +270,29 @@ app.get("/api/grade/", (req, res) => {
         }
     );
 })
+
+app.get("/api/grades/averages", (req, res) => {
+    const userId = req.query.userId;
+    const className = req.query.className;
+
+    const query = `
+        SELECT g.student_id, a.quarter, ROUND(AVG(g.score), 1) AS score
+        FROM grades g
+        JOIN activities a ON g.activity_id = a.id
+        WHERE g.user_id = ? AND g.class_id = (SELECT id FROM classes WHERE name = ? AND user_id = ?)
+        GROUP BY a.quarter
+    `;
+
+    db.all(query, [userId, className, userId], (err, rows) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ success: false });
+        } else {
+            return res.status(200).json({ success: true, rows })
+        }
+    });
+});
+
 app.post("/api/grade/", (req, res) => {
     const { activityScore, activityId, studentId, userId, className } = req.body;
     db.run(
@@ -303,22 +325,21 @@ app.post("/api/grade/", (req, res) => {
 
 // Endpoints para las actividades
 app.post("/api/activity/", (req, res) => {
-    console.log("ACTIVITY POST");
-    const { name, type, userId, className } = req.body;
+    const { name, type, userId, className, quarterActivity } = req.body;
     db.run(
         `
             INSERT INTO activities 
-            (type, name, user_id, class_id) 
+            (type, name, user_id, quarter, class_id) 
             VALUES (
+                ?,
                 ?,
                 ?,
                 ?,
                 (SELECT id FROM classes WHERE name = ? AND user_id = ?)
             )
         `,
-        [type, name, userId, className, userId],
+        [type, name, userId, quarterActivity, className, userId],
         function (error) {
-            console.log(error);
             if (error) {
                 return res.status(400).json({ success: false });
             } else {
@@ -352,16 +373,14 @@ app.get("/api/activity/", (req, res) => {
     const userId = req.query.userId;
     const type = req.query.type;
     const className = req.query.className;
-    console.log(className);
     db.all(
         `
-            SELECT a.id, a.name, a.type, a.class_id
+            SELECT a.id, a.name, a.type, a.class_id, a.quarter
             FROM activities a 
             WHERE a.user_id = ? AND a.type = ? AND a.class_id = (SELECT id FROM classes WHERE name = ? AND user_id = ?)
         `,
         [userId, type, className, userId],
         function (error, rows) {
-            console.log(rows);
             if (error) {
                 return res.status(400).json({ success: false });
             } else {

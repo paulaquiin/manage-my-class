@@ -74,6 +74,7 @@ db.run(
     (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         type TEXT NOT NULL CHECK (type IN ("activity", "exam")),
+        quarter TEXT NOT NULL CHECK (quarter IN ("first", "second", "third")),
         name TEXT NOT NULL,
         user_id INTEGER NOT NULL,
         class_id INTEGER NOT NULL,

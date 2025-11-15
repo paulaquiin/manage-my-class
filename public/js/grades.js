@@ -11,6 +11,8 @@ const filters = document.querySelector(".filter");
 const content = document.querySelector(".content");
 // Tabla donde se muestran las actividades/examenes
 const table = document.getElementById("grades-table");
+// Tabla donde se muestran los resultados de los trimestres
+const quartersTable = document.getElementById("quarters-table");
 // Referencia del encabezado de la tabla
 const thead = table.querySelector(".row.thead");
 // Botón para guardar las notas cuando se ha editado la tabla
@@ -48,14 +50,19 @@ async function init() {
     if (params.get("clase") && params.get("type")) {
         className = params.get("clase");
         type = params.get("type");
-        hideClasses();
-        fillNavigation();
-        updateDialogUI();
-        await fetchStudents();
-        await fetchActivities();
-        await fillScores();
-        calculateAvg();
-        handleTableEvents();
+        if (type !== "quarter") {
+            hideClasses();
+            fillNavigation();
+            updateDialogUI();
+            await fetchStudents();
+            await fetchActivities();
+            await fillScores();
+            calculateAvg();
+            handleTableEvents();
+        } else {
+            fillNavigation();
+            handleQuartersTable();
+        }
     } else {
         handleClasses();
     }
@@ -148,13 +155,15 @@ function renderStudents() {
             tr.appendChild(newCell);
         }
 
-        table.appendChild(tr);
+        const tableEl = type !== "quarter" ? table : quartersTable;
+        tableEl.appendChild(tr);
     })
 }
 
 // Función que renderiza cada nota en forma de columnas en la tabla
 function renderActivities(activities) {
     activities.forEach((activity) => {
+        console.log(activity);
         const th = document.createElement("div");
         th.textContent = activity.name;
         th.dataset.id = activity.id;
@@ -178,7 +187,7 @@ async function fillScores() {
     const result = await handleFetch(
         `http://localhost:3000/api/grade?className=${className}&userId=${userId}`,
         "GET",
-    )
+    );
     const grades = result.rows;
     // Por cada nota, busco el elemento del DOM con el dataset correspondiente y cambio su textContent
     grades.forEach((grade) => {
@@ -264,8 +273,52 @@ function handleTableEvents() {
     })
 }
 
+// Función encargada de renderizar las columnas del primer, segundo y tercer trimestre.
+async function handleQuartersTable() {
+    // Ocultar tabla original
+    table.classList.add("hide");
+    // Mostrar tabla trimestral
+    quartersTable.classList.remove("hide");
+    // Crear los estudiantes en la tabla
+    await fetchStudents();
+    // Por cada estudiante creado en la tabla, voy a añadir a cada estudiante 3 celdas, una para cada trimestre.
+    const rows = quartersTable.querySelectorAll(".row:not(.thead)");
+    rows.forEach((tr) => {
+        for (let i = 0; i < 3; i++) {
+            const newTd = document.createElement("div");
+            newTd.textContent = "-";
+            tr.insertBefore(newTd, tr.lastElementChild);
+        }
+    })
+    // Obtengo la puntuación de cada estudiante y cada trimestre y lo renderizo
+    fetchQuartersScore(rows);
+}
+
+// Función encargada de calcular la puntuación total de cada trimestre para cada alumno
+async function fetchQuartersScore() {
+    // Se hace una petición por clase, trayendose todos los alumnos, con todas sus actividades, tipo de actividad y la nota de esa actividad.
+    const result = await handleFetch(
+        `http://localhost:3000/api/grades/averages?className=${className}&userId=${userId}`,
+        "GET",
+    );
+    const grades = result.rows;
+    // Por cada resultado, se busca el student_id, se identifica el quarter y se le aplica el score devuelto.
+    grades.forEach((grade) => {
+        const studentRow = document.querySelector(`.row[data-student-id="${grade.student_id}"]`);
+        // Dependiendo del trimestre que se esté evaluando, se imprime en la primera, segunda o tercera columna, identificados por
+        // el selector :nth-child() teniendo en cuenta que (1) es el nombre del alumno, y a partir de ahí los tres trimestres.
+        switch(grade.quarter) {
+            case "first": studentRow.querySelector("div:nth-child(2)").textContent = grade.score; break;
+            case "second": studentRow.querySelector("div:nth-child(3)").textContent = grade.score; break;
+            case "third": studentRow.querySelector("div:nth-child(4)").textContent = grade.score; break;
+        }
+    })
+
+}
+
+
 // Al cerrar el dialog reseteo el editActivityId por si luego le da a añadir actividad que no lo considere un edit
-// Al cerrar el dialog, actualizo su 
+// Al cerrar el dialog, actualizo su interfaz al estado inicial 
 function onCloseDialog() {
     editActivityId = null;
     updateDialogUI();
@@ -360,11 +413,15 @@ form.addEventListener("submit", async (e) => {
 
     // Obtener nombre de la actividad
     const { name } = Object.fromEntries(formData.entries());
+    // Obtener trimestre
+    const quarterActivitySelect = document.getElementById("activity-quarter");
+    const quarterActivity = quarterActivitySelect.value;
+    console.log(quarterActivity);
     // Añado una nueva actividad o edito una existente
     const result = await handleFetch(
         "http://localhost:3000/api/activity",
         editActivityId ? "PUT" : "POST",
-        editActivityId ? JSON.stringify({ name, activityId: editActivityId }) : JSON.stringify({ name, type, userId, className })
+        editActivityId ? JSON.stringify({ name, activityId: editActivityId }) : JSON.stringify({ name, type, userId, className, quarterActivity })
     );
 
     if (result.success && !editActivityId) {
@@ -379,7 +436,7 @@ form.addEventListener("submit", async (e) => {
                     studentId: student.id,
                     userId,
                     className,
-                    activityScore: 0
+                    activityScore: 0,
                 })
             );
 
