@@ -289,7 +289,6 @@ app.post("/api/grade/", (req, res) => {
         `,
         [activityScore, activityId, studentId, className, userId, userId],
         function (error) {
-            console.log(error);
             if (error) {
                 return res.status(400).json({ success: false });
             } else {
@@ -304,6 +303,7 @@ app.post("/api/grade/", (req, res) => {
 
 // Endpoints para las actividades
 app.post("/api/activity/", (req, res) => {
+    console.log("ACTIVITY POST");
     const { name, type, userId, className } = req.body;
     db.run(
         `
@@ -329,6 +329,24 @@ app.post("/api/activity/", (req, res) => {
         }
     );
 })
+
+app.put("/api/activity/", (req, res) => {
+    const { name, activityId } = req.body;
+    db.run(
+        `UPDATE activities SET name = ? WHERE id = ?`,
+        [name, activityId],
+        function (error) {
+            if (error) {
+                return res.status(400).json({ success: false });
+            } else {
+                return res.status(201).json({ success: true, activityId: this.lastID });
+            }
+
+        }
+    );
+})
+
+
 
 app.get("/api/activity/", (req, res) => {
     const userId = req.query.userId;
