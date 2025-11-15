@@ -141,7 +141,7 @@
                     &.thead {
                         background-color: $secondary;
 
-                        div {
+                        div:not(:first-child):not(:last-child) {
                             cursor: pointer;
                             transition: all 0.25s;
                             border: 2px solid transparent;

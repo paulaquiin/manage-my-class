@@ -248,7 +248,7 @@ function handleTableEvents() {
     saveStudentGradesEl.addEventListener("click", saveGrades);
 
     // Añadir el evento correspondiente a las cabeceras para poder editar el nombre de las actividades
-    const headers = thead.querySelectorAll("div");
+    const headers = thead.querySelectorAll("div:not(:first-child):not(:last-child)");
     headers.forEach((header) => {
         header.addEventListener("click", () => {
             // Asignar activityId para actualizarlo en el backend
