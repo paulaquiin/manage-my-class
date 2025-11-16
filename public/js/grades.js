@@ -60,6 +60,7 @@ async function init() {
             calculateAvg();
             handleTableEvents();
         } else {
+            hideClasses();
             fillNavigation();
             updateDialogUI();
             handleQuartersTable();
