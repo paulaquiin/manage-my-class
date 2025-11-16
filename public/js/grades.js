@@ -437,7 +437,7 @@ form.addEventListener("submit", async (e) => {
     const result = await handleFetch(
         "http://localhost:3000/api/activity",
         editActivityId ? "PUT" : "POST",
-        editActivityId ? JSON.stringify({ name, activityId: editActivityId }) : JSON.stringify({ name, type, userId, className, quarterActivity })
+        editActivityId ? JSON.stringify({ name, quarterActivity, activityId: editActivityId }) : JSON.stringify({ name, type, userId, className, quarterActivity })
     );
 
     if (result.success && !editActivityId) {

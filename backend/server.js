@@ -352,12 +352,13 @@ app.post("/api/activity/", (req, res) => {
 })
 
 app.put("/api/activity/", (req, res) => {
-    const { name, activityId } = req.body;
+    const { name, quarterActivity, activityId } = req.body;
     db.run(
-        `UPDATE activities SET name = ? WHERE id = ?`,
-        [name, activityId],
+        `UPDATE activities SET name = ?, quarter = ? WHERE id = ?`,
+        [name, quarterActivity, activityId],
         function (error) {
             if (error) {
+                console.log(error);
                 return res.status(400).json({ success: false });
             } else {
                 return res.status(201).json({ success: true, activityId: this.lastID });
