@@ -214,17 +214,15 @@
                                 cursor: text;
                                 transition: all 0.25s;
                                 border: 2px solid transparent;
-
-                                &:focus {
-                                    outline: 2px solid $accent;
+                                outline: none;
+                                
+                                &:focus,
+                                &:hover {
+                                    border-color: $accent;
                                 }
 
                                 &.selected {
                                     border: 2px solid $secondary;
-                                }
-
-                                &:hover {
-                                    border: 2px solid $accent;
                                 }
 
                                 &::after {
