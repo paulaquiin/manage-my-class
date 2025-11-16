@@ -165,8 +165,12 @@ function renderActivities(activities) {
     activities.forEach((activity) => {
         console.log(activity);
         const th = document.createElement("div");
-        th.textContent = activity.name;
         th.dataset.id = activity.id;
+        // Nombre de la actividad
+        const activityName = document.createElement("span");
+        activityName.classList.add("text");
+        activityName.textContent = activity.name;
+        // Nombre del trimestre de la actividad
         const quarterInfo = document.createElement("span");
         quarterInfo.classList.add("muted");
         switch(activity.quarter) {
@@ -174,9 +178,12 @@ function renderActivities(activities) {
             case "second": quarterInfo.textContent = "(Segundo trimestre)"; break;
             case "third": quarterInfo.textContent = "(Tercer trimestre)"; break;
         }
-        
+        // Añadir nombre y trimestre a la celda.
+        th.appendChild(activityName);
         th.appendChild(quarterInfo);
+        // Insertar en la tabla
         thead.insertBefore(th, thead.lastElementChild);
+
         const tbody = table.querySelectorAll(".row:not(.thead)");
         tbody.forEach(tr => {
             const newTd = document.createElement("div");
@@ -217,7 +224,6 @@ function calculateAvg() {
         const cells = row.querySelectorAll("div:not(:first-child):not(:last-child)");
         // Por cada celda, le sumo su textContent (parseado a numero y comprobando que si es un guión lo trate como un cero).
         cells.forEach((cell) => {
-            console.log(cell.textContent);
             avgScore += cell.textContent === "-" ? 0 : parseInt(cell.textContent);
         })
         // Obtengo la ultima celda de la fila actual (corresponde a la nota) y le doy la suma de todas las celdas dividido por la longitud
@@ -273,7 +279,8 @@ function handleTableEvents() {
             editActivityId = header.dataset.id;
             // Añadir nombre de la actividad en el input
             const activityTitle = dialog.querySelector("#name");
-            activityTitle.value = header.textContent;
+            const activityName = header.querySelector("span:first-child");
+            activityTitle.value = activityName.textContent;
             // Actualizar los textos del dialog
             updateDialogUI();
             // Abrir dialog
@@ -425,7 +432,7 @@ form.addEventListener("submit", async (e) => {
     // Obtener trimestre
     const quarterActivitySelect = document.getElementById("activity-quarter");
     const quarterActivity = quarterActivitySelect.value;
-    console.log(quarterActivity);
+
     // Añado una nueva actividad o edito una existente
     const result = await handleFetch(
         "http://localhost:3000/api/activity",

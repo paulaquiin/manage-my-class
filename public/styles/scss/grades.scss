@@ -160,9 +160,7 @@
                             display: grid;
                             gap: 0.5rem;
 
-                            span {
-                                display: block;
-                                text-align: center;
+                            span:last-child {
                                 font-size: 0.75rem;
                             }
                         }
