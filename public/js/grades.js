@@ -173,7 +173,7 @@ function renderActivities(activities) {
         // Nombre del trimestre de la actividad
         const quarterInfo = document.createElement("span");
         quarterInfo.classList.add("muted");
-        switch(activity.quarter) {
+        switch (activity.quarter) {
             case "first": quarterInfo.textContent = "(Primer trimestre)"; break;
             case "second": quarterInfo.textContent = "(Segundo trimestre)"; break;
             case "third": quarterInfo.textContent = "(Tercer trimestre)"; break;
@@ -323,13 +323,22 @@ async function fetchQuartersScore() {
         const studentRow = document.querySelector(`.row[data-student-id="${grade.student_id}"]`);
         // Dependiendo del trimestre que se esté evaluando, se imprime en la primera, segunda o tercera columna, identificados por
         // el selector :nth-child() teniendo en cuenta que (1) es el nombre del alumno, y a partir de ahí los tres trimestres.
-        switch(grade.quarter) {
+        switch (grade.quarter) {
             case "first": studentRow.querySelector("div:nth-child(2)").textContent = grade.score; break;
             case "second": studentRow.querySelector("div:nth-child(3)").textContent = grade.score; break;
             case "third": studentRow.querySelector("div:nth-child(4)").textContent = grade.score; break;
         }
     })
-
+    // Ahora por cada fila, sumo las tres notas y lo añado en la ultima columna (nota media)
+    const rows = quartersTable.querySelectorAll(".row:not(.thead)");
+    let avgScore = 0;
+    rows.forEach((row) => {
+        const columns = row.querySelectorAll("div:not([data-student-id]):not(:last-child)");
+        columns.forEach((col) => {
+            avgScore += col.textContent !== "-" ? parseFloat(col.textContent) : 0;
+        })
+        row.querySelector("div:last-child").textContent = Math.round((avgScore / columns.length) * 10) / 10;
+    })
 }
 
 
