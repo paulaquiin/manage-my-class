@@ -61,6 +61,7 @@ async function init() {
             handleTableEvents();
         } else {
             fillNavigation();
+            updateDialogUI();
             handleQuartersTable();
         }
     } else {
@@ -105,7 +106,7 @@ function updateDialogUI() {
             dialogBtn.value = editActivityId ? "Editar examen" : "Crear examen";
             break;
     }
-
+    console.log(type);
     // Ocultar el botón de añadir actividad/examen si estoy viendo las notas trimestrales
     if (type == "quarter") {
         openDialog.classList.add("hide");
