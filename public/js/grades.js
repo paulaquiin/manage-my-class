@@ -107,7 +107,7 @@ function updateDialogUI() {
             dialogBtn.value = editActivityId ? "Editar examen" : "Crear examen";
             break;
     }
-    console.log(type);
+
     // Ocultar el botón de añadir actividad/examen si estoy viendo las notas trimestrales
     if (type == "quarter") {
         openDialog.classList.add("hide");
@@ -152,7 +152,7 @@ function renderStudents() {
             const newCell = document.createElement("div");
             if (i === 0) {
                 newCell.dataset.studentId = student.id;
-                newCell.textContent = student.name;
+                newCell.textContent = student.student_name;
             }
             tr.appendChild(newCell);
         }
@@ -165,7 +165,6 @@ function renderStudents() {
 // Función que renderiza cada nota en forma de columnas en la tabla
 function renderActivities(activities) {
     activities.forEach((activity) => {
-        console.log(activity);
         const th = document.createElement("div");
         th.dataset.id = activity.id;
         // Nombre de la actividad

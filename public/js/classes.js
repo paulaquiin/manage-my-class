@@ -42,7 +42,6 @@ function renderClasses(classes) {
 
     classes.forEach((item) => {
         const clone = template.content.cloneNode(true);
-        console.log(item);
         const classEl = clone.querySelector("#class");
         const iconEl = clone.querySelector("img");
         const titleEl = clone.querySelector("#title");
@@ -55,7 +54,7 @@ function renderClasses(classes) {
         classEl.textContent = item.grade;
         iconEl.src = iconList[item.icon];
         titleEl.textContent = item.name;
-        studentsEl.textContent = `${item.students_qty} estudiantes`;
+        studentsEl.textContent = `${item.studentsQty} estudiantes`;
 
         fragment.appendChild(clone);
     })

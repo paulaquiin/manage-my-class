@@ -2,7 +2,11 @@ const express = require("express");
 const db = require("./database");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
+const UserController = require("./controller/userController");
+const ClassController = require("./controller/classController");
+const StudentController = require("./controller/studentController");
+const GradeController = require("./controller/gradeController");
+const ActivityController = require("./controller/activityController");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,10 +26,14 @@ function authJwtToken(req, res, next) {
 
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
-    if (!token) return res.status(401).json({ message: "No autorizado" });
+    if (!token) {
+        return res.status(401).json({ message: "No autorizado" });
+    } 
 
-    jwt.verify(token, JWT_SECRET_KEY, (err, user) => {
-        if (err) return res.status(401).json({ message: "Token inválido" });
+    jwt.verify(token, JWT_SECRET_KEY, (error, user) => {
+        if (error) {
+            return res.status(401).json({ message: "Token inválido" });
+        } 
         req.user = user;
         next();
     });
@@ -36,361 +44,32 @@ app.use(authJwtToken);
  * ENDPOINTS
 */
 
-// Endpoint para registrar profesores
-app.post("/api/register/", async (req, res) => {
-
-    const { user, password, dni } = req.body;
-
-    // Librería para encriptar la contraseña
-    const hashedPwd = await bcrypt.hash(password, 10);
-    db.run(
-        "INSERT INTO users (user, password, dni) VALUES (?, ?, ?)",
-        [user, hashedPwd, dni],
-        function (error) {
-            if (error) {
-                return res.status(400).json({ success: false, errorId: "user-exists-error", message: "Usuario ya existe" });
-            } else {
-                // Usuario registrado y redirecciona a la pantalla de inicio de sesión
-                return res.status(201).json({ success: true });
-            }
-        }
-    );
-})
-
+// Endpoint para registrar
+app.post("/api/register/", UserController.register);
 // Endpoint para iniciar sesión
-app.post("/api/login/", async (req, res) => {
-    const { user, password } = req.body;
-    db.get(
-        "SELECT * FROM users WHERE user = ?",
-        [user],
-        async function (error, user) {
-            if (!user) {
-                return res.status(400).json({ errorId: "user-error", message: "El usuario no existe" });
-            } else {
-                const validPassword = await bcrypt.compare(password, user.password);
-                if (!validPassword) {
-                    return res.status(400).json({ errorId: "password-error", message: "Contraseña incorrecta" });
-                } else {
-                    const token = jwt.sign({ id: user.id }, JWT_SECRET_KEY, { expiresIn: JWT_EXPIRATION });
-                    return res.status(200).json({ token, user_id: user.id });
-                }
-            }
-
-        }
-    );
-})
-
-// Endpoint para usuarios
-app.get("/api/user/", (req, res) => {
-    const userId = req.query.userId;
-    db.get(
-        "SELECT user, dni FROM users WHERE id = ?",
-        [userId],
-        async function (error, user) {
-            if (error) {
-                return res.status(400).json({ success: false });
-            } else {
-                return res.status(201).json({ success: true, info: user });
-            }
-
-        }
-    )
-})
+app.post("/api/login/", UserController.login)
+// Endpoint para obtener la información del usuario
+app.get("/api/user/", UserController.getUser)
 
 // Endpoint para clases
-app.post("/api/class/", (req, res) => {
-    const { name, course, icon, userId } = req.body;
-    db.run(
-        "INSERT INTO classes (name, grade, icon, user_id) VALUES (?, ?, ?, ?)",
-        [name, course, icon, userId],
-        function (error) {
-            if (error) {
-                if (error.code === "SQLITE_CONSTRAINT") {
-                    return res.status(400).json({ success: false, errorId: "class-exists" });
-                } else {
-                    return res.status(400).json({ success: false });
-                }
-            } else {
-                return res.status(201).json({ success: true });
-            }
-        }
-    )
-})
-
-app.get("/api/class/", (req, res) => {
-    const userId = req.query.userId;
-    db.all(
-        `
-            SELECT c.*, 
-            COUNT(s.id) AS students_qty
-            FROM classes c
-            LEFT JOIN students s ON s.class_id = c.id
-            WHERE c.user_id = ?
-            GROUP BY c.id
-        `,
-        [userId],
-        function (error, rows) {
-            if (error) {
-                return res.status(400).json({ success: false });
-            } else {
-                return res.status(201).json({ success: true, rows });
-            }
-
-        }
-    );
-})
-
-app.delete("/api/class/", (req, res) => {
-    const { id, userId } = req.body;
-    db.run(
-        "DELETE FROM classes WHERE id = ? AND user_id = ?",
-        [id, userId],
-        function (error) {
-            if (error) {
-                return res.status(400).json({ success: false, error });
-            } else {
-                return res.status(200).json({ success: true });
-            }
-        }
-    )
-})
-
+app.post("/api/class/", ClassController.create);
+app.get("/api/class/", ClassController.getAll)
+app.delete("/api/class/", ClassController.delete)
 
 // Endpoint para alumnos
-app.post("/api/student/", (req, res) => {
-    const { name, surname, photo, classId, userId } = req.body;
-    db.run(
-        "INSERT INTO students (name, surname, photo, class_id, user_id) VALUES (?, ?, ?, ?, ?)",
-        [name, surname, photo, classId, userId],
-        function (error) {
-            if (error) {
-                return res.status(400).json({ success: false });
-            } else {
-                return res.status(201).json({ success: true });
-            }
-        }
-    )
-})
-
-app.get("/api/student/", (req, res) => {
-    const userId = req.query.userId;
-    db.all(
-        `
-            SELECT s.name AS student_name,
-            s.id,
-            s.surname,
-            s.photo,
-            s.class_id,
-            s.user_id,
-            c.id AS class_id,
-            c.name AS class_name,
-            c.grade,
-            c.icon
-            FROM students s LEFT JOIN classes c ON s.class_id = c.id
-            WHERE s.user_id = ?
-        `,
-        [userId],
-        function (error, rows) {
-            if (error) {
-                return res.status(400).json({ success: false });
-            } else {
-                return res.status(201).json({ success: true, rows });
-
-            }
-
-        }
-    );
-})
-
-app.get("/api/student-by-class-name/", (req, res) => {
-    const userId = req.query.userId;
-    const className = req.query.className;
-    // console.log(userId);
-    // console.log(className);
-    db.all(
-        `
-            SELECT 
-            s.id,
-            s.name,
-            s.surname
-            FROM students s
-            JOIN classes c ON s.class_id = c.id
-            WHERE s.user_id = ? AND c.name = ?;
-        `,
-        [userId, className],
-        function (error, rows) {
-            // console.log(error);
-            // console.log(rows);
-            if (error) {
-                return res.status(400).json({ success: false });
-            } else {
-                return res.status(201).json({ success: true, rows });
-
-            }
-
-        }
-    );
-})
-
-app.delete("/api/student/", (req, res) => {
-    const { id, userId } = req.body;
-    db.run(
-        "DELETE FROM students WHERE id = ? AND user_id = ?",
-        [id, userId],
-        function (error) {
-            if (error) {
-                return res.status(400).json({ success: false, error });
-            } else {
-                return res.status(200).json({ success: true });
-            }
-        }
-    )
-})
-
+app.post("/api/student/", StudentController.create);
+app.get("/api/student/", StudentController.getAll);
+app.delete("/api/student/", StudentController.delete);
+app.get("/api/student-by-class-name/", StudentController.getAllByClassName)
 
 // Endpoints para las notas
-app.get("/api/grade/", (req, res) => {
-    const className = req.query.className;
-    const userId = req.query.userId;
-    db.all(
-        `
-            SELECT g.*
-            FROM grades g
-            JOIN classes c ON g.class_id = c.id
-            WHERE c.name = ? AND g.user_id = ?;
-        `,
-        [className, userId],
-        function (error, rows) {
-            if (error) {
-                return res.status(400).json({ success: false });
-            } else {
-                return res.status(201).json({ success: true, rows });
-
-            }
-        }
-    );
-})
-
-app.get("/api/grades/averages", (req, res) => {
-    const userId = req.query.userId;
-    const className = req.query.className;
-
-    const query = `
-        SELECT g.student_id, a.quarter, ROUND(AVG(g.score), 1) AS score
-        FROM grades g
-        JOIN activities a ON g.activity_id = a.id
-        WHERE g.user_id = ? AND g.class_id = (SELECT id FROM classes WHERE name = ? AND user_id = ?)
-        GROUP BY a.quarter
-    `;
-
-    db.all(query, [userId, className, userId], (err, rows) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({ success: false });
-        } else {
-            return res.status(200).json({ success: true, rows })
-        }
-    });
-});
-
-app.post("/api/grade/", (req, res) => {
-    const { activityScore, activityId, studentId, userId, className } = req.body;
-    db.run(
-        `
-            INSERT INTO grades 
-            (score, activity_id, student_id, class_id, user_id) 
-            VALUES (
-            ?,
-            ?,
-            ?,
-            (SELECT id FROM classes WHERE name = ? AND user_id = ?),
-            ?
-            )
-            ON CONFLICT(activity_id, student_id, class_id, user_id)
-            DO UPDATE SET score = excluded.score
-        `,
-        [activityScore, activityId, studentId, className, userId, userId],
-        function (error) {
-            if (error) {
-                return res.status(400).json({ success: false });
-            } else {
-                return res.status(201).json({ success: true });
-
-            }
-
-        }
-    );
-})
-
+app.get("/api/grade/", GradeController.getAll)
+app.get("/api/grades/averages", GradeController.getAverages);
+app.post("/api/grade/", GradeController.create);
 
 // Endpoints para las actividades
-app.post("/api/activity/", (req, res) => {
-    const { name, type, userId, className, quarterActivity } = req.body;
-    db.run(
-        `
-            INSERT INTO activities 
-            (type, name, user_id, quarter, class_id) 
-            VALUES (
-                ?,
-                ?,
-                ?,
-                ?,
-                (SELECT id FROM classes WHERE name = ? AND user_id = ?)
-            )
-        `,
-        [type, name, userId, quarterActivity, className, userId],
-        function (error) {
-            if (error) {
-                return res.status(400).json({ success: false });
-            } else {
-                return res.status(201).json({ success: true, activityId: this.lastID });
-
-            }
-
-        }
-    );
-})
-
-app.put("/api/activity/", (req, res) => {
-    const { name, quarterActivity, activityId } = req.body;
-    db.run(
-        `UPDATE activities SET name = ?, quarter = ? WHERE id = ?`,
-        [name, quarterActivity, activityId],
-        function (error) {
-            if (error) {
-                console.log(error);
-                return res.status(400).json({ success: false });
-            } else {
-                return res.status(201).json({ success: true, activityId: this.lastID });
-            }
-
-        }
-    );
-})
-
-
-
-app.get("/api/activity/", (req, res) => {
-    const userId = req.query.userId;
-    const type = req.query.type;
-    const className = req.query.className;
-    db.all(
-        `
-            SELECT a.id, a.name, a.type, a.class_id, a.quarter
-            FROM activities a 
-            WHERE a.user_id = ? AND a.type = ? AND a.class_id = (SELECT id FROM classes WHERE name = ? AND user_id = ?)
-            ORDER BY a.quarter
-        `,
-        [userId, type, className, userId],
-        function (error, rows) {
-            if (error) {
-                return res.status(400).json({ success: false });
-            } else {
-                return res.status(201).json({ success: true, rows });
-
-            }
-        }
-    );
-})
+app.post("/api/activity/", ActivityController.create);
+app.put("/api/activity/", ActivityController.update);
+app.get("/api/activity/", ActivityController.getAll);
 
 app.listen(PORT, () => console.log(`Servidor escuchando en http://localhost:${PORT}`));

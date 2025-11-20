@@ -32,7 +32,7 @@ export async function handleFetch(url, method, body, validateToken = true) {
         }
 
         return result;
-    } catch (err) {
-        console.error("Error en fetch:", err);
+    } catch (error) {
+        console.error("Error en fetch:", error);
     }
 }
