@@ -215,7 +215,7 @@
                                 transition: all 0.25s;
                                 border: 2px solid transparent;
                                 outline: none;
-                                
+
                                 &:focus,
                                 &:hover {
                                     border-color: $accent;
@@ -243,6 +243,30 @@
                 }
 
 
+            }
+
+            .table#quarters-table {
+                .row {
+                    &.thead {
+                        div:not(:first-child):not(:last-child) {
+                            &:hover {
+                                border: 2px solid transparent;
+                            }
+                        }
+                    }
+
+                    &:not(.thead) {
+                        &>div {
+                            &:not(:first-child):not(:last-child) {
+
+                                &:focus,
+                                &:hover {
+                                    border-color: transparent;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
