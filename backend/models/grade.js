@@ -60,16 +60,16 @@ class Grade {
                     FROM grades g
                     JOIN activities a ON g.activity_id = a.id
                     WHERE g.user_id = ? AND g.class_id = (SELECT id FROM classes WHERE name = ? AND user_id = ?)
-                    GROUP BY a.quarter
-                `, 
-                [userId, className, userId], 
+                    GROUP BY g.student_id, a.quarter
+                `,
+                [userId, className, userId],
                 function (error, rows) {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(rows);
-                } 
-            });
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(rows);
+                    }
+                });
         });
     }
 }
