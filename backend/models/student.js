@@ -11,7 +11,7 @@ class Student {
         this.grade = grade;
     }
 
-    static create(name, surname, photo, classId, userId) {
+    static create(name, surname, photo, classes, userId) {
         return new Promise((resolve, reject) => {
             db.run(
                 "INSERT INTO students (name, surname, photo, user_id) VALUES (?, ?, ?, ?)",
@@ -21,17 +21,19 @@ class Student {
                         return reject(error);
                     }
                     const studentId = this.lastID;
-                    db.run(
-                        "INSERT INTO student_classes (student_id, class_id, user_id) VALUES (?, ?, ?)",
-                        [studentId, classId, userId],
-                        function (error2) {
-                            if (error2) {
-                                reject(error2);
-                            } else {
-                                resolve(new Student(studentId, name, surname, photo));
+                    classes.forEach(element => {
+                        db.run(
+                            "INSERT INTO student_classes (student_id, class_id, user_id) VALUES (?, ?, ?)",
+                            [studentId, element, userId],
+                            function (error2) {
+                                if (error2) {
+                                    reject(error2);
+                                } else {
+                                    resolve(new Student(studentId, name, surname, photo));
+                                }
                             }
-                        }
-                    );
+                        );
+                    });
                 }
             );
         });

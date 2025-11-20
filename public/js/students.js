@@ -15,6 +15,7 @@ init();
 
 function init() {
     initDialog();
+    handleClassesSelected();
     getStudents();
     fillClasses();
     handleChosenPhotoPreview();
@@ -92,7 +93,7 @@ function renderStudents(students) {
         classNameEl.textContent = classroom.class_name;
         classCourseEl.textContent = classroom.grade;
         classStudentsQty.textContent = `(${classroom.students.length} estudiantes)`;
-        
+
         classInfo.appendChild(classClone);
         fragment.appendChild(classInfo);
 
@@ -143,13 +144,18 @@ form.addEventListener("submit", async (e) => {
     // Obtener nombre y curso
     const { name, surname } = Object.fromEntries(formData.entries());
 
-    // Obtener curso
-    const classId = studentClassSelectEl.value;
-    if (!classId) {
-        const errorEl = document.getElementById("student-photo-class-error");
+    // Obtener cursos
+    const classesEl = document.querySelector(".classes-selected").querySelectorAll(".dialog-class-element");
+    let classes = [];
+    classesEl.forEach((classEl) => {
+        classes.push(classEl.dataset.id);
+    })
+
+    if (classes.length < 1) {
+        const errorEl = document.getElementById("student-class-error");
         errorEl.classList.add("show");
         return;
-    }
+    }    
 
     // Foto
     let photo = undefined;
@@ -162,9 +168,9 @@ form.addEventListener("submit", async (e) => {
             const result = await handleFetch(
                 "http://localhost:3000/api/student",
                 "POST",
-                JSON.stringify({ name, surname, classId, photo, userId })
+                JSON.stringify({ name, surname, classes, photo, userId })
             )
-    
+
             if (result.success) {
                 window.location.reload();
                 closeDialog();
@@ -220,6 +226,39 @@ function handleChosenPhotoPreview() {
                 parent.appendChild(img);
             }
         }
+    })
+}
+
+function handleClassesSelected() {
+    const select = document.querySelector("select");
+    const parent = document.querySelector(".classes-selected");
+
+    const dialogClassTemplate = document.getElementById("dialog-class-template");
+    select.addEventListener("change", (e) => {
+        // Añadir item
+        const clone = dialogClassTemplate.content.cloneNode(true);
+
+        const classEl = clone.querySelector(".dialog-class-element");
+        classEl.dataset.id = e.target.value;
+        classEl.dataset.text = e.target.options[e.target.selectedIndex].text;
+
+        const classNameEl = clone.querySelector("#dialog-class-name");
+        const removeClassEl = clone.querySelector("#dialog-class-remove");
+        classNameEl.textContent = e.target.options[e.target.selectedIndex].text;
+        removeClassEl.addEventListener("click", () => {
+            // Añadir la opción
+            const option = document.createElement("option");
+            option.value = classEl.dataset.id;
+            option.textContent = classEl.dataset.text;
+            select.appendChild(option);
+            // Quitar de la lista
+            parent.removeChild(classEl);
+        });
+        parent.appendChild(clone);
+        // Eliminar esta opción del selector
+        select.remove(e.target.selectedIndex);
+        // Limpiar select
+        select.value = "";
     })
 }
 

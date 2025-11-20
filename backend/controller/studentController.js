@@ -2,9 +2,9 @@ const Student = require("../models/student");
 
 const StudentController = {
     async create(req, res) {
-        const { name, surname, photo, classId, userId } = req.body;
+        const { name, surname, photo, classes, userId } = req.body;
         try {
-            await Student.create(name, surname, photo, classId, userId);
+            await Student.create(name, surname, photo, classes, userId);
             res.status(201).json({ success: true });
         } catch (error) {
             res.status(400).json({ success: false, error: error.message });
