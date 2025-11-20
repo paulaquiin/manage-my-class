@@ -111,7 +111,7 @@ function renderStudents(students) {
             iconEl.src = student.photo;
             lastNameEl.textContent = student.surname;
             removeEl.addEventListener("click", () => {
-                deleteStudentById(student.id)
+                deleteStudentById(student.id, classroom.class_name)
             })
 
             content.appendChild(clone);
@@ -124,12 +124,12 @@ function renderStudents(students) {
 }
 
 // Eliminar un alumno de base de datos
-async function deleteStudentById(id) {
+async function deleteStudentById(id, className) {
 
     const result = await handleFetch(
         "http://localhost:3000/api/student",
         "DELETE",
-        JSON.stringify({ id, userId })
+        JSON.stringify({ id, className, userId })
     )
 
     if (result.success) {

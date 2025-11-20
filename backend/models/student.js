@@ -95,16 +95,48 @@ class Student {
         });
     }
 
-    static delete(id, userId) {
+    static delete(id, className, userId) {
         return new Promise((resolve, reject) => {
             db.run(
-                "DELETE FROM students WHERE id = ? AND user_id = ?",
-                [id, userId],
+                `
+                    DELETE FROM student_classes 
+                    WHERE student_id = ? AND class_id = (SELECT id FROM classes WHERE name = ? AND user_id = ?) AND user_id = ?
+                `,
+                [id, className, userId, userId],
                 function (error) {
                     if (error) {
                         reject(error);
                     } else {
-                        resolve(true);
+                        db.get(
+                            `
+                                SELECT COUNT(*) AS total 
+                                FROM student_classes 
+                                WHERE student_id = ? AND user_id = ?
+                            `,
+                            [id, userId],
+                            function (error2, result) {
+                                if (error2) {
+                                    return reject(error2);
+                                }
+                                if (result.total === 0) {
+                                    db.run(
+                                        `
+                                            DELETE FROM students 
+                                            WHERE id = ? AND user_id = ?
+                                        `,
+                                        [id, userId],
+                                        function (error3) {
+                                            if (error3) {
+                                                return reject(error3);
+                                            }
+                                            resolve(true);
+                                        }
+                                    );
+                                } else {
+                                    resolve(true);
+                                }
+                            }
+                        );
                     }
                 }
             );

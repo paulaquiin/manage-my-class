@@ -32,9 +32,9 @@ const StudentController = {
     },
 
     async delete(req, res) {
-        const { id, userId } = req.body;
+        const { id, className, userId } = req.body;
         try {
-            await Student.delete(id, userId);
+            await Student.delete(id, className, userId);
             res.status(200).json({ success: true });
         } catch (error) {
             res.status(400).json({ success: false, error: error.message });
