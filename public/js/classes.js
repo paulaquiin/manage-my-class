@@ -1,4 +1,4 @@
-import { initDialog } from "./dialog.js";
+import { closeDialog, initDialog } from "./dialog.js";
 import { handleFetch } from "./handle-fetch.js";
 import { iconList } from "./utils/icons.js";
 
@@ -134,7 +134,7 @@ form.addEventListener("submit", async (e) => {
 
     if (result.success) {
         // Si todo ha ido bien, recargo página
-        window.location.reload();
         closeDialog();
+        window.location.reload();
     }
 })
