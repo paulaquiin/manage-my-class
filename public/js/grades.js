@@ -339,6 +339,7 @@ async function fetchQuartersScore() {
             avgScore += col.textContent !== "-" ? parseFloat(col.textContent) : 0;
         })
         row.querySelector("div:last-child").textContent = Math.round((avgScore / columns.length) * 10) / 10;
+        avgScore = 0;
     })
 }
 
