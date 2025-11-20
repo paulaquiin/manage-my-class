@@ -367,9 +367,8 @@ async function saveGrades() {
                 JSON.stringify({ activityScore, activityId, studentId, userId, className })
             )
 
-            if (result.success) {
-                document.location.reload();
-                closeDialog();
+            if (!result.success) {
+                alert("Ha ocurrido un error al guardar las notas. Abortando operación...")
             }
         })
 
