@@ -354,26 +354,23 @@ function onCloseDialog() {
 async function saveGrades() {
     // Recorrer cada estudiante y guardar su nota siempre y cuando su nota sea diferente a "-".
     const studentsElements = table.querySelectorAll("div[data-student-id]:first-child");
-    studentsElements.forEach((studentEl) => {
-        const studentId = studentEl.dataset.studentId;
 
+    for (const studentEl of studentsElements) {
+        const studentId = studentEl.dataset.studentId;
         const studentActivitiesElements = studentEl.parentElement.querySelectorAll("div[data-activity-id]");
-        studentActivitiesElements.forEach(async (activityEl) => {
+    
+        for (const activityEl of studentActivitiesElements) {
             const activityId = activityEl.dataset.activityId;
             const activityScore = activityEl.textContent;
             // Por cada actividad de cada estudiante, se lanza petición
-            const result = await handleFetch(
+            await handleFetch(
                 `http://localhost:3000/api/grade`,
                 "POST",
                 JSON.stringify({ activityScore, activityId, studentId, userId, className })
             )
-
-            if (!result.success) {
-                alert("Ha ocurrido un error al guardar las notas. Abortando operación...")
-            }
-        })
-
-    })
+        }
+    }
+    window.location.reload();
 }
 
 
