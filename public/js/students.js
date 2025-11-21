@@ -8,6 +8,7 @@ const form = document.querySelector("form");
 const wrapper = document.querySelector(".wrapper");
 const studentClassSelectEl = document.getElementById("student-class-select");
 const fileInput = document.getElementById("student-photo-input");
+const studentPhoto = document.getElementById("student-photo");
 
 
 // init es la función que arranca todas las funciones
@@ -210,21 +211,7 @@ function handleChosenPhotoPreview() {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = async (event) => {
-            const photoPreviewEl = fileInput.parentElement.querySelector("#student-photo");
-            const parent = fileInput.parentElement.querySelector("label");
-            // Para saber si el avatar es un svg o una img compruebo si el elemento tiene la propiedad src
-            // si tiene src significa que es un <img>, sino, es un <svg>
-            if (photoPreviewEl.hasOwnProperty("src")) {
-                // Es un <img>, simplemente reemplazar el valor de src
-                photoPreviewEl.src = event.target.result;
-            } else {
-                // Es un <svg>, debo crear un <img> y reemplazarlo.
-                const img = document.createElement("img");
-                img.src = event.target.result;
-                img.id = "student-photo";
-                photoPreviewEl.remove();
-                parent.appendChild(img);
-            }
+            studentPhoto.innerHTML = `<img src="${event.target.result}" />`
         }
     })
 }
