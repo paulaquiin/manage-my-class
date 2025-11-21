@@ -68,13 +68,11 @@ class User {
     }
 
     static update(id, user, dni, activityPercentage, examPercentage, password) {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
 
             const fields = [];
             const values = [];
-            console.log(id);
-            console.log(user);
-            console.log(dni);
+
             if (user !== "") {
                 fields.push("user = ?");
                 values.push(user);
@@ -96,19 +94,13 @@ class User {
             }
 
             if (password !== "") {
+                const hashedPwd = await bcrypt.hash(password, 10);
                 fields.push("password = ?");
-                values.push(password);
+                values.push(hashedPwd);
             }
-
-            // Si no hay campos para actualizar, salimos
-            /* if (fields.length === 0) {
-                return resolve({ message: 'No hay campos para actualizar' });
-            } */
 
             const sql = `UPDATE users SET ${fields.join(', ')} WHERE id = ?`;
             values.push(id);
-            console.log(sql);
-            console.log(values);
             db.run(sql, values, function (error) {
                 if (error) {
                     reject(error);
