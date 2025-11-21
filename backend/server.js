@@ -49,7 +49,8 @@ app.post("/api/register/", UserController.register);
 // Endpoint para iniciar sesión
 app.post("/api/login/", UserController.login)
 // Endpoint para obtener la información del usuario
-app.get("/api/user/", UserController.getUser)
+app.get("/api/user/", UserController.getUser);
+app.put("/api/user/", UserController.update);
 
 // Endpoint para clases
 app.post("/api/class/", ClassController.create);

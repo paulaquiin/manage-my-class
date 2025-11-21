@@ -47,6 +47,18 @@ const UserController = {
         } catch (error) {
             return res.status(400).json({ success: false });
         }
+    },
+
+    async update(req, res) {
+        const { userId, user, dni, password, activityPercentage, examPercentage} = req.body;
+        try {
+            await User.update(userId, user, dni, activityPercentage, examPercentage, password);
+            return res.status(201).json({ success: true });
+
+        } catch (error) {
+            console.log(error);
+            return res.status(400).json({ success: false });
+        }
     }
 };
 
