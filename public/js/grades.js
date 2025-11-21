@@ -301,7 +301,7 @@ async function handleQuartersTable() {
     // Por cada estudiante creado en la tabla, voy a añadir a cada estudiante 3 celdas, una para cada trimestre.
     const rows = quartersTable.querySelectorAll(".row:not(.thead)");
     rows.forEach((tr) => {
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 2; i++) {
             const newTd = document.createElement("div");
             newTd.textContent = "-";
             tr.insertBefore(newTd, tr.lastElementChild);
@@ -318,6 +318,7 @@ async function fetchQuartersScore() {
         `http://localhost:3000/api/grades/averages?className=${className}&userId=${userId}`,
         "GET",
     );
+    // Ahora, obtiene el porcentaje establecido por el profesor para la nota de examenes y actividades
     const grades = result.rows;
     // Por cada resultado, se busca el student_id, se identifica el quarter y se le aplica el score devuelto.
     grades.forEach((grade) => {
@@ -338,7 +339,8 @@ async function fetchQuartersScore() {
         columns.forEach((col) => {
             avgScore += col.textContent !== "-" ? parseFloat(col.textContent) : 0;
         })
-        row.querySelector("div:last-child").textContent = Math.round((avgScore / columns.length) * 10) / 10;
+        const result = Math.round((avgScore / columns.length) * 10) / 10;
+        row.querySelector("div:last-child").textContent = result
         avgScore = 0;
     })
 }

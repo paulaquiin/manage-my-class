@@ -248,6 +248,10 @@
             .table#quarters-table {
                 .row {
                     &.thead {
+                        & > div {
+                            cursor: default;
+                            width: 190px;
+                        }
                         div:not(:first-child):not(:last-child) {
                             &:hover {
                                 border: 2px solid transparent;
@@ -257,6 +261,13 @@
 
                     &:not(.thead) {
                         &>div {
+                            width: 190px;
+                            background-color: #fff;
+                            // outline: none;
+                            outline: 2px solid #F7F6F8;
+                            &::after {
+                                content: "";
+                            }
                             &:not(:first-child):not(:last-child) {
 
                                 &:focus,
@@ -266,6 +277,8 @@
                             }
                         }
                     }
+
+                    
                 }
             }
         }

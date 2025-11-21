@@ -56,9 +56,31 @@ class Grade {
         return new Promise((resolve, reject) => {
             db.all(
                 `
-                    SELECT g.student_id, a.quarter, ROUND(AVG(g.score), 1) AS score
+                    SELECT 
+                    g.student_id, 
+                    a.quarter, 
+                    ROUND(
+                        SUM(
+                            g.score * 
+                            CASE 
+                                WHEN a.type = "exam" THEN u.examPercentage 
+                                WHEN a.type = "activity" THEN u.activityPercentage 
+                                ELSE 0
+                            END
+                        ) 
+                        / 
+                        SUM(
+                            CASE 
+                                WHEN a.type = "exam" THEN u.examPercentage 
+                                WHEN a.type = "activity" THEN u.activityPercentage 
+                                ELSE 0
+                            END
+                        ), 
+                        1
+                    ) AS score
                     FROM grades g
                     JOIN activities a ON g.activity_id = a.id
+                    JOIN users u ON g.user_id = u.id
                     WHERE g.user_id = ? AND g.class_id = (SELECT id FROM classes WHERE name = ? AND user_id = ?)
                     GROUP BY g.student_id, a.quarter
                 `,
