@@ -50,9 +50,9 @@ const UserController = {
     },
 
     async update(req, res) {
-        const { userId, user, dni, password, activityPercentage, examPercentage} = req.body;
+        const { userId, user, dni, photo, password, activityPercentage, examPercentage} = req.body;
         try {
-            await User.update(userId, user, dni, activityPercentage, examPercentage, password);
+            await User.update(userId, user, dni, photo, activityPercentage, examPercentage, password);
             return res.status(201).json({ success: true });
 
         } catch (error) {

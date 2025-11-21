@@ -15,6 +15,7 @@ db.run(
         user TEXT UNIQUE NOT NULL,
         password TEXT NOT NULL,
         dni TEXT NOT NULL,
+        photo TEXT,
         activityPercentage INTEGER NOT NULL,
         examPercentage INTEGER NOT NULL
     )

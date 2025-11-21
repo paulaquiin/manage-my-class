@@ -2,10 +2,11 @@ const bcrypt = require("bcrypt");
 const db = require("../database");
 
 class User {
-    constructor(id, user, dni, activityPercentage, examPercentage, password,) {
+    constructor(id, user, dni, photo, activityPercentage, examPercentage, password,) {
         this.id = id;
         this.user = user;
         this.dni = dni;
+        this.photo = photo;
         this.activityPercentage = activityPercentage;
         this.examPercentage = examPercentage;
         this.password = password;
@@ -40,7 +41,7 @@ class User {
                         reject(error);
                     } else {
                         if (row) {
-                            const user = new User(row.id, row.user, row.dni, null, null, row.password,)
+                            const user = new User(row.id, row.user, row.dni, null, null, null, row.password,)
                             resolve(user);
                         } else {
                             reject(null);
@@ -53,13 +54,13 @@ class User {
 
     static getById(id) {
         return new Promise((resolve, reject) => {
-            db.get("SELECT id, user, dni, activityPercentage, examPercentage FROM users WHERE id = ?",
+            db.get("SELECT id, user, dni, photo, activityPercentage, examPercentage FROM users WHERE id = ?",
                 [id],
                 function (error, row) {
                     if (error) {
                         reject(error);
                     } else {
-                        const user = new User(row.id, row.user, row.dni, row.activityPercentage, row.examPercentage);
+                        const user = new User(row.id, row.user, row.dni, row.photo, row.activityPercentage, row.examPercentage);
                         resolve(user);
                     }
                 }
@@ -67,7 +68,7 @@ class User {
         });
     }
 
-    static update(id, user, dni, activityPercentage, examPercentage, password) {
+    static update(id, user, dni, photo, activityPercentage, examPercentage, password) {
         return new Promise(async (resolve, reject) => {
 
             const fields = [];
@@ -81,6 +82,11 @@ class User {
             if (dni !== "") {
                 fields.push("dni = ?");
                 values.push(dni);
+            }
+
+            if (photo !== "") {
+                fields.push("photo = ?");
+                values.push(photo);
             }
 
             if (activityPercentage !== "") {
