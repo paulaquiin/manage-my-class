@@ -1,0 +1,90 @@
+@import "reset";
+@import "global";
+@import "layout";
+@import "button";
+@import "form";
+
+.configuration {
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 3rem;
+        width: 100%;
+        padding: 2rem;
+
+        .header {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .content {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            
+            form {
+                max-width: 800px;
+                .section {
+                    width: 100%;
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 3rem;
+                    padding: 2rem;
+                    background-color: #fff;
+                    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+                    .title {
+                        width: 100%;
+                    }
+                    .photo-wrapper {
+                        flex: 0 1 200px;
+
+                        label {
+                            display: flex;
+                            align-items: center;
+                            gap: 1rem;
+
+                            .info {
+                                display: flex;
+                                flex-direction: column;
+                                align-items: flex-start;
+                                gap: 0.5rem;
+                                order: 1;
+
+                                .muted {
+                                    font-size: 0.7rem;
+                                }
+                            }
+
+                            img,
+                            svg {
+                                width: 60px;
+                                height: 60px;
+                                border-radius: 100%;
+                                background-color: $secondary;
+                                border: none;
+                            }
+                        }
+
+                        input[type="file"] {
+                            display: none;
+                        }
+                    }
+
+                    .info {
+                        flex: 1;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 1rem;
+                    }
+                }
+            }
+        }
+    }
+
+}
