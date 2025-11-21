@@ -37,17 +37,24 @@ form.addEventListener("submit", async (e) => {
 
 
     const { user, dni, activityPercentage, examPercentage, password } = Object.fromEntries(formData.entries());
+    if (
+        ((parseInt(activityPercentage) + parseInt(examPercentage)) > 100) ||
+        ((parseInt(activityPercentage) + parseInt(examPercentage)) < 100)
+    ) 
+    {
+        const errorEl = form.querySelector("#percentage-overflow-error");
+        errorEl.classList.add("show");
+        return;
+    }
 
-
-    console.log(user);
-    console.log(dni);
-    console.log(activityPercentage);
-    console.log(examPercentage);
-    console.log(password);
-    await handleFetch(
+    const result = await handleFetch(
         `http://localhost:3000/api/user`,
         "PUT",
         JSON.stringify({ userId, user, dni, activityPercentage, examPercentage, password })
     )
+
+    if (result.success) {
+        window.location.reload();
+    }
 
 })
