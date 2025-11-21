@@ -2,11 +2,13 @@ const bcrypt = require("bcrypt");
 const db = require("../database");
 
 class User {
-    constructor(id, user, password, dni) {
+    constructor(id, user, dni, activityPercentage, examPercentage,  password,) {
         this.id = id;
         this.user = user;
-        this.password = password;
         this.dni = dni;
+        this.activityPercentage = activityPercentage;
+        this.examPercentage = examPercentage;
+        this.password = password;
     }
 
     static async create(user, password, dni) {
@@ -15,8 +17,8 @@ class User {
         const hashedPwd = await bcrypt.hash(password, 10);
         return new Promise((resolve, reject) => {
             db.run(
-                "INSERT INTO users (user, password, dni) VALUES (?, ?, ?)",
-                [user, hashedPwd, dni],
+                "INSERT INTO users (user, password, dni, activityPercentage, examPercentage) VALUES (?, ?, ?, ?, ?)",
+                [user, hashedPwd, dni, 50, 50],
                 function (error) {
                     if (error) {
                         reject(error);
@@ -31,14 +33,14 @@ class User {
 
     static getByUsername(username) {
         return new Promise((resolve, reject) => {
-            db.get("SELECT * FROM users WHERE user = ?",
+            db.get("SELECT id, user, dni, password FROM users WHERE user = ?",
                 [username],
                 function (error, row) {
                     if (error) {
                         reject(error);
                     } else {
                         if (row) {
-                            const user = new User(row.id, row.user, row.password, row.dni)
+                            const user = new User(row.id, row.user, row.dni, null, null, row.password, )
                             resolve(user);
                         } else {
                             reject(null);
@@ -51,13 +53,13 @@ class User {
 
     static getById(id) {
         return new Promise((resolve, reject) => {
-            db.get("SELECT * FROM users WHERE id = ?",
+            db.get("SELECT id, user, dni, activityPercentage, examPercentage FROM users WHERE id = ?",
                 [id],
                 function (error, row) {
                     if (error) {
                         reject(error);
                     } else {
-                        const user = new User(row.id, row.user, row.password, row.dni);
+                        const user = new User(row.id, row.user, row.dni, row.activityPercentage, row.examPercentage);
                         resolve(user);
                     } 
                 }

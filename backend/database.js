@@ -14,7 +14,9 @@ db.run(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user TEXT UNIQUE NOT NULL,
         password TEXT NOT NULL,
-        dni TEXT NOT NULL
+        dni TEXT NOT NULL,
+        activityPercentage INTEGER NOT NULL,
+        examPercentage INTEGER NOT NULL
     )
     `
 );

@@ -50,17 +50,14 @@
                         <div class="info">
                             <div class="row">
                                 <div class="form-group">
-                                    <label for="name" class="subtext">Nombre</label>
-                                    <input name="name" type="text" placeholder="Olivia" required />
+                                    <label for="user" class="subtext">Usuario (inicio de sesión)</label>
+                                    <input id="user" name="user" type="text" placeholder="Olivia123" required />
                                 </div>
                                 <div class="form-group">
-                                    <label for="surname" class="subtext">Apellidos</label>
-                                    <input name="surname" type="text" placeholder="Martinez" required />
+                                    <label for="dni" class="subtext">DNI</label>
+                                    <input id="dni" name="dni" type="text" placeholder="12341234Q" required />
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="email" class="subtext">Correo electrónico</label>
-                                <input name="email" type="mail" placeholder="olivia.martinez@gmail.com" required />
+
                             </div>
                         </div>
                     </div>
@@ -71,12 +68,16 @@
                         <div class="info">
                             <div class="row">
                                 <div class="form-group">
-                                    <label for="activity-percentage" class="subtext">Porcentaje de nota para las actividades</label>
-                                    <input min="1" max="100" name="activity-percentage" type="number" placeholder="" required />
+                                    <label for="activity-percentage" class="subtext">Porcentaje de nota para las
+                                        actividades (%)</label>
+                                    <input id="activity-percentage" min="1" max="100" name="activity-percentage" type="number" placeholder=""
+                                        required />
                                 </div>
                                 <div class="form-group">
-                                    <label for="exam-percentage" class="subtext">Porcentaje de nota para los examenes</label>
-                                    <input min="1" max="100" name="exam-percentage" type="number" placeholder="" required />
+                                    <label for="exam-percentage" class="subtext">Porcentaje de nota para los
+                                        examenes (%)</label>
+                                    <input id="exam-percentage" min="1" max="100" name="exam-percentage" type="number" placeholder=""
+                                        required />
                                 </div>
                             </div>
                         </div>
@@ -110,7 +111,7 @@
     </main>
 
     <script type="module" src="/js/sidebar.js"></script>
-    <script type="module" src="/js/classes.js"></script>
+    <script type="module" src="/js/configuration.js"></script>
 </body>
 
 </html>
