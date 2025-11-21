@@ -46,7 +46,6 @@ function handleChosenPhotoPreview() {
         reader.readAsDataURL(file);
         reader.onload = async (event) => {
             photoLabel.innerHTML = `<img src="${event.target.result}" />`
-            photo.src = result.info.photo;
         }
     })
 }
