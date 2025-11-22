@@ -52,13 +52,32 @@ class Class {
     static delete(id, userId) {
         return new Promise((resolve, reject) => {
             db.run(
-                "DELETE FROM classes WHERE id = ? AND user_id = ?",
+                `
+                    DELETE FROM classes 
+                    WHERE id = ? AND user_id = ?
+                `,
                 [id, userId],
                 function (error) {
                     if (error) {
                         reject(error);
                     } else {
-                        resolve(true);
+                        db.run(
+                            `
+                                DELETE FROM students
+                                WHERE id IN (
+                                    SELECT s.id
+                                    FROM students s
+                                    LEFT JOIN student_classes sc ON s.id = sc.student_id
+                                    WHERE sc.student_id IS NULL
+                                )
+                            `,
+                            function (error2) {
+                                if (error2) {
+                                    reject(error2);
+                                } else {
+                                    resolve(true);
+                                }
+                            });
                     }
                 });
         });

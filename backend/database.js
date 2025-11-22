@@ -80,7 +80,7 @@ db.run(
         FOREIGN KEY (activity_id) REFERENCES activities(id) ON DELETE CASCADE
         FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE
         FOREIGN KEY (user_id) REFERENCES users(id)
-        FOREIGN KEY (class_id) REFERENCES classes(id)
+        FOREIGN KEY (class_id) REFERENCES classes(id) ON DELETE CASCADE,
 
         UNIQUE (activity_id, student_id, class_id, user_id)
     )
