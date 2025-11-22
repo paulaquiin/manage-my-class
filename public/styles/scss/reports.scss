@@ -1,0 +1,23 @@
+@import "reset";
+@import "global";
+@import "layout";
+@import "button";
+
+.reports {
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 3rem;
+        width: 100%;
+        padding: 2rem;
+        .header {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+    }
+}

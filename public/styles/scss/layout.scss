@@ -1,7 +1,8 @@
 main.classes,
 main.students,
 main.grades,
-main.configuration {
+main.configuration,
+main.reports {
     display: grid;
     grid-template-columns: 0.15fr 1fr;
     height: 100%;
@@ -86,7 +87,9 @@ main.configuration {
 
     main.classes,
     main.students,
-    main.grades {
+    main.grades,
+    main.configuration,
+    main.reports {
         aside {
             & > div {
                 align-items: flex-start;
