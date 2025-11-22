@@ -56,12 +56,14 @@ app.put("/api/user/", UserController.update);
 app.post("/api/class/", ClassController.create);
 app.get("/api/class/", ClassController.getAll)
 app.delete("/api/class/", ClassController.delete)
+app.get("/api/top-approved-class/", ClassController.getTopApprovedClass)
 
 // Endpoint para alumnos
 app.post("/api/student/", StudentController.create);
 app.get("/api/student/", StudentController.getAll);
 app.delete("/api/student/", StudentController.delete);
 app.get("/api/student-by-class-name/", StudentController.getAllByClassName)
+app.get("/api/student-count/", StudentController.getTotalByUser)
 
 // Endpoints para las notas
 app.get("/api/grade/", GradeController.getAll)

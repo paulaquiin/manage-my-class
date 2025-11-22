@@ -59,10 +59,41 @@ class Class {
                         reject(error);
                     } else {
                         resolve(true);
-                    } 
+                    }
                 });
         });
     }
+
+    static getTopApprovedClass(userId) {
+        return new Promise((resolve, reject) => {
+            db.get(
+                `
+                    SELECT 
+                    c.name,
+                    c.grade,
+                    ROUND(
+                        (COUNT
+                            (CASE WHEN g.score >= 5 THEN 1 END) * 100.0) / COUNT(g.id), 2
+                    ) AS approval_percentage
+                    FROM classes c
+                    JOIN student_classes sc ON c.id = sc.class_id
+                    JOIN students s ON s.id = sc.student_id
+                    JOIN grades g ON g.student_id = s.id AND g.class_id = c.id
+                    WHERE c.user_id = ?
+                    GROUP BY c.id
+                    LIMIT 1;
+                `,
+                [userId],
+                function (error, rows) {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(rows);
+                    }
+                }
+            )
+        })
+    }
 }
 
-module.exports = Class
+module.exports = Classs
