@@ -142,6 +142,29 @@ class Student {
             );
         });
     }
+
+    static getTotalByUser(userId) {
+        return new Promise((resolve, reject) => {
+            db.get(
+                `
+                    SELECT COUNT(*) AS total_students
+                    FROM students
+                    WHERE user_id = ?;
+                `,
+                [userId],
+                (error, row) => {
+                    console.log(row);
+                    console.log(error);
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(row ? row.total_students : 0);
+                    }
+                }
+            );
+        });
+    }
+
 }
 
 module.exports = Student

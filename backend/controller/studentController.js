@@ -39,7 +39,18 @@ const StudentController = {
         } catch (error) {
             res.status(400).json({ success: false, error: error.message });
         }
-    }
+    },
+
+    async getTotalByUser(req, res) {
+        const { userId } = req.query;
+        console.log(userId);
+        try {
+            const rows = await Student.getTotalByUser(userId);
+            res.status(200).json({ success: true, rows });
+        } catch (error) {
+            res.status(400).json({ success: false });
+        }
+    },
 };
 
 module.exports = StudentController;
