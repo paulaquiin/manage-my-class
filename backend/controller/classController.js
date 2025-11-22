@@ -39,6 +39,7 @@ const ClassController = {
         const { userId } = req.query;
         try {
             const classroom = await Class.getTopApprovedClass(userId);
+            console.log(classroom);
             res.status(200).json({ success: true, classroom });
         } catch (error) {
             console.log(error);

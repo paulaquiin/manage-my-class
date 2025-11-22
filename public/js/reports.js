@@ -20,18 +20,27 @@ async function getBestClass() {
         "GET",
     )
 
-    const clone = template.content.cloneNode(true);
-    const mutedEl = clone.querySelector("#subtitle");
-    const titleEl = clone.querySelector("#title");
-    const gradeEl = clone.querySelector("#grade");
-    const resultEl = clone.querySelector("#result");
+    if (result.success) {
+        const clone = template.content.cloneNode(true);
+        const mutedEl = clone.querySelector("#subtitle");
+        const titleEl = clone.querySelector("#title");
+        const gradeEl = clone.querySelector("#grade");
+        const resultEl = clone.querySelector("#result");
 
-    mutedEl.textContent = "Mejor Clase (Aprobados)";
-    titleEl.textContent = result.classroom.name;
-    gradeEl.textContent = result.classroom.grade;
-    resultEl.textContent = `${result.classroom.approval_percentage}%`;
+        mutedEl.textContent = "Mejor Clase (Aprobados)";
+        if (result.classroom) {
+            titleEl.textContent = result.classroom.name;
+            gradeEl.textContent = result.classroom.grade;
+            resultEl.textContent = `${result.classroom.approval_percentage}%`;
+        } else {
+            titleEl.textContent = "-";
+            resultEl.textContent = "-%";
 
-    content.appendChild(clone);
+        }
+    
+    
+        content.appendChild(clone);
+    }
 }
 
 async function getTotalUsers() {
@@ -39,5 +48,19 @@ async function getTotalUsers() {
         `http://localhost:3000/api/student-count?userId=${userId}`,
         "GET",
     )
-    // console.log(result);
+
+    if (result.success) {
+        const clone = template.content.cloneNode(true);
+        const mutedEl = clone.querySelector("#subtitle");
+
+        const titleEl = clone.querySelector("#title");
+        const resultEl = clone.querySelector("#result");
+    
+        // mutedEl.textContent = "Cantidad de alumnos";
+        mutedEl.textContent = "Todas las clases"
+        titleEl.textContent = "Cantidad de alumnos";
+        resultEl.textContent = result.quantity;
+    
+        content.appendChild(clone);
+    }
 }

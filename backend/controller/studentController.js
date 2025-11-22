@@ -45,8 +45,8 @@ const StudentController = {
         const { userId } = req.query;
         console.log(userId);
         try {
-            const rows = await Student.getTotalByUser(userId);
-            res.status(200).json({ success: true, rows });
+            const quantity = await Student.getTotalByUser(userId);
+            res.status(200).json({ success: true, quantity });
         } catch (error) {
             res.status(400).json({ success: false });
         }
