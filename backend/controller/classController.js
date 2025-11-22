@@ -38,8 +38,8 @@ const ClassController = {
     async getTopApprovedClass(req, res) {
         const { userId } = req.query;
         try {
-            const rows = await Class.getTopApprovedClass(userId);
-            res.status(200).json({ success: true, rows });
+            const classroom = await Class.getTopApprovedClass(userId);
+            res.status(200).json({ success: true, classroom });
         } catch (error) {
             console.log(error);
             res.status(400).json({ success: false, error: error });

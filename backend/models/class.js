@@ -84,11 +84,11 @@ class Class {
                     LIMIT 1;
                 `,
                 [userId],
-                function (error, rows) {
+                function (error, row) {
                     if (error) {
                         reject(error);
                     } else {
-                        resolve(rows);
+                        resolve(row);
                     }
                 }
             )
@@ -96,4 +96,4 @@ class Class {
     }
 }
 
-module.exports = Classs
+module.exports = Class
