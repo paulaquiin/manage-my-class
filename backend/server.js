@@ -69,6 +69,7 @@ app.get("/api/student-count/", StudentController.getTotalByUser)
 app.get("/api/grade/", GradeController.getAll)
 app.get("/api/grades/averages", GradeController.getAverages);
 app.post("/api/grade/", GradeController.create);
+app.get("/api/grade-overall-approval-rate/", GradeController.getOverallApprovalRate);
 
 // Endpoints para las actividades
 app.post("/api/activity/", ActivityController.create);

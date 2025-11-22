@@ -10,8 +10,9 @@ const template = document.getElementById("box-template");
 init();
 
 function init() {
-    getBestClass();
     getTotalUsers();
+    getOverallApprovalRate();
+    getBestClass();
 }
 
 async function getBestClass() {
@@ -35,10 +36,9 @@ async function getBestClass() {
         } else {
             titleEl.textContent = "-";
             resultEl.textContent = "-%";
-
         }
-    
-    
+
+
         content.appendChild(clone);
     }
 }
@@ -55,12 +55,39 @@ async function getTotalUsers() {
 
         const titleEl = clone.querySelector("#title");
         const resultEl = clone.querySelector("#result");
-    
-        // mutedEl.textContent = "Cantidad de alumnos";
+
         mutedEl.textContent = "Todas las clases"
         titleEl.textContent = "Cantidad de alumnos";
         resultEl.textContent = result.quantity;
-    
+
+        content.appendChild(clone);
+    }
+}
+
+async function getOverallApprovalRate() {
+    const result = await handleFetch(
+        `http://localhost:3000/api/grade-overall-approval-rate?userId=${userId}`,
+        "GET",
+    )
+
+    console.log(result);
+
+    if (result.success) {
+        const clone = template.content.cloneNode(true);
+        const mutedEl = clone.querySelector("#subtitle");
+        const titleEl = clone.querySelector("#title");
+        const resultEl = clone.querySelector("#result");
+
+        mutedEl.textContent = "Todas las clases (Aprobados)";
+        if (result.rate) {
+            resultEl.textContent = `${result.rate}%`;
+            titleEl.textContent = "Cantidad de aprobados";
+        } else {
+            titleEl.textContent = "-";
+            resultEl.textContent = "-%";
+        }
+
+
         content.appendChild(clone);
     }
 }

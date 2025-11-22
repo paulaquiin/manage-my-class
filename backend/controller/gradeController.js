@@ -29,7 +29,17 @@ const GradeController = {
         } catch (error) {
             res.status(400).json({ success: false, error: error.message });
         }
-    }
+    },
+
+    async getOverallApprovalRate(req, res) {
+        const { userId } = req.query;
+        try {
+            const rate = await Grade.getOverallApprovalRate(userId);
+            res.status(200).json({ success: true, rate });
+        } catch (error) {
+            res.status(400).json({ success: false });
+        }
+    },
 };
 
 module.exports = GradeController;

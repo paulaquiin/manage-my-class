@@ -94,6 +94,34 @@ class Grade {
                 });
         });
     }
+
+    static getOverallApprovalRate(userId) {
+        return new Promise((resolve, reject) => {
+            db.get(
+                `
+                    SELECT 
+                        ROUND(
+                            (SUM(CASE WHEN g.score >= 5 THEN 1 ELSE 0 END) * 100.0) / COUNT(g.id),
+                            2
+                        ) AS overall_approval_rate
+                    FROM grades g
+                    INNER JOIN activities a ON g.activity_id = a.id
+                    INNER JOIN classes c ON a.class_id = c.id
+                    WHERE c.user_id = ?;
+                `,
+                [userId],
+                (error, row) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(row ? row.overall_approval_rate || 0 : 0);
+                    }
+                }
+            );
+        });
+    }
+
+
 }
 
 module.exports = Grade
