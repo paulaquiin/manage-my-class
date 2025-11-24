@@ -45,6 +45,18 @@ const ClassController = {
             console.log(error);
             res.status(400).json({ success: false, error: error });
         }
+    },
+
+    async getTopFailureClass(req, res) {
+        const { userId } = req.query;
+        try {
+            const classroom = await Class.getTopFailureClass(userId);
+            console.log(classroom);
+            res.status(200).json({ success: true, classroom });
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({ success: false, error: error });
+        }
     }
 };
 

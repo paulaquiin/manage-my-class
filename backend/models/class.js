@@ -113,6 +113,40 @@ class Class {
             )
         })
     }
+
+    static getTopFailureClass(userId) {
+        return new Promise((resolve, reject) => {
+            db.get(
+                `
+                    SELECT 
+                        c.name,
+                        c.grade,
+                        ROUND(
+                            (SUM(CASE WHEN g.score < 5 THEN 1 ELSE 0 END) * 100.0) / COUNT(g.id),
+                            2
+                        ) AS failure_percentage
+                        FROM classes c
+                        JOIN student_classes sc ON c.id = sc.class_id
+                        JOIN students s ON s.id = sc.student_id
+                        JOIN grades g ON g.student_id = s.id AND g.class_id = c.id
+                        WHERE c.user_id = ?
+                        GROUP BY c.id
+                        ORDER BY failure_percentage DESC
+                        LIMIT 1;
+                `,
+                [userId],
+                function (error, row) {
+                    console.log(row);
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(row || null);
+                    }
+                }
+            );
+        });
+    }
+
 }
 
 module.exports = Class

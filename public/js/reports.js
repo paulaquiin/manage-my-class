@@ -14,6 +14,7 @@ async function init() {
     await getOverallApprovalRate();
     await getOverallFailureRate();
     await getBestClass();
+    await getWorstClass();
 }
 
 async function getBestClass() {
@@ -34,6 +35,35 @@ async function getBestClass() {
             titleEl.textContent = result.classroom.name;
             gradeEl.textContent = result.classroom.grade;
             resultEl.textContent = `${result.classroom.approval_percentage}%`;
+        } else {
+            titleEl.textContent = "-";
+            resultEl.textContent = "-%";
+        }
+
+
+        content.appendChild(clone);
+    }
+}
+async function getWorstClass() {
+    const result = await handleFetch(
+        `http://localhost:3000/api/top-failure-class?userId=${userId}`,
+        "GET",
+    )
+
+    console.log(result);
+
+    if (result.success) {
+        const clone = template.content.cloneNode(true);
+        const mutedEl = clone.querySelector("#subtitle");
+        const titleEl = clone.querySelector("#title");
+        const gradeEl = clone.querySelector("#grade");
+        const resultEl = clone.querySelector("#result");
+
+        mutedEl.textContent = "Peor Clase (Suspensos)";
+        if (result.classroom) {
+            titleEl.textContent = result.classroom.name;
+            gradeEl.textContent = result.classroom.grade;
+            resultEl.textContent = `${result.classroom.failure_percentage}%`;
         } else {
             titleEl.textContent = "-";
             resultEl.textContent = "-%";
@@ -71,8 +101,6 @@ async function getOverallApprovalRate() {
         "GET",
     )
 
-    console.log(result);
-
     if (result.success) {
         const clone = template.content.cloneNode(true);
         const mutedEl = clone.querySelector("#subtitle");
@@ -92,8 +120,6 @@ async function getOverallFailureRate() {
         `http://localhost:3000/api/grade-overall-failure-rate?userId=${userId}`,
         "GET",
     )
-
-    console.log(result);
 
     if (result.success) {
         const clone = template.content.cloneNode(true);

@@ -57,6 +57,7 @@ app.post("/api/class/", ClassController.create);
 app.get("/api/class/", ClassController.getAll)
 app.delete("/api/class/", ClassController.delete)
 app.get("/api/top-approved-class/", ClassController.getTopApprovedClass)
+app.get("/api/top-failure-class/", ClassController.getTopFailureClass)
 
 // Endpoint para alumnos
 app.post("/api/student/", StudentController.create);
