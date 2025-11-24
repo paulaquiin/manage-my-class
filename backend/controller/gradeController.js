@@ -40,6 +40,15 @@ const GradeController = {
             res.status(400).json({ success: false });
         }
     },
+    async getOverallFailureRate(req, res) {
+        const { userId } = req.query;
+        try {
+            const rate = await Grade.getOverallFailureRate(userId);
+            res.status(200).json({ success: true, rate });
+        } catch (error) {
+            res.status(400).json({ success: false });
+        }
+    },
 };
 
 module.exports = GradeController;

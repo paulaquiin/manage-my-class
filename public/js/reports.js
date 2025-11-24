@@ -9,10 +9,11 @@ const template = document.getElementById("box-template");
 // init es la función que arranca todas las funciones
 init();
 
-function init() {
-    getTotalUsers();
-    getOverallApprovalRate();
-    getBestClass();
+async function init() {
+    await getTotalUsers();
+    await getOverallApprovalRate();
+    await getOverallFailureRate();
+    await getBestClass();
 }
 
 async function getBestClass() {
@@ -79,14 +80,30 @@ async function getOverallApprovalRate() {
         const resultEl = clone.querySelector("#result");
 
         mutedEl.textContent = "Todas las clases (Aprobados)";
-        if (result.rate) {
-            resultEl.textContent = `${result.rate}%`;
-            titleEl.textContent = "Cantidad de aprobados";
-        } else {
-            titleEl.textContent = "-";
-            resultEl.textContent = "-%";
-        }
+        titleEl.textContent = "Cantidad de aprobados";
+        resultEl.textContent = `${result.rate}%`;
 
+        content.appendChild(clone);
+    }
+}
+
+async function getOverallFailureRate() {
+    const result = await handleFetch(
+        `http://localhost:3000/api/grade-overall-failure-rate?userId=${userId}`,
+        "GET",
+    )
+
+    console.log(result);
+
+    if (result.success) {
+        const clone = template.content.cloneNode(true);
+        const mutedEl = clone.querySelector("#subtitle");
+        const titleEl = clone.querySelector("#title");
+        const resultEl = clone.querySelector("#result");
+
+        mutedEl.textContent = "Todas las clases (Suspensos)";
+        titleEl.textContent = "Cantidad de suspensos";
+        resultEl.textContent = `${result.rate}%`;
 
         content.appendChild(clone);
     }
