@@ -40,7 +40,7 @@ setOnCloseDialog(removeDialogPhotoPreview);
 // Recupera las clases de base de datos
 async function getStudents() {
     const result = await handleFetch(
-        `http://localhost:3000/api/student?userId=${userId}`,
+        `/api/student?userId=${userId}`,
         "GET",
     )
     if (result.success) {
@@ -128,7 +128,7 @@ function renderStudents(students) {
 async function deleteStudentById(id, className) {
 
     const result = await handleFetch(
-        "http://localhost:3000/api/student",
+        "/api/student",
         "DELETE",
         JSON.stringify({ id, className, userId })
     )
@@ -167,7 +167,7 @@ form.addEventListener("submit", async (e) => {
         reader.onload = async (event) => {
             photo = event.target.result
             const result = await handleFetch(
-                "http://localhost:3000/api/student",
+                "/api/student",
                 "POST",
                 JSON.stringify({ name, surname, classes, photo, userId })
             )
@@ -191,7 +191,7 @@ form.addEventListener("submit", async (e) => {
 // Rellena el selector del dialog con las clases
 async function fillClasses() {
     const result = await handleFetch(
-        `http://localhost:3000/api/class?userId=${userId}`,
+        `/api/class?userId=${userId}`,
         "GET",
     )
     if (result.success) {
