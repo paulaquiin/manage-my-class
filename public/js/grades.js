@@ -119,7 +119,7 @@ function updateDialogUI() {
 // Obtiene todos los estudiantes y los renderiza en la tabla
 async function fetchStudents() {
     const studentsResult = await handleFetch(
-        `http://localhost:3000/api/student-by-class-name?userId=${userId}&&className=${className}`,
+        `/api/student-by-class-name?userId=${userId}&&className=${className}`,
         "GET",
     )
     // Ahora se crea una fila por cada estudiantes
@@ -130,7 +130,7 @@ async function fetchStudents() {
 // Obtiene todas las actividades y las renderiza en la tabla
 async function fetchActivities() {
     const activitiesResult = await handleFetch(
-        `http://localhost:3000/api/activity?userId=${userId}&type=${type}&className=${className}`,
+        `/api/activity?userId=${userId}&type=${type}&className=${className}`,
         "GET",
     )
 
@@ -202,7 +202,7 @@ function renderActivities(activities) {
 async function fillScores() {
     // Primero obtengo todas las notas
     const result = await handleFetch(
-        `http://localhost:3000/api/grade?className=${className}&userId=${userId}`,
+        `/api/grade?className=${className}&userId=${userId}`,
         "GET",
     );
     const grades = result.rows;
@@ -315,7 +315,7 @@ async function handleQuartersTable() {
 async function fetchQuartersScore() {
     // Se hace una petición por clase, trayendose todos los alumnos, con todas sus actividades, tipo de actividad y la nota de esa actividad.
     const result = await handleFetch(
-        `http://localhost:3000/api/grades/averages?className=${className}&userId=${userId}`,
+        `/api/grades/averages?className=${className}&userId=${userId}`,
         "GET",
     );
     // Ahora, obtiene el porcentaje establecido por el profesor para la nota de examenes y actividades
@@ -366,7 +366,7 @@ async function saveGrades() {
             const activityScore = activityEl.textContent;
             // Por cada actividad de cada estudiante, se lanza petición
             await handleFetch(
-                `http://localhost:3000/api/grade`,
+                `/api/grade`,
                 "POST",
                 JSON.stringify({ activityScore, activityId, studentId, userId, className })
             )
@@ -390,7 +390,7 @@ async function handleClasses() {
     openDialog.classList.add("hide");
     // Listar las clases
     const result = await handleFetch(
-        `http://localhost:3000/api/class?userId=${userId}`,
+        `/api/class?userId=${userId}`,
         "GET",
     )
     if (result.success) {
@@ -444,7 +444,7 @@ form.addEventListener("submit", async (e) => {
 
     // Añado una nueva actividad o edito una existente
     const result = await handleFetch(
-        "http://localhost:3000/api/activity",
+        "/api/activity",
         editActivityId ? "PUT" : "POST",
         editActivityId ? JSON.stringify({ name, quarterActivity, activityId: editActivityId }) : JSON.stringify({ name, type, userId, className, quarterActivity })
     );
@@ -454,7 +454,7 @@ form.addEventListener("submit", async (e) => {
         // de ellos para esta actividad
         students.forEach(async (student) => {
             const result2 = await handleFetch(
-                "http://localhost:3000/api/grade",
+                "/api/grade",
                 "POST",
                 JSON.stringify({
                     activityId: result.activityId,

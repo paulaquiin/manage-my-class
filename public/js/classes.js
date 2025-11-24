@@ -26,7 +26,7 @@ function init() {
 // Recupera las clases de base de datos
 export async function getClasses() {
     const result = await handleFetch(
-        `http://localhost:3000/api/class?userId=${userId}`,
+        `/api/class?userId=${userId}`,
         "GET",
     )
     if (result.success) {
@@ -66,7 +66,7 @@ function renderClasses(classes) {
 async function deleteClassById(id) {
 
     const result = await handleFetch(
-        "http://localhost:3000/api/class",
+        "/api/class",
         "DELETE",
         JSON.stringify({ id, userId })
     )
@@ -126,7 +126,7 @@ form.addEventListener("submit", async (e) => {
     const icon = iconEl.dataset.id;
 
     const result = await handleFetch(
-        "http://localhost:3000/api/class",
+        "/api/class",
         "POST",
         JSON.stringify({ name, course, icon, userId })
     )

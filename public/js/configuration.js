@@ -23,7 +23,7 @@ async function loadConfig() {
 
     // Información del usuario
     const result = await handleFetch(
-        `http://localhost:3000/api/user?userId=${userId}`,
+        `/api/user?userId=${userId}`,
         "GET",
     )
 
@@ -76,7 +76,7 @@ form.addEventListener("submit", async (e) => {
             photo = event.target.result
             console.log(photo);
             const result = await handleFetch(
-                `http://localhost:3000/api/user`,
+                `/api/user`,
                 "PUT",
                 JSON.stringify({ userId, user, dni, photo, activityPercentage, examPercentage, password })
             )

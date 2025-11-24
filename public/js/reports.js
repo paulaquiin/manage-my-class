@@ -19,7 +19,7 @@ async function init() {
 
 async function getBestClass() {
     const result = await handleFetch(
-        `http://localhost:3000/api/top-approved-class?userId=${userId}`,
+        `/api/top-approved-class?userId=${userId}`,
         "GET",
     )
 
@@ -46,7 +46,7 @@ async function getBestClass() {
 }
 async function getWorstClass() {
     const result = await handleFetch(
-        `http://localhost:3000/api/top-failure-class?userId=${userId}`,
+        `/api/top-failure-class?userId=${userId}`,
         "GET",
     )
 
@@ -76,7 +76,7 @@ async function getWorstClass() {
 
 async function getTotalUsers() {
     const result = await handleFetch(
-        `http://localhost:3000/api/student-count?userId=${userId}`,
+        `/api/student-count?userId=${userId}`,
         "GET",
     )
 
@@ -97,7 +97,7 @@ async function getTotalUsers() {
 
 async function getOverallApprovalRate() {
     const result = await handleFetch(
-        `http://localhost:3000/api/grade-overall-approval-rate?userId=${userId}`,
+        `/api/grade-overall-approval-rate?userId=${userId}`,
         "GET",
     )
 
@@ -117,7 +117,7 @@ async function getOverallApprovalRate() {
 
 async function getOverallFailureRate() {
     const result = await handleFetch(
-        `http://localhost:3000/api/grade-overall-failure-rate?userId=${userId}`,
+        `/api/grade-overall-failure-rate?userId=${userId}`,
         "GET",
     )
 

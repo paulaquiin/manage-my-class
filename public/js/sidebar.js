@@ -32,7 +32,7 @@ function highlightCurrentItem() {
 async function renderUserInfo() {
     const userId = localStorage.getItem("user_id");
     const result = await handleFetch(
-        `http://localhost:3000/api/user?userId=${userId}`,
+        `/api/user?userId=${userId}`,
         "GET",
     )
 

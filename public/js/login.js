@@ -8,7 +8,7 @@ form.addEventListener("submit", async (e) => {
     const { user, password } = Object.fromEntries(formData.entries());
 
     const result = await handleFetch(
-        "http://localhost:3000/api/login",
+        "/api/login",
         "POST",
         JSON.stringify({ user, password }),
         false

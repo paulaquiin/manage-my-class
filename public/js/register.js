@@ -9,7 +9,7 @@ form.addEventListener("submit", async (e) => {
     const { user, password, dni } = Object.fromEntries(formData.entries());
 
     const result = await handleFetch(
-        "http://localhost:3000/api/register",
+        "/api/register",
         "POST",
         JSON.stringify({ user, password, dni }),
         false
