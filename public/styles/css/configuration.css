@@ -435,30 +435,6 @@ input[type=submit]:hover {
   border-color: #782fbd;
 }
 
-dialog {
-  width: 100%;
-  max-width: 400px;
-  max-height: 600px;
-  border: none;
-  outline: none;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-  padding: 1.5rem;
-  border-radius: 1rem;
-}
-dialog .header {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid #F7F6F8;
-}
-dialog .header .close-dialog {
-  cursor: pointer;
-}
-dialog .content {
-  padding-top: 1rem;
-}
-
 html, body {
   height: 100%;
   font-family: "Lexend", sans-serif;
@@ -576,7 +552,7 @@ form input[type=submit] {
   margin-left: auto;
 }
 
-.classes .container {
+.configuration .container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -584,7 +560,7 @@ form input[type=submit] {
   width: 100%;
   padding: 2rem;
 }
-.classes .container .header {
+.configuration .container .header {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -592,63 +568,59 @@ form input[type=submit] {
   align-items: center;
   gap: 1rem;
 }
-.classes .container .content {
+.configuration .container .content {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
 }
-.classes .container .content .box {
-  width: 100%;
-  flex: 0 1 450px;
-  max-width: 450px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1rem;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-  text-decoration: none;
+.configuration .container .content form {
+  max-width: 800px;
 }
-.classes .container .content .box .row {
+.configuration .container .content form .section {
   width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  padding: 2rem;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+.configuration .container .content form .section .title {
+  width: 100%;
+}
+.configuration .container .content form .section .photo-wrapper {
+  flex: 0 1 200px;
+}
+.configuration .container .content form .section .photo-wrapper label {
   display: flex;
   align-items: center;
   gap: 1rem;
-  justify-content: space-between;
 }
-.classes .container .content .box .row img {
-  width: 3rem;
-  height: 3rem;
-}
-.classes .container .content .box #title,
-.classes .container .content .box #class {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  width: 100%;
-}
-.classes .container .content .box #students {
-  font-size: 1rem;
-}
-.classes .container .content .box svg {
-  width: 1.25rem;
-  height: 1.25rem;
-  align-self: flex-end;
-  cursor: pointer;
-}
-.classes dialog .icon-group {
+.configuration .container .content form .section .photo-wrapper label .info {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 0.5rem;
+  order: 1;
 }
-.classes dialog .icon-group img {
-  width: 3rem;
-  height: 3rem;
-  cursor: pointer;
-  padding: 0.25rem;
-  border-radius: 0.5rem;
+.configuration .container .content form .section .photo-wrapper label .info .muted {
+  font-size: 0.7rem;
 }
-.classes dialog .icon-group img.selected {
-  outline: 2px solid #A855F7;
+.configuration .container .content form .section .photo-wrapper label img,
+.configuration .container .content form .section .photo-wrapper label svg {
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  background-color: #F7F6F8;
+  border: none;
+}
+.configuration .container .content form .section .photo-wrapper input[type=file] {
+  display: none;
+}
+.configuration .container .content form .section .info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }

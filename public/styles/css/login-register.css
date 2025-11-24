@@ -90,7 +90,7 @@ textarea {
 .error {
   display: none;
   font-size: 0.8rem;
-  color: red;
+  color: #E74C3C;
 }
 .error.show {
   display: inline;
@@ -98,7 +98,7 @@ textarea {
 
 .heading-1,
 h1 {
-  font-size: 3.75rem;
+  font-size: 3rem;
   color: #181818;
 }
 
@@ -166,7 +166,7 @@ textarea {
 .error {
   display: none;
   font-size: 0.8rem;
-  color: red;
+  color: #E74C3C;
 }
 .error.show {
   display: inline;
@@ -174,7 +174,7 @@ textarea {
 
 .heading-1,
 h1 {
-  font-size: 3.75rem;
+  font-size: 3rem;
   color: #181818;
 }
 
@@ -283,7 +283,7 @@ textarea {
 .error {
   display: none;
   font-size: 0.8rem;
-  color: red;
+  color: #E74C3C;
 }
 .error.show {
   display: inline;
@@ -291,7 +291,7 @@ textarea {
 
 .heading-1,
 h1 {
-  font-size: 3.75rem;
+  font-size: 3rem;
   color: #181818;
 }
 
@@ -359,7 +359,7 @@ input[type=submit]:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
+  gap: 1rem;
   flex: 1;
   border: 1px solid rgba(255, 255, 255, 0.3);
   background: rgba(255, 255, 255, 0.2);
@@ -393,14 +393,12 @@ input[type=submit]:hover {
   align-items: center;
   justify-content: center;
   gap: 2rem;
-  max-width: 350px;
+  max-width: 450px;
   text-align: center;
 }
 .login-register .container .left .tmp {
   width: 250px;
   height: 300px;
-  border: 3px solid rgb(100, 0, 100);
-  border-radius: 1rem;
 }
 .login-register .container .right {
   display: flex;

@@ -435,148 +435,7 @@ input[type=submit]:hover {
   border-color: #782fbd;
 }
 
-dialog {
-  width: 100%;
-  max-width: 400px;
-  max-height: 600px;
-  border: none;
-  outline: none;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-  padding: 1.5rem;
-  border-radius: 1rem;
-}
-dialog .header {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid #F7F6F8;
-}
-dialog .header .close-dialog {
-  cursor: pointer;
-}
-dialog .content {
-  padding-top: 1rem;
-}
-
-html, body {
-  height: 100%;
-  font-family: "Lexend", sans-serif;
-}
-
-body {
-  overflow-x: hidden;
-}
-
-*:not(dialog):focus {
-  outline: 1px solid #A855F7;
-}
-
-input,
-textarea {
-  font-family: "Lexend", sans-serif;
-}
-
-.text {
-  font-size: 1rem;
-  color: #181818;
-}
-
-.subtext {
-  font-size: 0.85rem;
-  color: #181818;
-}
-
-.muted {
-  font-size: 0.85rem;
-  color: #777777;
-}
-
-.bold {
-  font-weight: 600;
-}
-
-.error {
-  display: none;
-  font-size: 0.8rem;
-  color: #E74C3C;
-}
-.error.show {
-  display: inline;
-}
-
-.heading-1,
-h1 {
-  font-size: 3rem;
-  color: #181818;
-}
-
-.heading-2,
-h2 {
-  font-size: 2.75rem;
-  color: #181818;
-}
-
-.heading-3,
-h3 {
-  font-size: 1.75rem;
-  color: #181818;
-}
-
-.heading-4,
-h4 {
-  font-size: 1.35rem;
-  color: #181818;
-}
-
-.heading-5,
-h5 {
-  font-size: 1.25rem;
-  color: #181818;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-  width: 100%;
-}
-form .row {
-  width: 100%;
-  display: flex;
-  gap: 0.5rem;
-}
-form .form-group {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.5rem;
-}
-form label {
-  font-size: 1.1rem;
-}
-form input:not(input[type=submit]) {
-  width: 100%;
-  background-color: #F7F6F8;
-  border: 0;
-  height: 40px;
-  border-radius: 0.5rem;
-  padding: 0 0.5rem;
-  box-sizing: border-box;
-}
-form input:not(input[type=submit]):focus {
-  outline: 1px solid #A855F7;
-}
-form input:not(input[type=submit])::placeholder {
-  color: #a5a5a5;
-}
-form input[type=submit] {
-  margin-left: auto;
-}
-
-.classes .container {
+.reports .container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -584,7 +443,7 @@ form input[type=submit] {
   width: 100%;
   padding: 2rem;
 }
-.classes .container .header {
+.reports .container .header {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -592,63 +451,34 @@ form input[type=submit] {
   align-items: center;
   gap: 1rem;
 }
-.classes .container .content {
+.reports .container .content {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
+  max-width: 1500px;
 }
-.classes .container .content .box {
+.reports .container .content .box {
   width: 100%;
-  flex: 0 1 450px;
-  max-width: 450px;
+  flex: 0 1 400px;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 1rem;
+  gap: 0.5rem;
   padding: 1.5rem;
   border-radius: 1rem;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
   text-decoration: none;
 }
-.classes .container .content .box .row {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  justify-content: space-between;
+.reports .container .content .box #subtitle {
+  margin-bottom: 0.5rem;
 }
-.classes .container .content .box .row img {
-  width: 3rem;
-  height: 3rem;
+.reports .container .content .box #title {
+  font-weight: 500;
 }
-.classes .container .content .box #title,
-.classes .container .content .box #class {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  width: 100%;
-}
-.classes .container .content .box #students {
-  font-size: 1rem;
-}
-.classes .container .content .box svg {
-  width: 1.25rem;
-  height: 1.25rem;
-  align-self: flex-end;
-  cursor: pointer;
-}
-.classes dialog .icon-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-.classes dialog .icon-group img {
-  width: 3rem;
-  height: 3rem;
-  cursor: pointer;
-  padding: 0.25rem;
-  border-radius: 0.5rem;
-}
-.classes dialog .icon-group img.selected {
-  outline: 2px solid #A855F7;
+.reports .container .content .box #result {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #A855F7;
 }

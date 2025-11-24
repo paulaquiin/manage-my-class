@@ -38,7 +38,7 @@ textarea {
 .error {
   display: none;
   font-size: 0.8rem;
-  color: red;
+  color: #E74C3C;
 }
 .error.show {
   display: inline;
@@ -46,7 +46,7 @@ textarea {
 
 .heading-1,
 h1 {
-  font-size: 3.75rem;
+  font-size: 3rem;
   color: #181818;
 }
 
