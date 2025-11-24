@@ -21,19 +21,19 @@ app.use(express.static("public")); // Sirve los archivos de la carpeta public
 // Permite comprobar si la petición recibida es de un usuario autenticado
 // Este middleware se ejecutará en todas las peticiones donde sea necesario la autenticación
 function authJwtToken(req, res, next) {
-    const exclude = ["/api/register", "/api/login"];
+    const exclude = ["/api/register", "/api/login", "/"];
     if (exclude.includes(req.path)) return next();
 
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
     if (!token) {
         return res.status(401).json({ message: "No autorizado" });
-    } 
+    }
 
     jwt.verify(token, JWT_SECRET_KEY, (error, user) => {
         if (error) {
             return res.status(401).json({ message: "Token inválido" });
-        } 
+        }
         req.user = user;
         next();
     });
@@ -43,6 +43,11 @@ app.use(authJwtToken);
 /**
  * ENDPOINTS
 */
+
+app.get("/", (req, res) => {
+    res.redirect("/iniciar-sesion");
+});
+
 
 // Endpoint para registrar
 app.post("/api/register/", UserController.register);
