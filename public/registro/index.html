@@ -39,19 +39,18 @@
                     <div class="row">
                         <div class="form-group">
                             <label id="user">Usuario</label>
-                            <input name="user" type="text" />
+                            <input name="user" type="text" required />
                             <span class="error" id="user-exists-error">El usuario ya existe</span>
                         </div>
                         <div class="form-group">
                             <label id="password">Contraseña</label>
-                            <input name="password" type="password" />
-                            <span class="error" id="password-error"></span>
+                            <input name="password" type="password"  required/>
+                            <span class="error" id="password-too-short">La contraseña debe tener al menos 6 caracteres</span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label id="password">DNI</label>
-                        <input name="dni" type="text" />
-                        <span class="error" id="dni-error"></span>
+                        <input name="dni" type="text"  required/>
                     </div>
                     <input value="Registro" type="submit" />
                     <a href="/registro" class="button">Registro</a>

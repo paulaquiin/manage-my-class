@@ -17,7 +17,7 @@ form.addEventListener("submit", async (e) => {
     if (!result.token) {
         const errorEl = document.getElementById(result.errorId);
         if (errorEl) {
-            errorEl.textContent = result.message;
+            errorEl.classList.add("show");
         }
     } else {
         localStorage.setItem("token", result.token)

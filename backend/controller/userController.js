@@ -8,11 +8,16 @@ const JWT_EXPIRATION = "12h";
 const UserController = {
     async register(req, res) {
         const { user, password, dni } = req.body;
+
+        if (password.length < 6) {
+            return res.status(400).json({ success: false, errorId: "password-too-short" });
+        }
+
         try {
             await User.create(user, password, dni);
             return res.status(201).json({ success: true });
         } catch (error) {
-            return res.status(400).json({ success: false, errorId: "user-exists-error", message: "Usuario ya existe" });
+            return res.status(400).json({ success: false, errorId: "user-exists-error" });
         }
 
     },
@@ -23,7 +28,7 @@ const UserController = {
             const result = await User.getByUsername(user);
             const validPassword = await bcrypt.compare(password, result.password);
             if (!validPassword) {
-                return res.status(400).json({ errorId: "password-error", message: "Contraseña incorrecta" });
+                return res.status(400).json({ errorId: "password-error" });
             } else {
                 const token = jwt.sign({ id: result.id }, JWT_SECRET_KEY, { expiresIn: JWT_EXPIRATION });
                 return res.status(200).json({ token, user_id: result.id });
@@ -32,7 +37,7 @@ const UserController = {
             if (error) {
                 return res.status(400).json({ success: false });
             } else {
-                return res.status(400).json({ errorId: "user-error", message: "El usuario no existe" });
+                return res.status(400).json({ errorId: "user-error" });
 
             }
         }
@@ -50,13 +55,12 @@ const UserController = {
     },
 
     async update(req, res) {
-        const { userId, user, dni, photo, password, activityPercentage, examPercentage} = req.body;
+        const { userId, user, dni, photo, password, activityPercentage, examPercentage } = req.body;
         try {
             await User.update(userId, user, dni, photo, activityPercentage, examPercentage, password);
             return res.status(201).json({ success: true });
 
         } catch (error) {
-            console.log(error);
             return res.status(400).json({ success: false });
         }
     }

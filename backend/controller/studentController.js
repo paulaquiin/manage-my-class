@@ -43,7 +43,6 @@ const StudentController = {
 
     async getTotalByUser(req, res) {
         const { userId } = req.query;
-        console.log(userId);
         try {
             const quantity = await Student.getTotalByUser(userId);
             res.status(200).json({ success: true, quantity });

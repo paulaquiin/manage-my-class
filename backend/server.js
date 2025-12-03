@@ -1,6 +1,4 @@
 const express = require("express");
-const db = require("./database");
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const UserController = require("./controller/userController");
 const ClassController = require("./controller/classController");
@@ -11,7 +9,6 @@ const ActivityController = require("./controller/activityController");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET_KEY = "1c975aca040f714db40ba0f0fdbf8aad"; // Firma generada en https://jwtsecrets.com/
-const JWT_EXPIRATION = "12h";
 
 /**
  * MIDDLEWARES
