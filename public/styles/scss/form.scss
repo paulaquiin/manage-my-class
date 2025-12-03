@@ -41,7 +41,8 @@ form {
         }
     }
 
-    input[type="submit"]{
+    input[type="submit"],
+    a.button {
         margin-left: auto;
     }
 }

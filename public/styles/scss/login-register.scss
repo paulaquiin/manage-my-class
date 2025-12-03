@@ -95,6 +95,9 @@
             
             form {
                 max-width: 350px;
+                a.button:last-child {
+                    display: none;
+                }
             }
 
         }
