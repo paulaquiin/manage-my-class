@@ -8,12 +8,12 @@ const db = new sqlite3.Database("./backend/data.db", (err) => {
 
 db.run("PRAGMA foreign_keys = ON");
 
-db.run("DROP TABLE users");
-db.run("DROP TABLE classes");
-db.run("DROP TABLE students");
-db.run("DROP TABLE student_classes");
-db.run("DROP TABLE grades");
-db.run("DROP TABLE activities");
+db.run("DROP TABLE IF EXISTS users");
+db.run("DROP TABLE IF EXISTS classes");
+db.run("DROP TABLE IF EXISTS students");
+db.run("DROP TABLE IF EXISTS student_classes");
+db.run("DROP TABLE IF EXISTS grades");
+db.run("DROP TABLE IF EXISTS activities");
 
 db.run(
     `CREATE TABLE IF NOT EXISTS users 
