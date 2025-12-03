@@ -11,12 +11,12 @@ db.serialize(() => {
 
     db.run("PRAGMA foreign_keys = ON");
     
-    db.run("DROP TABLE IF EXISTS users");
-    db.run("DROP TABLE IF EXISTS classes");
-    db.run("DROP TABLE IF EXISTS students");
-    db.run("DROP TABLE IF EXISTS student_classes");
     db.run("DROP TABLE IF EXISTS grades");
     db.run("DROP TABLE IF EXISTS activities");
+    db.run("DROP TABLE IF EXISTS student_classes");
+    db.run("DROP TABLE IF EXISTS students");
+    db.run("DROP TABLE IF EXISTS classes");
+    db.run("DROP TABLE IF EXISTS users");
     
     db.run(
         `CREATE TABLE IF NOT EXISTS users 
@@ -39,7 +39,7 @@ db.serialize(() => {
             grade TEXT NOT NULL,
             icon INTEGER NOT NULL,
             user_id INTEGER NOT NULL,
-            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
             UNIQUE (name, user_id)
         )
         `
@@ -87,9 +87,9 @@ db.serialize(() => {
             class_id INTEGER NOT NULL,
             user_id INTEGER NOT NULL,
             
-            FOREIGN KEY (activity_id) REFERENCES activities(id) ON DELETE CASCADE
-            FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE
-            FOREIGN KEY (user_id) REFERENCES users(id)
+            FOREIGN KEY (activity_id) REFERENCES activities(id) ON DELETE CASCADE,
+            FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE,
+            FOREIGN KEY (user_id) REFERENCES users(id),
             FOREIGN KEY (class_id) REFERENCES classes(id) ON DELETE CASCADE,
     
             UNIQUE (activity_id, student_id, class_id, user_id)
@@ -107,8 +107,8 @@ db.serialize(() => {
             user_id INTEGER NOT NULL,
             class_id INTEGER NOT NULL,
             
-            FOREIGN KEY (user_id) REFERENCES users(id)
-            FOREIGN KEY (class_id) REFERENCES classes(id) ON DELETE CASCADE
+            FOREIGN KEY (user_id) REFERENCES users(id),
+            FOREIGN KEY (class_id) REFERENCES classes(id) ON DELETE CASCADE,
             UNIQUE (name, class_id, user_id)
         )
         `
