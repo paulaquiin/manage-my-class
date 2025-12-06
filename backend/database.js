@@ -11,13 +11,6 @@ db.serialize(() => {
 
     db.run("PRAGMA foreign_keys = ON");
     
-    db.run("DROP TABLE IF EXISTS grades");
-    db.run("DROP TABLE IF EXISTS activities");
-    db.run("DROP TABLE IF EXISTS student_classes");
-    db.run("DROP TABLE IF EXISTS students");
-    db.run("DROP TABLE IF EXISTS classes");
-    db.run("DROP TABLE IF EXISTS users");
-    
     db.run(
         `CREATE TABLE IF NOT EXISTS users 
         (
