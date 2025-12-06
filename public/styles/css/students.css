@@ -337,84 +337,9 @@ main.reports .container {
     display: none;
   }
 }
-html, body {
-  height: 100%;
-  font-family: "Lexend", sans-serif;
-}
-
-body {
-  overflow-x: hidden;
-}
-
-*:not(dialog):focus {
-  outline: 1px solid #A855F7;
-}
-
-input,
-textarea {
-  font-family: "Lexend", sans-serif;
-}
-
-.text {
-  font-size: 1rem;
-  color: #181818;
-}
-
-.subtext {
-  font-size: 0.85rem;
-  color: #181818;
-}
-
-.muted {
-  font-size: 0.85rem;
-  color: #777777;
-}
-
-.bold {
-  font-weight: 600;
-}
-
-.error {
-  display: none;
-  font-size: 0.8rem;
-  color: #E74C3C;
-}
-.error.show {
-  display: inline;
-}
-
-.heading-1,
-h1 {
-  font-size: 3rem;
-  color: #181818;
-}
-
-.heading-2,
-h2 {
-  font-size: 2.75rem;
-  color: #181818;
-}
-
-.heading-3,
-h3 {
-  font-size: 1.75rem;
-  color: #181818;
-}
-
-.heading-4,
-h4 {
-  font-size: 1.35rem;
-  color: #181818;
-}
-
-.heading-5,
-h5 {
-  font-size: 1.25rem;
-  color: #181818;
-}
-
 button,
-input[type=submit] {
+input[type=submit],
+.button {
   background-color: #A855F7;
   font-family: "Lexend", sans-serif;
   color: #fff;
@@ -424,13 +349,16 @@ input[type=submit] {
   cursor: pointer;
   border: 2px solid #A855F7;
   transition: background-color 0.25s;
+  text-decoration: none;
 }
 button:focus,
-input[type=submit]:focus {
+input[type=submit]:focus,
+.button:focus {
   border-color: #fff;
 }
 button:hover,
-input[type=submit]:hover {
+input[type=submit]:hover,
+.button:hover {
   background-color: #782fbd;
   border-color: #782fbd;
 }
@@ -572,7 +500,8 @@ form input:not(input[type=submit]):focus {
 form input:not(input[type=submit])::placeholder {
   color: #a5a5a5;
 }
-form input[type=submit] {
+form input[type=submit],
+form a.button {
   margin-left: auto;
 }
 
