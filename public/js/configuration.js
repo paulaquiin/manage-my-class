@@ -69,6 +69,7 @@ form.addEventListener("submit", async (e) => {
 
     let photo = undefined;
     const file = photoInput.files[0];
+
     if (file) {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -82,8 +83,19 @@ form.addEventListener("submit", async (e) => {
             )
 
             if (result.success) {
-                // window.location.reload();
+                window.location.reload();
             }
+
+        }
+    } else {
+        const result = await handleFetch(
+            `/api/user`,
+            "PUT",
+            JSON.stringify({ userId, user, dni, photo, activityPercentage, examPercentage, password })
+        )
+
+        if (result.success) {
+            window.location.reload();
         }
     }
 
