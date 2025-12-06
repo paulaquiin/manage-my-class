@@ -140,14 +140,14 @@ async function fetchActivities() {
 }
 
 // Función que renderiza cada estudiante en forma de fila en la tabla
+// Esta funcion crea 2 celdas, la del nombre del estudiante y la de la nota
 function renderStudents() {
     students.forEach((student) => {
         const tr = document.createElement("div");
         tr.classList.add("row");
         tr.dataset.studentId = student.id;
 
-        const loopCount = thead.querySelectorAll("div").length;
-
+        let loopCount = type !== "quarter" ? 2 : 1;
         for (let i = 0; i < loopCount; i++) {
             const newCell = document.createElement("div");
             if (i === 0) {
@@ -301,10 +301,10 @@ async function handleQuartersTable() {
     // Por cada estudiante creado en la tabla, voy a añadir a cada estudiante 3 celdas, una para cada trimestre.
     const rows = quartersTable.querySelectorAll(".row:not(.thead)");
     rows.forEach((tr) => {
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 3; i++) {
             const newTd = document.createElement("div");
             newTd.textContent = "-";
-            tr.insertBefore(newTd, tr.lastElementChild);
+            tr.appendChild(newTd);
         }
     })
     // Obtengo la puntuación de cada estudiante y cada trimestre y lo renderizo
@@ -330,18 +330,6 @@ async function fetchQuartersScore() {
             case "second": studentRow.querySelector("div:nth-child(3)").textContent = grade.score; break;
             case "third": studentRow.querySelector("div:nth-child(4)").textContent = grade.score; break;
         }
-    })
-    // Ahora por cada fila, sumo las tres notas y lo añado en la ultima columna (nota media)
-    const rows = quartersTable.querySelectorAll(".row:not(.thead)");
-    let avgScore = 0;
-    rows.forEach((row) => {
-        const columns = row.querySelectorAll("div:not([data-student-id]):not(:last-child)");
-        columns.forEach((col) => {
-            avgScore += col.textContent !== "-" ? parseFloat(col.textContent) : 0;
-        })
-        const result = Math.round((avgScore / columns.length) * 10) / 10;
-        row.querySelector("div:last-child").textContent = result
-        avgScore = 0;
     })
 }
 
