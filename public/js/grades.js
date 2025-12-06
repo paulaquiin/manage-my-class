@@ -17,7 +17,8 @@ const quartersTable = document.getElementById("quarters-table");
 const thead = table.querySelector(".row.thead");
 // Botón para guardar las notas cuando se ha editado la tabla
 const saveStudentGradesEl = document.getElementById("save-student-grades");
-
+// Selector de trimestres del dialog de editar una actividad
+const quarterActivitySelect = document.getElementById("activity-quarter");
 // Referencia del form donde se añaden nuevas actividades/examenes
 const form = document.querySelector("form");
 
@@ -92,8 +93,7 @@ function fillNavigation() {
     currentLink.classList.add("active");
 }
 
-function updateDialogUI() {
-
+function updateDialogUI(quarter) {
     // Cambiar título del botón de la pantalla y del dialog (input y titulo) según si estamos en examenes o actividades
     switch (type) {
         case "activity":
@@ -113,6 +113,11 @@ function updateDialogUI() {
         openDialog.classList.add("hide");
     } else {
         openDialog.classList.remove("hide");
+    }
+
+    // Recuperar y establecer trimestre en el select de trimestre al abrir el dialog según la actividad que corresponda
+    if (quarter) {
+        quarterActivitySelect.value = quarter;
     }
 }
 
@@ -167,6 +172,7 @@ function renderActivities(activities) {
     activities.forEach((activity) => {
         const th = document.createElement("div");
         th.dataset.id = activity.id;
+        th.dataset.quarter = activity.quarter;
         // Nombre de la actividad
         const activityName = document.createElement("span");
         activityName.classList.add("text");
@@ -283,7 +289,7 @@ function handleTableEvents() {
             const activityName = header.querySelector("span:first-child");
             activityTitle.value = activityName.textContent;
             // Actualizar los textos del dialog
-            updateDialogUI();
+            updateDialogUI(header.dataset.quarter);
             // Abrir dialog
             dialog.showModal();
         })
@@ -426,8 +432,7 @@ form.addEventListener("submit", async (e) => {
 
     // Obtener nombre de la actividad
     const { name } = Object.fromEntries(formData.entries());
-    // Obtener trimestre
-    const quarterActivitySelect = document.getElementById("activity-quarter");
+    // Obtener trimestre    
     const quarterActivity = quarterActivitySelect.value;
 
     // Añado una nueva actividad o edito una existente
