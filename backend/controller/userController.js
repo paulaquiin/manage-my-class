@@ -14,7 +14,8 @@ const UserController = {
         }
 
         try {
-            await User.create(user, password, dni);
+            const hashedPwd = await bcrypt.hash(password, 10);
+            await User.create(user, hashedPwd, dni);
             return res.status(201).json({ success: true });
         } catch (error) {
             return res.status(400).json({ success: false, errorId: "user-exists-error" });
@@ -57,11 +58,27 @@ const UserController = {
     async update(req, res) {
         const { userId, user, dni, photo, password, activityPercentage, examPercentage } = req.body;
         try {
-            await User.update(userId, user, dni, photo, activityPercentage, examPercentage, password);
+            let hashedPassword = "";
+            if (password !== "") {
+                if (password.length > 5) {
+                    // Comprobar que es una contraseña distinta a la actual
+                    const currentUser = await User.getById(userId);
+                    const currentHash = currentUser.password;
+                    const isSame = await bcrypt.compare(password, currentHash);
+                    if (isSame) {
+                        return res.status(400).json({ success: false, errorId: "password-repeated" });
+                    }
+                    hashedPassword = await bcrypt.hash(password, 10);
+                } else {
+                    return res.status(400).json({ success: false, errorId: "password-too-short" });
+                }
+            }
+
+            await User.update(userId, user, dni, photo, activityPercentage, examPercentage, hashedPassword);
             return res.status(201).json({ success: true });
 
         } catch (error) {
-            return res.status(400).json({ success: false });
+            return res.status(400).json({ success: false, errorId: error });
         }
     }
 };

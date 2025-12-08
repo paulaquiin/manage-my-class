@@ -25,6 +25,12 @@ export async function handleFetch(url, method, body, validateToken = true) {
         const result = await response.json();
 
         if (!result.success) {
+            // Limpiar todos los anteriores errores
+            const errorList = document.querySelectorAll(".error");
+            errorList.forEach((error) => {
+                error.classList.remove("show");
+            })
+            // Renderizar nuevo error (Si corresponde)
             const errorEl = document.getElementById(result.errorId);
             if (errorEl) {
                 errorEl.classList.add("show");
