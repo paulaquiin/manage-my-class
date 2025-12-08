@@ -55,8 +55,15 @@ form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const formData = new FormData(form);
 
+    const { user, dni, activityPercentage, examPercentage, password, repeatPassword } = Object.fromEntries(formData.entries());
 
-    const { user, dni, activityPercentage, examPercentage, password } = Object.fromEntries(formData.entries());
+    if (password.length > 0) {
+        if (password !== repeatPassword) {
+            const errorEl = form.querySelector("#password-coincidence");
+            errorEl.classList.add("show");
+            return;
+        }
+    }
 
     if (
         ((parseInt(activityPercentage) + parseInt(examPercentage)) > 100) ||
