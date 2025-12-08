@@ -1,5 +1,8 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+dotenv.config();
+
 const UserController = require("./controller/userController");
 const ClassController = require("./controller/classController");
 const StudentController = require("./controller/studentController");
@@ -8,7 +11,7 @@ const ActivityController = require("./controller/activityController");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const JWT_SECRET_KEY = "1c975aca040f714db40ba0f0fdbf8aad"; // Firma generada en https://jwtsecrets.com/
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY; // Firma generada en https://jwtsecrets.com/
 
 /**
  * MIDDLEWARES

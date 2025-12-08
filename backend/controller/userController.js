@@ -2,7 +2,7 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const JWT_SECRET_KEY = "1c975aca040f714db40ba0f0fdbf8aad"; // Firma generada en https://jwtsecrets.com/
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY; // Firma generada en https://jwtsecrets.com/
 const JWT_EXPIRATION = "12h";
 
 const UserController = {
